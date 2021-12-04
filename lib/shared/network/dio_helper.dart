@@ -34,7 +34,7 @@ class DioHelper {
     dio.options.headers = {
       "Content-Type": "application/json",
       'lang': lang,
-      'Authorization': "Bearer $token"
+      'auth-token': "$token"
     };
     return await dio.get(url);
   }
@@ -54,7 +54,7 @@ class DioHelper {
     }) async {
        dio.options.headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
+      "auth-token": "$token"
     };
     return dio.put(
       url,

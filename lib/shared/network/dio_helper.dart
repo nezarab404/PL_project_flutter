@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 class DioHelper {
@@ -6,7 +8,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-          baseUrl: "",//TODO
+          baseUrl: "", //TODO
           receiveDataWhenStatusError: true,
           headers: {"Content-Type": "application/json"}),
     );
@@ -39,29 +41,25 @@ class DioHelper {
     return await dio.get(url);
   }
 
-  static Future<Response> deleteData({required String url,required int id}) async {
-    return dio.delete(url,
-      queryParameters: {
-        "id":id
-      }
-    );
+  static Future<Response> deleteData(
+      {required String url, required int id}) async {
+    return dio.delete(url, queryParameters: {"id": id});
   }
-  static Future<Response> updateData({
-    required String url,
-    Map<String, dynamic>? query,
-    dynamic data,
-      String? token
-    }) async {
-       dio.options.headers = {
+
+  static Future<Response> updateData(
+      {required String url,
+      Map<String, dynamic>? query,
+      dynamic data,
+      String? token}) async {
+    dio.options.headers = {
       "Content-Type": "application/json",
       "auth-token": "$token"
     };
-    return dio.put(
-      url,
-      queryParameters:query,
-      data: data
-    );
+    return dio.put(url, queryParameters: query, data: data);
   }
 
-  
+  static Future uploadData(File file) async {
+    
+    
+  }
 }

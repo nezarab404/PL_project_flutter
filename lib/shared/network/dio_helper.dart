@@ -8,7 +8,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-          baseUrl: "", //TODO
+          baseUrl: "",
           receiveDataWhenStatusError: true,
           headers: {"Content-Type": "application/json"}),
     );
@@ -58,8 +58,5 @@ class DioHelper {
     return dio.put(url, queryParameters: query, data: data);
   }
 
-  static Future uploadData(File file) async {
-    
-    
-  }
+  static Future uploadData(File file) async {}
 }

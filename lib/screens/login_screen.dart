@@ -70,6 +70,7 @@ class LoginScreen extends StatelessWidget {
             //Login Form
             InputForm(
               screenWidth: screenWidth,
+              screenName: "LoginScreen",
               hintText: "Email or Username",
             ),
             SizedBox(
@@ -77,6 +78,7 @@ class LoginScreen extends StatelessWidget {
             ),
             InputForm(
               screenWidth: screenWidth,
+              screenName: "LoginScreen",
               hintText: "Password",
             ),
             //Help Text

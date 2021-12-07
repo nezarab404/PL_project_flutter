@@ -5,6 +5,7 @@ import '../providers/network_provider.dart';
 import './screens/login_screen.dart';
 import '../shared/themes/main_theme.dart';
 import './screens/register_screen.dart';
+import './screens/verification_code_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: mainDarkBlue,
           scaffoldBackgroundColor: mainDarkBlue,
         ),
-        home: const LoginScreen(),
+        home: const VerificationCodeScreen(),
       ),
     );
   }

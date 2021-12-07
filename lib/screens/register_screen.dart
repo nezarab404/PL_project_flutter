@@ -71,6 +71,7 @@ class RegisterScreen extends StatelessWidget {
             //Register Form
             InputForm(
               screenWidth: screenWidth,
+              screenName: "RegisterScreen",
               hintText: "Username",
             ),
             SizedBox(
@@ -78,6 +79,7 @@ class RegisterScreen extends StatelessWidget {
             ),
             InputForm(
               screenWidth: screenWidth,
+              screenName: "RegisterScreen",
               hintText: "Email",
             ),
             SizedBox(
@@ -85,6 +87,7 @@ class RegisterScreen extends StatelessWidget {
             ),
             InputForm(
               screenWidth: screenWidth,
+              screenName: "RegisterScreen",
               hintText: "Password",
             ),
             SizedBox(
@@ -92,6 +95,7 @@ class RegisterScreen extends StatelessWidget {
             ),
             InputForm(
               screenWidth: screenWidth,
+              screenName: "RegisterScreen",
               hintText: "Confirm password",
             ),
 

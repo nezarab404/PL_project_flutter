@@ -22,8 +22,12 @@ class InputForm extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
           ),
-          hintText: hintText,
-          hintStyle: const TextStyle(
+          // hintText: hintText,
+          // hintStyle: const TextStyle(
+          //   color: Colors.black26,
+          // ),
+          labelText: hintText,
+          labelStyle: const TextStyle(
             color: Colors.black26,
           ),
         ),

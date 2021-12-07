@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:programming_languages_project/providers/network_provider.dart';
-import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/network_provider.dart';
+import './screens/login_screen.dart';
+import '../shared/themes/main_theme.dart';
 import './screens/register_screen.dart';
 
 void main() {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: mainDarkBlue,
           scaffoldBackgroundColor: mainDarkBlue,
         ),
-        home: const RegisterScreen(),
+        home: const LoginScreen(),
       ),
     );
   }

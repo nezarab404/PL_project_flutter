@@ -73,6 +73,7 @@ class RegisterScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "RegisterScreen",
               hintText: "Username",
+              pIcon: Icon(Icons.person),
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -81,6 +82,7 @@ class RegisterScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "RegisterScreen",
               hintText: "Email",
+              pIcon: Icon(Icons.email),
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -89,6 +91,7 @@ class RegisterScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "RegisterScreen",
               hintText: "Password",
+              pIcon: Icon(Icons.password),
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -97,10 +100,11 @@ class RegisterScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "RegisterScreen",
               hintText: "Confirm password",
+              pIcon: Icon(Icons.check_circle),
             ),
 
             SizedBox(
-              height: screenHeight / 15,
+              height: screenHeight / 20,
             ),
             SizedBox(
               height: screenHeight / 10,

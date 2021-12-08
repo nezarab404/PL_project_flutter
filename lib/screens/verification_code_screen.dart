@@ -136,6 +136,7 @@ class VerificationCodeScreen extends StatelessWidget {
                 child: Icon(
                   Icons.check,
                   color: mainDarkBlue,
+                  size: 40,
                 ),
                 elevation: 6,
               ),

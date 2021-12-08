@@ -1,14 +1,12 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../shared/commponents/input_form.dart';
-import '../shared/commponents/header.dart';
 import '../shared/themes/main_theme.dart';
+import '../shared/commponents/header.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +38,24 @@ class LoginScreen extends StatelessWidget {
                 //     begin: Alignment.topCenter,
                 //     end: Alignment.bottomCenter,
 
-                //Logo
+                //Register user icon
                 Positioned(
-                  top: screenHeight / 10,
-                  left: screenWidth / 3.7,
+                  top: screenHeight / 15,
+                  left: screenWidth / 4.3,
                   child: SvgPicture.asset(
-                    'assets/images/cart_red2.svg',
+                    'assets/images/password_reset.svg',
+                    color: mainRed,
+                    height: screenHeight / 4,
+                    width: screenWidth / 2,
                   ),
                 ),
 
-                //Login Text
+                //Verify Text
                 Container(
                   height: screenHeight / 2.4,
                   alignment: Alignment.bottomCenter,
-                  child: Text(
-                    "Login",
+                  child: const Text(
+                    "Reset",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -65,42 +66,43 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: screenHeight / 15,
+              height: screenHeight / 20,
             ),
-            //Login Form
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(
+                horizontal: 30,
+              ),
+              child: const Text(
+                "Enter your new password below:",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.start,
+              ),
+            ),
+            SizedBox(
+              height: screenHeight / 40,
+            ),
+            //Reset Form
             InputForm(
               screenWidth: screenWidth,
-              screenName: "LoginScreen",
-              hintText: "Email or username",
-              pIcon: Icon(Icons.email),
+              screenName: "ForgotPasswordScreen",
+              hintText: "New password",
+              pIcon: const Icon(Icons.password),
             ),
             SizedBox(
               height: screenHeight / 40,
             ),
             InputForm(
               screenWidth: screenWidth,
-              screenName: "LoginScreen",
-              hintText: "Password",
-              pIcon: Icon(Icons.password),
-            ),
-            //Help Text
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Forgot password?",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("ٌReset"),
-                ),
-              ],
+              screenName: "ForgotPasswordScreen",
+              hintText: "Confirm new password",
+              pIcon: const Icon(Icons.check_circle),
             ),
             SizedBox(
-              height: screenHeight / 15,
+              height: screenHeight / 10,
             ),
             SizedBox(
               height: screenHeight / 10,
@@ -109,29 +111,12 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () {},
                 backgroundColor: mainRed,
                 child: Icon(
-                  Icons.arrow_forward,
+                  Icons.check,
                   color: mainDarkBlue,
+                  size: 40,
                 ),
                 elevation: 6,
               ),
-            ),
-            SizedBox(
-              height: screenHeight / 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't have an account?",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("Create one now!"),
-                ),
-              ],
             ),
           ],
         ),

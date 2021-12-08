@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/screens/forgot_password_screen.dart';
+import 'package:programming_languages_project/screens/login_screen.dart';
+import 'package:programming_languages_project/screens/register_screen.dart';
+import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/network_provider.dart';
-import './screens/login_screen.dart';
 import '../shared/themes/main_theme.dart';
-import './screens/register_screen.dart';
-import './screens/verification_code_screen.dart';
 
 void main() {
   runApp(const MyApp());

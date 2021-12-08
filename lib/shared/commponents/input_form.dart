@@ -6,17 +6,30 @@ class InputForm extends StatelessWidget {
   final double screenWidth;
   final String? hintText;
   final String? screenName;
+  final Icon? pIcon;
 
-  final veriScreen = "VerificationCodeScreen",
+  static const veriScreen = "VerificationCodeScreen",
       regiScreen = "RegisterScreen",
-      logiScreen = "LoginScreen";
+      logiScreen = "LoginScreen",
+      newPassScreen = "ForgotPasswordScreen";
 
-  const InputForm(
-      {required this.screenWidth, required this.screenName, this.hintText});
+  static const password = "Password",
+      email = "Email",
+      emailOrUsername = "Email or username",
+      confPassword = "Confirm password",
+      newPassword = "New password",
+      confNewPassword = "Confirm new password";
+
+  const InputForm({
+    required this.screenWidth,
+    required this.screenName,
+    this.hintText,
+    this.pIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return screenName == logiScreen || screenName == regiScreen
+    return screenName != veriScreen
         ? Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -25,20 +38,39 @@ class InputForm extends StatelessWidget {
             margin: EdgeInsets.symmetric(
               horizontal: screenWidth / 10,
             ),
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 15,
+            child: Stack(
+              alignment: Alignment.centerRight,
+              children: [
+                TextField(
+                  obscureText: hintText == password ||
+                          hintText == confPassword ||
+                          hintText == newPassword ||
+                          hintText == confNewPassword
+                      ? true
+                      : false,
+                  keyboardType: hintText == email || hintText == emailOrUsername
+                      ? TextInputType.emailAddress
+                      : TextInputType.text,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: pIcon,
+                    contentPadding: const EdgeInsets.all(10),
+                    labelText: hintText,
+                    labelStyle: const TextStyle(
+                      color: Colors.black26,
+                    ),
+                  ),
                 ),
-                // hintText: hintText,
-                // hintStyle: const TextStyle(
-                //   color: Colors.black26,
-                // ),
-                labelText: hintText,
-                labelStyle: const TextStyle(
-                  color: Colors.black26,
-                ),
-              ),
+                if (hintText == password ||
+                    hintText == confPassword ||
+                    hintText == newPassword ||
+                    hintText == confNewPassword)
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.visibility),
+                    color: Colors.black26,
+                  ),
+              ],
             ),
           )
         : SizedBox(
@@ -50,6 +82,7 @@ class InputForm extends StatelessWidget {
               ),
               child: const TextField(
                 decoration: InputDecoration(
+                  border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 5,
                   ),

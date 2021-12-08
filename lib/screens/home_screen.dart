@@ -2,7 +2,6 @@ import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
-import 'package:programming_languages_project/screens/product_detailes_screen.dart';
 import 'package:programming_languages_project/shared/commponents/my_grid_view.dart';
 import 'package:programming_languages_project/shared/commponents/product_item.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
@@ -32,8 +31,35 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: const Drawer(),
-      body: buildBody2(context),
+
+      body: SingleChildScrollView(
+        physics:const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 40,
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (ctx, index) {
+                  return buildCategoryItem();
+                },
+                separatorBuilder: (ctx, index) {
+                  return const SizedBox(
+                    width: 15,
+                  );
+                },
+                itemCount: 10,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            MyGridView(itemCount: 10,),
+         const   SizedBox(height: 75,)
+          ],
+        ),
+      ),
       extendBody: true,
       bottomNavigationBar: DotNavigationBar(
         currentIndex: provider.bottomNavBarIndex,

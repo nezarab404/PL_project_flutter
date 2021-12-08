@@ -2,10 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:programming_languages_project/screens/forgot_password_screen.dart';
+import 'package:programming_languages_project/screens/home_screen.dart';
+import 'package:programming_languages_project/screens/register_screen.dart';
 
 import '../shared/commponents/input_form.dart';
 import '../shared/commponents/header.dart';
 import '../shared/themes/main_theme.dart';
+import 'verification_code_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -72,6 +76,7 @@ class LoginScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "LoginScreen",
               hintText: "Email or Username",
+              pIcon: Icons.email,
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -80,6 +85,8 @@ class LoginScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "LoginScreen",
               hintText: "Password",
+              pIcon: Icons.password,
+              isPassword: true,
             ),
             //Help Text
             Row(
@@ -92,7 +99,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    //TODO: back to login
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => VerificationCodeScreen()));
+                  },
                   child: Text("ٌReset"),
                 ),
               ],
@@ -104,7 +115,11 @@ class LoginScreen extends StatelessWidget {
               height: screenHeight / 10,
               width: screenHeight / 10,
               child: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  //TODO: login
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                },
                 backgroundColor: mainRed,
                 child: Icon(
                   Icons.arrow_forward,
@@ -114,7 +129,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: screenHeight / 10,
+              height: screenHeight / 10 - 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +141,12 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const RegisterScreen()));
+                  },
                   child: Text("Create one now!"),
                 ),
               ],

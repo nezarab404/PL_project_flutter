@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
@@ -12,7 +13,7 @@ class ProductDetailesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = CarouselController();
     var provider = Provider.of<ProductDetailesProvider>(context);
-
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: lightDarkBlue,
@@ -36,7 +37,7 @@ class ProductDetailesScreen extends StatelessWidget {
       floatingActionButton: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
               height: 60,
@@ -46,14 +47,38 @@ class ProductDetailesScreen extends StatelessWidget {
                 label: SizedBox(
                   width: 200,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("Buy",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2!
-                              .copyWith(color: Colors.white, fontSize: 24)),
-                      const Icon(Icons.add, size: 28),
+                      Row(
+                        children: [
+                          Text("Buy",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(color: Colors.white, fontSize: 24)),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          const Icon(Icons.shopping_cart, size: 28),
+                        ],
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        width: 100,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: mainGrey,
+                            borderRadius: BorderRadius.circular(90)),
+                        child: Text(
+                          "500\$",
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    color: mainRed,
+                                    fontSize: 20,
+                                  ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -77,9 +102,10 @@ class ProductDetailesScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              height: 250,
+              height: size.height/2.5,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(30),
@@ -88,6 +114,7 @@ class ProductDetailesScreen extends StatelessWidget {
                 color: lightDarkBlue,
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CarouselSlider(
                     carouselController: controller,
@@ -165,7 +192,7 @@ class ProductDetailesScreen extends StatelessWidget {
                         Column(
                           children: const [
                             Text(
-                              "#️",
+                              "#",
                               style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.white,
@@ -178,13 +205,13 @@ class ProductDetailesScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 15,
                   ),
                   SizedBox(
-                    height: 150,
+                    height: size.height/2.5-95,
                     child: SingleChildScrollView(
                       child: Text(
-                        "description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description ",
+                        "description descriptioncription description description description description description description description description description description descripdescription descriptioncription description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description desc",
                         style: Theme.of(context)
                             .textTheme
                             .caption!
@@ -192,10 +219,11 @@ class ProductDetailesScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 70),
+                  const SizedBox(height: 75),
                 ],
               ),
             ),
+            const SizedBox( height:30)
           ],
         ),
       ),
@@ -203,38 +231,37 @@ class ProductDetailesScreen extends StatelessWidget {
   }
 }
 
-
-  //  Row(
-  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                   children: [
-  //                     Row(
-  //                       children: [
-  //                         Column(
-  //                           children: [
-  //                             IconButton(
-  //                               onPressed: () {},
-  //                               icon: const Icon(Icons.comment),
-  //                             ),
-  //                             Text(
-  //                               "99",
-  //                               style: Theme.of(context).textTheme.bodyText1,
-  //                             ),
-  //                           ],
-  //                         ),
-  //                         Column(
-  //                           children: [
-  //                             IconButton(
-  //                               onPressed: () {},
-  //                               icon: const Icon(Icons.thumb_up),
-  //                             ),
-  //                             Text(
-  //                               "99",
-  //                               style: Theme.of(context).textTheme.bodyText1,
-  //                             ),
-  //                           ],
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 const SizedBox(height: 20),
+//  Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Row(
+//                       children: [
+//                         Column(
+//                           children: [
+//                             IconButton(
+//                               onPressed: () {},
+//                               icon: const Icon(Icons.comment),
+//                             ),
+//                             Text(
+//                               "99",
+//                               style: Theme.of(context).textTheme.bodyText1,
+//                             ),
+//                           ],
+//                         ),
+//                         Column(
+//                           children: [
+//                             IconButton(
+//                               onPressed: () {},
+//                               icon: const Icon(Icons.thumb_up),
+//                             ),
+//                             Text(
+//                               "99",
+//                               style: Theme.of(context).textTheme.bodyText1,
+//                             ),
+//                           ],
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(height: 20),

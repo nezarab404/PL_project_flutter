@@ -15,6 +15,8 @@ class ProductItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: Container(
+          width: 200,
+          height: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             color: const Color(0xffd3d3d3),

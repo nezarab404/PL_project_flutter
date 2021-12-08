@@ -15,11 +15,13 @@ class RegisterScreen extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+
       body: SingleChildScrollView(
         child: Column(
           children: [
             Stack(
               children: [
+
                 //Header Shadow
                 Header(
                   height: screenHeight / 2.4,
@@ -73,7 +75,7 @@ class RegisterScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "RegisterScreen",
               hintText: "Username",
-              pIcon: Icon(Icons.person),
+              pIcon: Icons.person,
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -82,7 +84,7 @@ class RegisterScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "RegisterScreen",
               hintText: "Email",
-              pIcon: Icon(Icons.email),
+              pIcon: Icons.email,
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -91,7 +93,7 @@ class RegisterScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "RegisterScreen",
               hintText: "Password",
-              pIcon: Icon(Icons.password),
+              pIcon: Icons.password,
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -100,7 +102,7 @@ class RegisterScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "RegisterScreen",
               hintText: "Confirm password",
-              pIcon: Icon(Icons.check_circle),
+              pIcon: Icons.check_circle,
             ),
 
             SizedBox(

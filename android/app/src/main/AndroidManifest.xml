@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.programming_languages_project">
    <application
-        android:label="programming_languages_project"
+        android:label="Dream Shop"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
-class InputForm extends StatelessWidget {
+class InputForm extends StatefulWidget {
   final double screenWidth;
   final String? hintText;
   final String? screenName;
@@ -20,7 +22,7 @@ class InputForm extends StatelessWidget {
       newPassword = "New password",
       confNewPassword = "Confirm new password";
 
-  const InputForm({
+  InputForm({
     required this.screenWidth,
     required this.screenName,
     this.hintText,
@@ -28,43 +30,48 @@ class InputForm extends StatelessWidget {
   });
 
   @override
+  State<InputForm> createState() => _InputFormState();
+}
+
+class _InputFormState extends State<InputForm> {
+  @override
   Widget build(BuildContext context) {
-    return screenName != veriScreen
+    return widget.screenName != InputForm.veriScreen
         ? Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
             elevation: 6,
             margin: EdgeInsets.symmetric(
-              horizontal: screenWidth / 10,
+              horizontal: widget.screenWidth / 10,
             ),
             child: Stack(
               alignment: Alignment.centerRight,
               children: [
-                TextField(
-                  obscureText: hintText == password ||
-                          hintText == confPassword ||
-                          hintText == newPassword ||
-                          hintText == confNewPassword
-                      ? true
-                      : false,
-                  keyboardType: hintText == email || hintText == emailOrUsername
+                TextFormField(
+                  textInputAction: TextInputAction.next,
+                  obscureText: widget.hintText == InputForm.password ||
+                      widget.hintText == InputForm.confPassword ||
+                      widget.hintText == InputForm.newPassword ||
+                      widget.hintText == InputForm.confNewPassword,
+                  keyboardType: widget.hintText == InputForm.email ||
+                          widget.hintText == InputForm.emailOrUsername
                       ? TextInputType.emailAddress
                       : TextInputType.text,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    prefixIcon: pIcon,
+                    prefixIcon: widget.pIcon,
                     contentPadding: const EdgeInsets.all(10),
-                    labelText: hintText,
+                    labelText: widget.hintText,
                     labelStyle: const TextStyle(
                       color: Colors.black26,
                     ),
                   ),
                 ),
-                if (hintText == password ||
-                    hintText == confPassword ||
-                    hintText == newPassword ||
-                    hintText == confNewPassword)
+                if (widget.hintText == InputForm.password ||
+                    widget.hintText == InputForm.confPassword ||
+                    widget.hintText == InputForm.newPassword ||
+                    widget.hintText == InputForm.confNewPassword)
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.visibility),
@@ -74,21 +81,23 @@ class InputForm extends StatelessWidget {
             ),
           )
         : SizedBox(
-            height: screenWidth / 7,
-            width: screenWidth / 7,
+            height: widget.screenWidth / 7,
+            width: widget.screenWidth / 7,
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextFormField(
+                maxLength: 1,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  counterText: '',
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 5,
-                  ),
                 ),
                 textAlign: TextAlign.center,
                 style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: mainRed,
                   fontSize: 28,
                 ),
               ),

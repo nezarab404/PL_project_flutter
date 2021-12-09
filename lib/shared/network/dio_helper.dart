@@ -8,7 +8,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-          baseUrl: "",
+          baseUrl: "http://192.168.137.19:8000/api/", //TODO
           receiveDataWhenStatusError: true,
           headers: {"Content-Type": "application/json"}),
     );
@@ -21,11 +21,21 @@ class DioHelper {
     String lang = 'en',
     String? token,
   }) async {
-    return await dio.post(
-      url,
-      data: data,
-      queryParameters: query,
-    );
+    dio.options.headers = {
+      "Content-Type": "application/json",
+      'auth-token': "$token"
+    };
+    Response response;
+    try {
+      response= await dio.post(
+        url,
+        data: data,
+        queryParameters: query,
+      );
+    } on DioError catch (e) {
+      return  e.response!;
+    }
+    return response;
   }
 
   static Future<Response> getData(
@@ -58,5 +68,8 @@ class DioHelper {
     return dio.put(url, queryParameters: query, data: data);
   }
 
-  static Future uploadData(File file) async {}
+  static Future uploadData(File file) async {
+    
+    
+  }
 }

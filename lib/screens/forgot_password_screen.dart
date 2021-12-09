@@ -90,7 +90,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "ForgotPasswordScreen",
               hintText: "New password",
-              pIcon: const Icon(Icons.password),
+              pIcon: Icons.password,
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -99,7 +99,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               screenWidth: screenWidth,
               screenName: "ForgotPasswordScreen",
               hintText: "Confirm new password",
-              pIcon: const Icon(Icons.check_circle),
+              pIcon: Icons.check_circle,
             ),
             SizedBox(
               height: screenHeight / 10,

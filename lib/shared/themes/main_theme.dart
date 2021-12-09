@@ -16,8 +16,9 @@ Map<int, Color> color = const {
 MaterialColor? mainRed = MaterialColor(0xffDC1A45, color);
 MaterialColor? mainDarkBlue = MaterialColor(0xff3C3D51, color);
 Color darkBlue = const Color(0xff3C3D51);
-Color darkBlue2 = const Color(0xff63657D);
-
-
+Color red = const Color(0xffDC1A45);
+Color lightDarkBlue = const Color(0xff4f506f);
+Color mainGrey = const Color(0xffd3d3d3);
+Color darkBlue2 = const Color(0xfff63657d);
 
 //0xffDC1A45

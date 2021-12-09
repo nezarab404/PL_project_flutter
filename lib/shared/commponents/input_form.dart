@@ -8,25 +8,17 @@ class InputForm extends StatefulWidget {
   final double screenWidth;
   final String? hintText;
   final String? screenName;
-  final Icon? pIcon;
-
-  static const veriScreen = "VerificationCodeScreen",
-      regiScreen = "RegisterScreen",
-      logiScreen = "LoginScreen",
-      newPassScreen = "ForgotPasswordScreen";
-
-  static const password = "Password",
-      email = "Email",
-      emailOrUsername = "Email or username",
-      confPassword = "Confirm password",
-      newPassword = "New password",
-      confNewPassword = "Confirm new password";
+  final IconData? pIcon;
+  final TextEditingController? controller;
+  bool isPassword;
 
   InputForm({
     required this.screenWidth,
     required this.screenName,
+    this.controller, //TODO: REQUIRED
     this.hintText,
     this.pIcon,
+    this.isPassword = false,
   });
 
   @override
@@ -34,9 +26,19 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
+  static const veriScreen = "VerificationCodeScreen";
+  static const password = "Password",
+      email = "Email",
+      emailOrUsername = "Email or username",
+      confPassword = "Confirm password",
+      newPassword = "New password",
+      confNewPassword = "Confirm new password";
+
+  var icon = Icons.visibility;
+
   @override
   Widget build(BuildContext context) {
-    return widget.screenName != InputForm.veriScreen
+    return widget.screenName != veriScreen
         ? Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -49,18 +51,19 @@ class _InputFormState extends State<InputForm> {
               alignment: Alignment.centerRight,
               children: [
                 TextFormField(
+                  controller: widget.controller,
                   textInputAction: TextInputAction.next,
-                  obscureText: widget.hintText == InputForm.password ||
-                      widget.hintText == InputForm.confPassword ||
-                      widget.hintText == InputForm.newPassword ||
-                      widget.hintText == InputForm.confNewPassword,
-                  keyboardType: widget.hintText == InputForm.email ||
-                          widget.hintText == InputForm.emailOrUsername
+                  obscureText: widget.hintText == password ||
+                      widget.hintText == confPassword ||
+                      widget.hintText == newPassword ||
+                      widget.hintText == confNewPassword,
+                  keyboardType: widget.hintText == email ||
+                          widget.hintText == emailOrUsername
                       ? TextInputType.emailAddress
                       : TextInputType.text,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    prefixIcon: widget.pIcon,
+                    prefixIcon: Icon(widget.pIcon),
                     contentPadding: const EdgeInsets.all(10),
                     labelText: widget.hintText,
                     labelStyle: const TextStyle(
@@ -68,13 +71,22 @@ class _InputFormState extends State<InputForm> {
                     ),
                   ),
                 ),
-                if (widget.hintText == InputForm.password ||
-                    widget.hintText == InputForm.confPassword ||
-                    widget.hintText == InputForm.newPassword ||
-                    widget.hintText == InputForm.confNewPassword)
+                if (widget.hintText == password ||
+                    widget.hintText == confPassword ||
+                    widget.hintText == newPassword ||
+                    widget.hintText == confNewPassword)
                   IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        widget.isPassword = !widget.isPassword;
+                        icon == Icons.visibility_off
+                            ? icon = Icons.visibility
+                            : icon = Icons.visibility_off;
+                      });
+                    },
+                    icon: Icon(icon,
+                        color:
+                            icon == Icons.visibility ? mainRed : Colors.grey),
                     color: Colors.black26,
                   ),
               ],
@@ -88,6 +100,7 @@ class _InputFormState extends State<InputForm> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextFormField(
+                controller: widget.controller,
                 maxLength: 1,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(

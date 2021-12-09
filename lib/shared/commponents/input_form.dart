@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 class InputForm extends StatefulWidget {
   final double screenWidth;
@@ -36,6 +37,7 @@ class _InputFormState extends State<InputForm> {
       newPassword = "New password",
       confNewPassword = "Confirm new password";
 
+  var icon = Icons.visibility;
   @override
   Widget build(BuildContext context) {
     return widget.screenName != veriScreen
@@ -75,9 +77,12 @@ class _InputFormState extends State<InputForm> {
                     onPressed: () {
                       setState(() {
                         widget.isPassword = !widget.isPassword;
+                        icon == Icons.visibility_off ?
+                        icon = Icons.visibility :
+                        icon =Icons.visibility_off;
                       });
                     },
-                    icon: const Icon(Icons.visibility),
+                    icon:  Icon(icon,color: icon == Icons.visibility ?  mainRed:Colors.grey),
                     color: Colors.black26,
                   ),
               ],
@@ -99,7 +104,7 @@ class _InputFormState extends State<InputForm> {
                   ),
                 ),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style:const TextStyle(
                   fontSize: 28,
                 ),
               ),

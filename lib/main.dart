@@ -12,8 +12,9 @@ import 'package:provider/provider.dart';
 import 'providers/add_product_provider.dart';
 import 'providers/home_provider.dart';
 import 'providers/product_detailes_provider.dart';
+import 'providers/verify_provider.dart';
 
-void main()async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   await SharedHelper.init();
@@ -21,18 +22,18 @@ void main()async{
 
   token = SharedHelper.getData(key: TOKEN);
 
-  if(token != null){
+  if (token != null) {
     widget = const HomeScreen();
+  } else {
+    widget = LoginScreen();
   }
-  else{
-    widget =  LoginScreen();
-  }
-  runApp( MyApp(mainWidget:widget));
+  runApp(MyApp(mainWidget: widget));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key,required this.mainWidget}) : super(key: key);
+  MyApp({Key? key, required this.mainWidget}) : super(key: key);
   Widget mainWidget;
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AddProductProvider>(
           create: (_) => AddProductProvider(),
+        ),
+        ChangeNotifierProvider<VerifyProvider>(
+          create: (_) => VerifyProvider(),
         ),
       ],
       child: MaterialApp(
@@ -71,7 +75,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: mainDarkBlue,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        home:  LoginScreen(),
+        home: LoginScreen(),
       ),
     );
   }

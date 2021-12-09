@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:programming_languages_project/providers/verify_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../shared/commponents/input_form.dart';
 import '../shared/themes/main_theme.dart';
@@ -12,6 +14,14 @@ class VerificationCodeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+    final _formKey = GlobalKey<FormState>();
+    final _code1 = TextEditingController();
+    final _code2 = TextEditingController();
+    final _code3 = TextEditingController();
+    final _code4 = TextEditingController();
+    final _code5 = TextEditingController();
+    final _code6 = TextEditingController();
+    var provider = Provider.of<VerifyProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -86,34 +96,42 @@ class VerificationCodeScreen extends StatelessWidget {
               height: screenHeight / 15,
             ),
             //Verify Form
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InputForm(
-                  screenWidth: screenWidth,
-                  screenName: "VerificationCodeScreen",
-                ),
-                InputForm(
-                  screenWidth: screenWidth,
-                  screenName: "VerificationCodeScreen",
-                ),
-                InputForm(
-                  screenWidth: screenWidth,
-                  screenName: "VerificationCodeScreen",
-                ),
-                InputForm(
-                  screenWidth: screenWidth,
-                  screenName: "VerificationCodeScreen",
-                ),
-                InputForm(
-                  screenWidth: screenWidth,
-                  screenName: "VerificationCodeScreen",
-                ),
-                InputForm(
-                  screenWidth: screenWidth,
-                  screenName: "VerificationCodeScreen",
-                ),
-              ],
+            Form(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InputForm(
+                    screenWidth: screenWidth,
+                    screenName: "VerificationCodeScreen",
+                    controller: _code1,
+                  ),
+                  InputForm(
+                    screenWidth: screenWidth,
+                    screenName: "VerificationCodeScreen",
+                    controller: _code2,
+                  ),
+                  InputForm(
+                    screenWidth: screenWidth,
+                    screenName: "VerificationCodeScreen",
+                    controller: _code3,
+                  ),
+                  InputForm(
+                    screenWidth: screenWidth,
+                    screenName: "VerificationCodeScreen",
+                    controller: _code4,
+                  ),
+                  InputForm(
+                    screenWidth: screenWidth,
+                    screenName: "VerificationCodeScreen",
+                    controller: _code5,
+                  ),
+                  InputForm(
+                    screenWidth: screenWidth,
+                    screenName: "VerificationCodeScreen",
+                    controller: _code6,
+                  ),
+                ],
+              ),
             ),
             TextButton(
               onPressed: () {},
@@ -131,7 +149,12 @@ class VerificationCodeScreen extends StatelessWidget {
               height: screenHeight / 10,
               width: screenHeight / 10,
               child: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  String code = _code1.text +_code2.text +_code3.text +_code4.text +_code5.text +_code6.text ;
+                  Provider.of<VerifyProvider>(context,listen: false).registerVerify(code: code).then((value) {
+                    print("kokokokokk");
+                  });
+                },
                 backgroundColor: mainRed,
                 child: Icon(
                   Icons.check,

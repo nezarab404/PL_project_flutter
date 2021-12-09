@@ -10,6 +10,8 @@ class InputForm extends StatefulWidget {
   final String? screenName;
   final IconData? pIcon;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
+  final Function(String)? function;
   bool isPassword;
 
   InputForm({
@@ -18,6 +20,8 @@ class InputForm extends StatefulWidget {
     this.controller, //TODO: REQUIRED
     this.hintText,
     this.pIcon,
+    this.focusNode,
+    this.function,
     this.isPassword = false,
   });
 
@@ -101,6 +105,8 @@ class _InputFormState extends State<InputForm> {
               ),
               child: TextFormField(
                 controller: widget.controller,
+                focusNode: widget.focusNode,
+                onChanged: widget.function,
                 maxLength: 1,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(

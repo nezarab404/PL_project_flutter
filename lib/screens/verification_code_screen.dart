@@ -28,6 +28,23 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     final _code5 = TextEditingController();
     final _code6 = TextEditingController();
     var provider = Provider.of<VerifyProvider>(context);
+
+    final focusNode1 = FocusNode();
+    final focusNode2 = FocusNode();
+    final focusNode3 = FocusNode();
+    final focusNode4 = FocusNode();
+    final focusNode5 = FocusNode();
+    final focusNode6 = FocusNode();
+
+    final List<FocusNode> node = [
+      focusNode1,
+      focusNode2,
+      focusNode3,
+      focusNode4,
+      focusNode5,
+      focusNode6,
+    ];
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
@@ -111,31 +128,50 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                       screenWidth: screenWidth,
                       screenName: "VerificationCodeScreen",
                       controller: _code1,
+                      function: (_) {
+                        node[1].requestFocus();
+                      },
                     ),
                     InputForm(
                       screenWidth: screenWidth,
                       screenName: "VerificationCodeScreen",
                       controller: _code2,
+                      focusNode: node[1],
+                      function: (_) {
+                        node[2].requestFocus();
+                      },
                     ),
                     InputForm(
-                      screenWidth: screenWidth,
-                      screenName: "VerificationCodeScreen",
-                      controller: _code3,
-                    ),
+                        screenWidth: screenWidth,
+                        screenName: "VerificationCodeScreen",
+                        controller: _code3,
+                        focusNode: node[2],
+                        function: (_) {
+                          node[3].requestFocus();
+                        }),
                     InputForm(
                       screenWidth: screenWidth,
                       screenName: "VerificationCodeScreen",
                       controller: _code4,
+                      focusNode: node[3],
+                      function: (_) {
+                        node[4].requestFocus();
+                      },
                     ),
                     InputForm(
                       screenWidth: screenWidth,
                       screenName: "VerificationCodeScreen",
                       controller: _code5,
+                      focusNode: node[4],
+                      function: (_) {
+                        node[5].requestFocus();
+                      },
                     ),
                     InputForm(
                       screenWidth: screenWidth,
                       screenName: "VerificationCodeScreen",
                       controller: _code6,
+                      focusNode: node[5],
                     ),
                   ],
                 ),

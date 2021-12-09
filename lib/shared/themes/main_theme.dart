@@ -19,6 +19,6 @@ Color darkBlue = const Color(0xff3C3D51);
 Color red = const Color(0xffDC1A45);
 Color lightDarkBlue = const Color(0xff4f506f);
 Color mainGrey = const Color(0xffd3d3d3);
-Color darkBlue2 = const Color(0xfff63657d);
+Color darkBlue2 = const Color(0xff63657d);
 
 //0xffDC1A45

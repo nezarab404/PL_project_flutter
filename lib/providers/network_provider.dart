@@ -1,3 +1,5 @@
+//ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/login_model.dart';
 import 'package:programming_languages_project/shared/constants.dart';
@@ -6,8 +8,8 @@ import 'package:programming_languages_project/shared/network/dio_helper.dart';
 enum Status {
   notLoggedIn,
   notRegistered,
-  loggenIn,
-  regesterd,
+  loggedIn,
+  registered,
   authenticating,
   registering,
   loggedOut
@@ -16,40 +18,41 @@ enum Status {
 class NetworkProvider with ChangeNotifier {
   Status loggedInStatus = Status.notLoggedIn;
 
-
+  String msg = "";
   LoginModel? loginModel;
 
 
   Future<void> userLogin(
-      {required String email,
-        required String password}) async {
+      {required String email, required String password}) async {
     loggedInStatus = Status.authenticating;
     notifyListeners();
     print("getting data");
     await DioHelper.postData(
-      url: 'auth/login',
+      url: "auth/login",
       data: {"email": email, "password": password},
     ).then((value) {
-      print(value);
-      print(loggedInStatus);
-      loginModel = LoginModel.fromJson(value.data);
-      print(value.data['status']);
-      if (value.data['status']) {
-        loggedInStatus = Status.loggenIn;
-        if (loginModel!.user != null) {
-          print("token : ${loginModel!.user!.token}");
-          token = loginModel!.user!.token;  //token var is exist in shared/constants.dart
+      if (value.statusCode == 200) {
+
+        loginModel = LoginModel.fromJson(value.data);
+
+        if (value.data['status']) {
+          loggedInStatus = Status.loggedIn;
+          if (loginModel!.user != null) {
+            print("token : ${loginModel!.user!.token}");
+            token = loginModel!.user!.token!;
+          } else {}
+        } else {
+          loggedInStatus = Status.notLoggedIn;
         }
       } else {
-        loggedInStatus = Status.notLoggedIn;
-      }
+        print(msg = value.data['msg']);
 
+      }
       notifyListeners();
     }).catchError((error) {
-      print('the error is $error');
+      print(error);
     });
+
     notifyListeners();
   }
-
-
 }

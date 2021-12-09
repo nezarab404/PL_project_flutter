@@ -7,13 +7,13 @@ class InputForm extends StatefulWidget {
   final String? hintText;
   final String? screenName;
   final IconData? pIcon;
+  final TextEditingController? controller;
   bool isPassword;
 
-
-
-   InputForm({
+  InputForm({
     required this.screenWidth,
     required this.screenName,
+    this.controller, //TODO: REQUIRED
     this.hintText,
     this.pIcon,
     this.isPassword = false,
@@ -24,7 +24,6 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
-
   static const veriScreen = "VerificationCodeScreen",
       regiScreen = "RegisterScreen",
       logiScreen = "LoginScreen",
@@ -39,7 +38,7 @@ class _InputFormState extends State<InputForm> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.screenName !=veriScreen
+    return widget.screenName != veriScreen
         ? Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -51,10 +50,11 @@ class _InputFormState extends State<InputForm> {
             child: Stack(
               alignment: Alignment.centerRight,
               children: [
-                TextField(
+                TextFormField(
+                  controller: widget.controller,
                   obscureText: widget.isPassword,
-
-                  keyboardType: widget.hintText == email || widget.hintText == emailOrUsername
+                  keyboardType: widget.hintText == email ||
+                          widget.hintText == emailOrUsername
                       ? TextInputType.emailAddress
                       : TextInputType.text,
                   decoration: InputDecoration(
@@ -90,8 +90,9 @@ class _InputFormState extends State<InputForm> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextFormField(
+                controller: widget.controller,
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 5,

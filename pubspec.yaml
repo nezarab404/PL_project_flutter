@@ -43,6 +43,7 @@ dependencies:
   flutter_svg: ^1.0.0
   image_picker: ^0.8.4+4
   shared_preferences: 
+  pin_code_fields: ^7.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

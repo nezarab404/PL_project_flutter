@@ -30,7 +30,6 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
-  static const veriScreen = "VerificationCodeScreen";
   static const password = "Password",
       email = "Email",
       emailOrUsername = "Email or username",
@@ -42,85 +41,59 @@ class _InputFormState extends State<InputForm> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.screenName != veriScreen
-        ? Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 6,
-            margin: EdgeInsets.symmetric(
-              horizontal: widget.screenWidth / 10,
-            ),
-            child: Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                TextFormField(
-                  controller: widget.controller,
-                  textInputAction: TextInputAction.next,
-                  obscureText: widget.hintText == password ||
-                      widget.hintText == confPassword ||
-                      widget.hintText == newPassword ||
-                      widget.hintText == confNewPassword,
-                  keyboardType: widget.hintText == email ||
-                          widget.hintText == emailOrUsername
-                      ? TextInputType.emailAddress
-                      : TextInputType.text,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(widget.pIcon),
-                    contentPadding: const EdgeInsets.all(10),
-                    labelText: widget.hintText,
-                    labelStyle: const TextStyle(
-                      color: Colors.black26,
-                    ),
-                  ),
-                ),
-                if (widget.hintText == password ||
-                    widget.hintText == confPassword ||
-                    widget.hintText == newPassword ||
-                    widget.hintText == confNewPassword)
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        widget.isPassword = !widget.isPassword;
-                        icon == Icons.visibility_off
-                            ? icon = Icons.visibility
-                            : icon = Icons.visibility_off;
-                      });
-                    },
-                    icon: Icon(icon,
-                        color:
-                            icon == Icons.visibility ? mainRed : Colors.grey),
-                    color: Colors.black26,
-                  ),
-              ],
-            ),
-          )
-        : SizedBox(
-            height: widget.screenWidth / 7,
-            width: widget.screenWidth / 7,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: TextFormField(
-                controller: widget.controller,
-                focusNode: widget.focusNode,
-                onChanged: widget.function,
-                maxLength: 1,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  counterText: '',
-                  border: InputBorder.none,
-                ),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: mainRed,
-                  fontSize: 28,
-                ),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      elevation: 6,
+      margin: EdgeInsets.symmetric(
+        horizontal: widget.screenWidth / 10,
+      ),
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: [
+          TextFormField(
+            controller: widget.controller,
+            textInputAction: TextInputAction.next,
+            obscureText: widget.hintText == password ||
+                widget.hintText == confPassword ||
+                widget.hintText == newPassword ||
+                widget.hintText == confNewPassword,
+            keyboardType:
+                widget.hintText == email || widget.hintText == emailOrUsername
+                    ? TextInputType.emailAddress
+                    : TextInputType.text,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              prefixIcon: Icon(widget.pIcon),
+              contentPadding: const EdgeInsets.all(10),
+              labelText: widget.hintText,
+              labelStyle: const TextStyle(
+                color: Colors.black26,
               ),
             ),
-          );
+          ),
+          if (widget.hintText == password ||
+              widget.hintText == confPassword ||
+              widget.hintText == newPassword ||
+              widget.hintText == confNewPassword)
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  widget.isPassword = !widget.isPassword;
+                  icon == Icons.visibility_off
+                      ? icon = Icons.visibility
+                      : icon = Icons.visibility_off;
+                });
+              },
+              icon: Icon(
+                icon,
+                color: icon == Icons.visibility ? mainRed : Colors.grey,
+              ),
+              color: Colors.black26,
+            ),
+        ],
+      ),
+    );
   }
 }

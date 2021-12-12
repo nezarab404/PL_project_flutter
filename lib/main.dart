@@ -21,7 +21,7 @@ void main() async {
   await SharedHelper.init();
   Widget widget;
 
-  token = SharedHelper.getData(key: TOKEN);
+ token = SharedHelper.getData(key: TOKEN);
 
   if (token != null) {
     widget = const HomeScreen();
@@ -32,8 +32,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key, required this.mainWidget}) : super(key: key);
-  Widget mainWidget;
+  const MyApp({Key? key, required this.mainWidget}) : super(key: key);
+  final Widget mainWidget;
 
   @override
   Widget build(BuildContext context) {

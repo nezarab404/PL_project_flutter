@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DioHelper {
   static late Dio dio;
@@ -8,7 +9,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-          baseUrl: "http://192.168.137.19:8000/api/", //TODO
+          baseUrl: "http://192.168.137.250:8000/api/", //TODO
           receiveDataWhenStatusError: true,
           headers: {"Content-Type": "application/json"}),
     );
@@ -27,13 +28,13 @@ class DioHelper {
     };
     Response response;
     try {
-      response= await dio.post(
+      response = await dio.post(
         url,
         data: data,
         queryParameters: query,
       );
     } on DioError catch (e) {
-      return  e.response!;
+      return e.response!;
     }
     return response;
   }
@@ -68,8 +69,42 @@ class DioHelper {
     return dio.put(url, queryParameters: query, data: data);
   }
 
-  static Future uploadData(File file) async {
-    
-    
+  static Future<Response> uploadFile(
+      {required String url,
+      Map<String, dynamic>? query,
+      required XFile file,
+      String? token}) async {
+    FormData data = FormData.fromMap({
+      "file": await MultipartFile.fromFile(file.path,
+          filename: file.path.split('/').last)
+    });
+
+    return dio.post(url, data: data);
+  }
+
+  Future<Response> uploadMultiFiles(
+      {required String url,
+      Map<String, dynamic>? query,
+      required List<XFile> files,
+      String? token}) async {
+    FormData data = FormData();
+    for (int i = 0; i < files.length; i++) {
+      data.files.addAll(
+        [
+          MapEntry(
+            'image${i+1}',
+            await MultipartFile.fromFile(
+              files[i].path,
+              filename: files[i].path.split('/').last
+            ),
+          ),
+        ],
+      );
+    }
+     dio.options.headers = {
+      "Content-Type": "application/json",
+      "auth-token": "$token"
+    };
+    return dio.post(url,data: data);
   }
 }

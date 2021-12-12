@@ -9,6 +9,7 @@ import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/storage/shared_helper.dart';
+import 'package:programming_languages_project/shared/validator.dart';
 import 'package:provider/provider.dart';
 
 import '../shared/commponents/input_form.dart';
@@ -90,6 +91,7 @@ class RegisterScreen extends StatelessWidget {
                 hintText: "Username",
                 pIcon: Icons.person,
                 controller: _name,
+                validator: (val)=>Validator.nameValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -99,6 +101,7 @@ class RegisterScreen extends StatelessWidget {
                 hintText: "Email",
                 pIcon: Icons.email,
                 controller: _email,
+                validator: (val)=>Validator.emailValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -109,6 +112,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.password,
                 controller: _password,
                 isPassword: true,
+                validator: (val)=>Validator.passwordValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -119,6 +123,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.check_circle,
                 controller: _confirmPassword,
                 isPassword: true,
+                validator: (val)=>Validator.passwordValidator(val),
               ),
 
               SizedBox(

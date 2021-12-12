@@ -9,15 +9,17 @@ class InputForm extends StatefulWidget {
   final String? hintText;
   final IconData? pIcon;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
   final Function(String)? function;
   bool isPassword;
   bool isDescription;
 
   InputForm({
     required this.screenWidth,
-    this.controller, //TODO: REQUIRED
+    this.controller, 
     this.hintText,
     this.pIcon,
+    this.validator,
     this.function,
     this.isPassword = false,
     this.isDescription = false
@@ -52,6 +54,7 @@ class _InputFormState extends State<InputForm> {
         children: [
           TextFormField(
             controller: widget.controller,
+            validator: widget.validator,
             textInputAction: TextInputAction.next,
             obscureText: widget.hintText == password ||
                 widget.hintText == confPassword ||

@@ -8,6 +8,7 @@ import 'package:programming_languages_project/screens/register_screen.dart';
 import 'package:programming_languages_project/shared/keys.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/storage/shared_helper.dart';
+import 'package:programming_languages_project/shared/validator.dart';
 import 'package:provider/provider.dart';
 
 import '../shared/commponents/input_form.dart';
@@ -81,12 +82,13 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight / 15,
               ),
-              //Login Form
+            
               InputForm(
                 controller: _email,
                 screenWidth: screenWidth,
                 hintText: "Email or Username",
                 pIcon: Icons.email,
+                validator: (val)=>Validator.emailValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -96,6 +98,7 @@ class LoginScreen extends StatelessWidget {
                 screenWidth: screenWidth,
                 hintText: "Password",
                 pIcon: Icons.password,
+                validator: (val)=>Validator.passwordValidator(val),
                 isPassword: true,
               ),
               //Help Text

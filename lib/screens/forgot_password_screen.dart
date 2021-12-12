@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:programming_languages_project/shared/validator.dart';
 
 import '../shared/commponents/input_form.dart';
 import '../shared/themes/main_theme.dart';
@@ -90,6 +91,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               screenWidth: screenWidth,
               hintText: "New password",
               pIcon: Icons.password,
+              validator: (val)=>Validator.passwordValidator(val),
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -98,6 +100,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               screenWidth: screenWidth,
               hintText: "Confirm new password",
               pIcon: Icons.check_circle,
+              validator: (val)=>Validator.passwordValidator(val),
             ),
             SizedBox(
               height: screenHeight / 10,

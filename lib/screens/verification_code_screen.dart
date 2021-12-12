@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +22,28 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+
+    TextEditingController textEditingController = TextEditingController();
+    // ..text = "123456";
+
+    // ignore: close_sinks
+    StreamController<ErrorAnimationType>? errorController;
+
+    bool hasError = false;
+    String currentText = "";
+
+    @override
+    void initState() {
+      errorController = StreamController<ErrorAnimationType>();
+      super.initState();
+    }
+
+    @override
+    void dispose() {
+      errorController!.close();
+
+      super.dispose();
+    }
 
     final _formKey = GlobalKey<FormState>();
     final _code1 = TextEditingController();
@@ -120,62 +145,107 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 height: screenHeight / 15,
               ),
               //Verify Form
-              Form(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InputForm(
-                      screenWidth: screenWidth,
-                      screenName: "VerificationCodeScreen",
-                      controller: _code1,
-                      function: (_) {
-                        node[1].requestFocus();
-                      },
-                    ),
-                    InputForm(
-                      screenWidth: screenWidth,
-                      screenName: "VerificationCodeScreen",
-                      controller: _code2,
-                      focusNode: node[1],
-                      function: (_) {
-                        node[2].requestFocus();
-                      },
-                    ),
-                    InputForm(
-                        screenWidth: screenWidth,
-                        screenName: "VerificationCodeScreen",
-                        controller: _code3,
-                        focusNode: node[2],
-                        function: (_) {
-                          node[3].requestFocus();
-                        }),
-                    InputForm(
-                      screenWidth: screenWidth,
-                      screenName: "VerificationCodeScreen",
-                      controller: _code4,
-                      focusNode: node[3],
-                      function: (_) {
-                        node[4].requestFocus();
-                      },
-                    ),
-                    InputForm(
-                      screenWidth: screenWidth,
-                      screenName: "VerificationCodeScreen",
-                      controller: _code5,
-                      focusNode: node[4],
-                      function: (_) {
-                        node[5].requestFocus();
-                      },
-                    ),
-                    InputForm(
-                      screenWidth: screenWidth,
-                      screenName: "VerificationCodeScreen",
-                      controller: _code6,
-                      focusNode: node[5],
-                    ),
-                  ],
+              PinCodeTextField(
+                appContext: context,
+                cursorColor: mainRed,
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28,
+                  color: mainRed,
                 ),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                length: 6,
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(15),
+                  fieldHeight: 50,
+                  fieldWidth: 50,
+                  inactiveColor: Colors.white,
+                  inactiveFillColor: Colors.white,
+                  activeColor: Colors.white,
+                  activeFillColor: Colors.white,
+                  selectedColor: Colors.white,
+                  selectedFillColor: Colors.white,
+                ),
+                enableActiveFill: true,
+                errorAnimationController: errorController,
+                controller: textEditingController,
+                onCompleted: (v) {
+                  print("Completed");
+                },
+                // onTap: () {
+                //   print("Pressed");
+                // },
+                onChanged: (value) {
+                  print(value);
+                  setState(() {
+                    currentText = value;
+                  });
+                },
+                beforeTextPaste: (text) {
+                  print("Allowing to paste $text");
+                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                  return true;
+                },
               ),
+
+              // Form(
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       InputForm(
+              //         screenWidth: screenWidth,
+              //         screenName: "VerificationCodeScreen",
+              //         controller: _code1,
+              //         function: (_) {
+              //           node[1].requestFocus();
+              //         },
+              //       ),
+              //       InputForm(
+              //         screenWidth: screenWidth,
+              //         screenName: "VerificationCodeScreen",
+              //         controller: _code2,
+              //         focusNode: node[1],
+              //         function: (_) {
+              //           node[2].requestFocus();
+              //         },
+              //       ),
+              //       InputForm(
+              //           screenWidth: screenWidth,
+              //           screenName: "VerificationCodeScreen",
+              //           controller: _code3,
+              //           focusNode: node[2],
+              //           function: (_) {
+              //             node[3].requestFocus();
+              //           }),
+              //       InputForm(
+              //         screenWidth: screenWidth,
+              //         screenName: "VerificationCodeScreen",
+              //         controller: _code4,
+              //         focusNode: node[3],
+              //         function: (_) {
+              //           node[4].requestFocus();
+              //         },
+              //       ),
+              //       InputForm(
+              //         screenWidth: screenWidth,
+              //         screenName: "VerificationCodeScreen",
+              //         controller: _code5,
+              //         focusNode: node[4],
+              //         function: (_) {
+              //           node[5].requestFocus();
+              //         },
+              //       ),
+              //       InputForm(
+              //         screenWidth: screenWidth,
+              //         screenName: "VerificationCodeScreen",
+              //         controller: _code6,
+              //         focusNode: node[5],
+              //       ),
+              //     ],
+              //   ),
+              // ),
               TextButton(
                 onPressed: () {},
                 child: Text(

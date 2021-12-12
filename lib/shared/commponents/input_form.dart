@@ -11,6 +11,7 @@ class InputForm extends StatefulWidget {
   final TextEditingController? controller;
   final Function(String)? function;
   bool isPassword;
+  bool isDescription;
 
   InputForm({
     required this.screenWidth,
@@ -19,6 +20,7 @@ class InputForm extends StatefulWidget {
     this.pIcon,
     this.function,
     this.isPassword = false,
+    this.isDescription = false
   });
 
   @override
@@ -59,7 +61,7 @@ class _InputFormState extends State<InputForm> {
                 widget.hintText == email || widget.hintText == emailOrUsername
                     ? TextInputType.emailAddress
                     : TextInputType.text,
-            maxLines: null,
+            maxLines:widget.isDescription ?  null: 1,
             decoration: InputDecoration(
               border: InputBorder.none,
               prefixIcon: Icon(widget.pIcon),

@@ -102,6 +102,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                           child: DropdownButton<String>(
                             value: value,
                             isExpanded: true,
+
                             hint: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
@@ -164,6 +165,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
               screenWidth: screenWidth,
               hintText: 'Description',
               pIcon: Icons.description,
+              isDescription: true,
             ),
           ],
         ),

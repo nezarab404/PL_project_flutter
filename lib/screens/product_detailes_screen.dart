@@ -1,13 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ProductDetailesScreen extends StatelessWidget {
-  const ProductDetailesScreen({Key? key}) : super(key: key);
+  ProductDetailesScreen({Key? key, required this.model}) : super(key: key);
+  ProductModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +22,18 @@ class ProductDetailesScreen extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          "Strawberry",
+          "${model.name}",
           style: Theme.of(context)
               .textTheme
               .headline5!
               .copyWith(color: Colors.white),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: CircleAvatar(),
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(model.user!.image!),
+            ),
           )
         ],
       ),
@@ -60,7 +64,7 @@ class ProductDetailesScreen extends StatelessWidget {
                           const SizedBox(
                             width: 8,
                           ),
-                          const Icon(Icons.shopping_cart, size: 28),
+                          const Icon(Icons.add_shopping_cart, size: 28),
                         ],
                       ),
                       Container(
@@ -71,7 +75,7 @@ class ProductDetailesScreen extends StatelessWidget {
                             color: mainGrey,
                             borderRadius: BorderRadius.circular(90)),
                         child: Text(
-                          "500\$",
+                          "${model.price!.roundToDouble()}\$",
                           style:
                               Theme.of(context).textTheme.bodyText2!.copyWith(
                                     color: mainRed,
@@ -105,7 +109,7 @@ class ProductDetailesScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              height: size.height/2.5,
+              height: size.height / 2.5,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(30),
@@ -119,12 +123,15 @@ class ProductDetailesScreen extends StatelessWidget {
                   CarouselSlider(
                     carouselController: controller,
                     items: List.generate(
-                        5,
+                        model.images.length,
                         (index) => Container(
                               width: double.infinity,
                               margin: const EdgeInsets.symmetric(vertical: 5),
-                              child: Image.asset(
-                                  "assets/images/i${index + 1}.png"),
+                              child: FadeInImage.assetNetwork(
+                                placeholder: "assets/images/loading.gif",
+                                image: model.images[index],
+                                fit: BoxFit.fill,
+                              ),
                             )),
                     options: CarouselOptions(
                         autoPlay: true,
@@ -141,7 +148,7 @@ class ProductDetailesScreen extends StatelessWidget {
                   ),
                   AnimatedSmoothIndicator(
                       activeIndex: provider.carouselIndex,
-                      count: 5,
+                      count: model.images.length,
                       effect: CustomizableEffect(
                         dotDecoration: DotDecoration(
                           color: Colors.white,
@@ -176,29 +183,29 @@ class ProductDetailesScreen extends StatelessWidget {
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Text("📂", style: TextStyle(fontSize: 30)),
+                          children: [
+                            const Text("📂", style: TextStyle(fontSize: 30)),
                             Text(
-                              "koko",
+                              "${model.category}",
                             )
                           ],
                         ),
                         Column(
-                          children: const [
-                            Text("⏳", style: TextStyle(fontSize: 30)),
-                            Text("55")
+                          children: [
+                            const Text("⏳", style: TextStyle(fontSize: 30)),
+                            Text("${model.remainingDays} days")
                           ],
                         ),
                         Column(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "#",
                               style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.white,
                               ),
                             ),
-                            Text("10")
+                            Text("${model.quantity}")
                           ],
                         ),
                       ],
@@ -208,10 +215,10 @@ class ProductDetailesScreen extends StatelessWidget {
                     height: 15,
                   ),
                   SizedBox(
-                    height: size.height/2.5-95,
+                    height: size.height / 2.5 - 95,
                     child: SingleChildScrollView(
                       child: Text(
-                        "description descriptioncription description description description description description description description description description description descripdescription descriptioncription description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description desc",
+                        "${model.description}",
                         style: Theme.of(context)
                             .textTheme
                             .caption!
@@ -223,7 +230,7 @@ class ProductDetailesScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox( height:30)
+            const SizedBox(height: 30)
           ],
         ),
       ),

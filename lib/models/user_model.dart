@@ -5,6 +5,7 @@ class UserModel{
   String? bio;
   String? email;
   String? token;
+  var accountConfirmation;
 
   UserModel.fromJson(Map<String,dynamic> json){
     id = json['id'];
@@ -13,5 +14,6 @@ class UserModel{
     bio = json['bio'];
     email = json['email'];
     token = json['token'];
+    accountConfirmation = json['account_confirmation'];
   }
 }

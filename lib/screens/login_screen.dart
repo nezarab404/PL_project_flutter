@@ -84,7 +84,6 @@ class LoginScreen extends StatelessWidget {
               InputForm(
                 controller: _email,
                 screenWidth: screenWidth,
-                screenName: "LoginScreen",
                 hintText: "Email or Username",
                 pIcon: Icons.email,
               ),
@@ -94,7 +93,6 @@ class LoginScreen extends StatelessWidget {
               InputForm(
                 controller: _password,
                 screenWidth: screenWidth,
-                screenName: "LoginScreen",
                 hintText: "Password",
                 pIcon: Icons.password,
                 isPassword: true,

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="186" height="167" viewBox="0 0 186 167">
+  <g id="Group_4" data-name="Group 4" transform="translate(-1472 -124)">
+    <g id="Rectangle_9" data-name="Rectangle 9" transform="translate(1472 124)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="3">
+      <rect width="186" height="167" rx="22" stroke="none"/>
+      <rect x="1.5" y="1.5" width="183" height="164" rx="20.5" fill="none"/>
+    </g>
+    <g id="Rectangle_10" data-name="Rectangle 10" transform="translate(1472 124)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="3">
+      <path d="M22,0H134a0,0,0,0,1,0,0V120a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V22A22,22,0,0,1,22,0Z" stroke="none"/>
+      <path d="M22,1.5H131A1.5,1.5,0,0,1,132.5,3V117a1.5,1.5,0,0,1-1.5,1.5H3A1.5,1.5,0,0,1,1.5,117V22A20.5,20.5,0,0,1,22,1.5Z" fill="none"/>
+    </g>
+    <circle id="Ellipse_2" data-name="Ellipse 2" cx="18" cy="18" r="18" transform="translate(1611 135)" fill="#707070"/>
+    <rect id="Rectangle_11" data-name="Rectangle 11" width="55" height="27" transform="translate(1603 217)" fill="#707070"/>
+    <g id="Rectangle_12" data-name="Rectangle 12" transform="translate(1485 250)" fill="#707070" stroke="#707070" stroke-width="1">
+      <rect width="72" height="9" stroke="none"/>
+      <rect x="0.5" y="0.5" width="71" height="8" fill="none"/>
+    </g>
+    <g id="Rectangle_13" data-name="Rectangle 13" transform="translate(1485 263)" fill="#707070" stroke="#707070" stroke-width="1">
+      <rect width="41" height="9" stroke="none"/>
+      <rect x="0.5" y="0.5" width="40" height="8" fill="none"/>
+    </g>
+    <g id="Rectangle_14" data-name="Rectangle 14" transform="translate(1616 259)" fill="#707070" stroke="#707070" stroke-width="1">
+      <rect width="27" height="9" stroke="none"/>
+      <rect x="0.5" y="0.5" width="26" height="8" fill="none"/>
+    </g>
+  </g>
+</svg>

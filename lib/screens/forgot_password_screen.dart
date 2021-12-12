@@ -88,7 +88,6 @@ class ForgotPasswordScreen extends StatelessWidget {
             //Reset Form
             InputForm(
               screenWidth: screenWidth,
-              screenName: "ForgotPasswordScreen",
               hintText: "New password",
               pIcon: Icons.password,
             ),
@@ -97,7 +96,6 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
             InputForm(
               screenWidth: screenWidth,
-              screenName: "ForgotPasswordScreen",
               hintText: "Confirm new password",
               pIcon: Icons.check_circle,
             ),

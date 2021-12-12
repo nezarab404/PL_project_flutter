@@ -7,20 +7,16 @@ import 'package:programming_languages_project/shared/themes/main_theme.dart';
 class InputForm extends StatefulWidget {
   final double screenWidth;
   final String? hintText;
-  final String? screenName;
   final IconData? pIcon;
   final TextEditingController? controller;
-  final FocusNode? focusNode;
   final Function(String)? function;
   bool isPassword;
 
   InputForm({
     required this.screenWidth,
-    required this.screenName,
     this.controller, //TODO: REQUIRED
     this.hintText,
     this.pIcon,
-    this.focusNode,
     this.function,
     this.isPassword = false,
   });
@@ -63,14 +59,12 @@ class _InputFormState extends State<InputForm> {
                 widget.hintText == email || widget.hintText == emailOrUsername
                     ? TextInputType.emailAddress
                     : TextInputType.text,
+            maxLines: null,
             decoration: InputDecoration(
               border: InputBorder.none,
               prefixIcon: Icon(widget.pIcon),
               contentPadding: const EdgeInsets.all(10),
               labelText: widget.hintText,
-              labelStyle: const TextStyle(
-                color: Colors.black26,
-              ),
             ),
           ),
           if (widget.hintText == password ||

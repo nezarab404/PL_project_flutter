@@ -86,7 +86,6 @@ class RegisterScreen extends StatelessWidget {
               //Register Form
               InputForm(
                 screenWidth: screenWidth,
-                screenName: "RegisterScreen",
                 hintText: "Username",
                 pIcon: Icons.person,
                 controller: _name,
@@ -96,7 +95,6 @@ class RegisterScreen extends StatelessWidget {
               ),
               InputForm(
                 screenWidth: screenWidth,
-                screenName: "RegisterScreen",
                 hintText: "Email",
                 pIcon: Icons.email,
                 controller: _email,
@@ -106,7 +104,6 @@ class RegisterScreen extends StatelessWidget {
               ),
               InputForm(
                 screenWidth: screenWidth,
-                screenName: "RegisterScreen",
                 hintText: "Password",
                 pIcon: Icons.password,
                 controller: _password,
@@ -117,7 +114,6 @@ class RegisterScreen extends StatelessWidget {
               ),
               InputForm(
                 screenWidth: screenWidth,
-                screenName: "RegisterScreen",
                 hintText: "Confirm password",
                 pIcon: Icons.check_circle,
                 controller: _confirmPassword,
@@ -131,9 +127,9 @@ class RegisterScreen extends StatelessWidget {
                 height: screenHeight / 10,
                 width: screenHeight / 10,
                 child: FloatingActionButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                     await Provider.of<NetworkProvider>(context, listen: false)
+                      await Provider.of<NetworkProvider>(context, listen: false)
                           .userRegister(
                               name: _name.text,
                               email: _email.text,
@@ -148,15 +144,15 @@ class RegisterScreen extends StatelessWidget {
                                   key: TOKEN,
                                   value: provider.registerModel!.user!.token)
                               .then((value) {
-                                token = provider.registerModel!.user!.token;
+                            token = provider.registerModel!.user!.token;
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => VerificationCodeScreen()));
                           });
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(provider.Rmsg.toString())));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(provider.Rmsg.toString())));
                         }
                       });
                     }

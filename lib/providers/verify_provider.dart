@@ -8,18 +8,21 @@ enum Status { notVerified, verified, verifying }
 class VerifyProvider with ChangeNotifier {
   String msg = "";
 
-  Future<void> registerVerify({required String code}) async {
+  Future<bool> registerVerify({required String code}) async {
+    bool verify=false;
     print("code : $code");
-    DioHelper.postData(url: VERIFY_REGISTER, token: token, data: {"code": code})
+   await DioHelper.postData(url: VERIFY_REGISTER, token: token, data: {"code": code})
         .then((value) {
       if (value.statusCode == 200) {
         print(value.data);
+        verify=true;
       } else {
         print(value.data);
         msg = value.data['msg'];
       }
     });
     notifyListeners();
+    return verify;
   }
 
   Future<void> resendCode() {

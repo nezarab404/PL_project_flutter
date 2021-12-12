@@ -188,10 +188,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 },
               ),
 
-
               TextButton(
                 onPressed: () {
-                  Provider.of<VerifyProvider>(context, listen: false).resendCode();
+                  Provider.of<VerifyProvider>(context, listen: false)
+                      .resendCode();
                 },
                 child: Text(
                   "Resend code",
@@ -209,9 +209,16 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 child: FloatingActionButton(
                   onPressed: () {
                     Provider.of<VerifyProvider>(context, listen: false)
-                        .registerVerify(code:_code.text )
+                        .registerVerify(code: _code.text)
                         .then((value) {
-                     Navigator.push(context,MaterialPageRoute(builder: (_)=>const HomeScreen()));
+                      if (value) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const HomeScreen()));
+                      } else {
+                        print("error");
+                      }
                     });
                   },
                   backgroundColor: mainRed,

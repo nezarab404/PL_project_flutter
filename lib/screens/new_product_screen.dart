@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
@@ -30,11 +29,12 @@ class _NewProductScreenState extends State<NewProductScreen> {
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      //screen appbar
       appBar: AppBar(
         backgroundColor: darkBlue2,
         centerTitle: true,
         title: const Text(
-          "Add Your Product",
+          'Add Your Product',
         ),
         leading: IconButton(
           onPressed: () {},
@@ -47,22 +47,27 @@ class _NewProductScreenState extends State<NewProductScreen> {
           ),
         ],
       ),
+
+      //body
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              height: screenHeight / 40,
+              height: screenHeight / 30,
             ),
+            //decoration divider
             TextDivider('Product specifications'),
             SizedBox(
-              height: screenHeight / 40,
+              height: screenHeight / 100,
             ),
+            //row containing add image + 3 fields
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Stack(
                   children: [
+                    //add image
                     SvgPicture.asset(
                       'assets/images/image_placeholder.svg',
                       color: darkBlue2,
@@ -80,19 +85,21 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     ),
                   ],
                 ),
+                //price, quantity and category fields
                 SizedBox(
                   width: 180,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SmallInputField(
-                        'Initial price',
-                        Icons.attach_money_outlined,
+                        label: 'Initial price',
+                        icon: Icons.attach_money_outlined,
                       ),
                       SmallInputField(
-                        "Quantity",
-                        Icons.production_quantity_limits,
+                        label: 'Quantity',
+                        icon: Icons.production_quantity_limits,
                       ),
+                      //category
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -144,6 +151,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 40,
             ),
+            //add name
             InputForm(
               screenWidth: screenWidth,
               hintText: 'Product name',
@@ -152,6 +160,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 40,
             ),
+            //add date
             InputForm(
               screenWidth: screenWidth,
               hintText: 'Expiration date',
@@ -160,10 +169,124 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 40,
             ),
+            //add description
             InputForm(
               screenWidth: screenWidth,
               hintText: 'Description',
               pIcon: Icons.description,
+            ),
+            SizedBox(
+              height: screenHeight / 30,
+            ),
+            TextDivider('Discounts'),
+            SizedBox(
+              height: screenHeight / 100,
+            ),
+
+            //discounts form
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    const Text(
+                      'Remaining days',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: screenHeight / 100,
+                    ),
+                    SizedBox(
+                      width: screenWidth / 4,
+                      child: DiscountsInputField(),
+                    ),
+                    SizedBox(
+                      width: screenWidth / 4,
+                      child: DiscountsInputField(),
+                    ),
+                    SizedBox(
+                      width: screenWidth / 4,
+                      child: DiscountsInputField(),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text(
+                      '%',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: screenHeight / 100,
+                    ),
+                    SizedBox(
+                      width: screenWidth / 4,
+                      child: DiscountsInputField(cardColor: mainRed),
+                    ),
+                    SizedBox(
+                      width: screenWidth / 4,
+                      child: DiscountsInputField(cardColor: mainRed),
+                    ),
+                    SizedBox(
+                      width: screenWidth / 4,
+                      child: DiscountsInputField(cardColor: mainRed),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            //user details
+            SizedBox(
+              height: screenHeight / 30,
+            ),
+            TextDivider('Seller contact info'),
+            SizedBox(
+              height: screenHeight / 100,
+            ),
+
+            //phone num
+            InputForm(
+              screenWidth: screenWidth,
+              hintText: 'Phone number',
+              inputType: TextInputType.phone,
+              pIcon: Icons.phone,
+            ),
+            SizedBox(
+              height: screenHeight / 40,
+            ),
+            //facebook account
+            InputForm(
+              screenWidth: screenWidth,
+              hintText: 'Facebook account (Optional)',
+              inputType: TextInputType.url,
+              pIcon: Icons.facebook,
+            ),
+            SizedBox(
+              height: screenHeight / 30,
+            ),
+
+            //done button
+            SizedBox(
+              height: screenHeight / 10,
+              width: screenHeight / 10,
+              child: FloatingActionButton(
+                onPressed: () {},
+                backgroundColor: mainRed,
+                child: Icon(
+                  Icons.check,
+                  color: mainDarkBlue,
+                  size: 40,
+                ),
+                elevation: 6,
+              ),
+            ),
+            SizedBox(
+              height: screenHeight / 30,
             ),
           ],
         ),
@@ -192,7 +315,10 @@ class _NewProductScreenState extends State<NewProductScreen> {
   }
 }
 
-Widget SmallInputField(String label, IconData icon) {
+Widget SmallInputField({
+  String? label,
+  IconData? icon,
+}) {
   return Card(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
@@ -216,6 +342,32 @@ Widget SmallInputField(String label, IconData icon) {
         labelText: label,
         labelStyle: const TextStyle(
           fontSize: 12,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget DiscountsInputField({Color? cardColor}) {
+  return Card(
+    color: cardColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    elevation: 6,
+    child: TextFormField(
+      textAlign: TextAlign.center,
+      maxLength: 2,
+      textInputAction: TextInputAction.next,
+      keyboardType: const TextInputType.numberWithOptions(
+        decimal: true,
+        signed: false,
+      ),
+      decoration: const InputDecoration(
+        counterText: '',
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 5,
         ),
       ),
     ),

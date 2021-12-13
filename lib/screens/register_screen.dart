@@ -89,6 +89,7 @@ class RegisterScreen extends StatelessWidget {
                 hintText: "Username",
                 pIcon: Icons.person,
                 controller: _name,
+                inputType: TextInputType.name,
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -98,6 +99,7 @@ class RegisterScreen extends StatelessWidget {
                 hintText: "Email",
                 pIcon: Icons.email,
                 controller: _email,
+                inputType: TextInputType.emailAddress,
               ),
               SizedBox(
                 height: screenHeight / 40,

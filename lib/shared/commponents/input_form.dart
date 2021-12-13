@@ -9,7 +9,7 @@ class InputForm extends StatefulWidget {
   final String? hintText;
   final IconData? pIcon;
   final TextEditingController? controller;
-  final Function(String)? function;
+  final TextInputType? inputType;
   bool isPassword;
 
   InputForm({
@@ -17,7 +17,7 @@ class InputForm extends StatefulWidget {
     this.controller, //TODO: REQUIRED
     this.hintText,
     this.pIcon,
-    this.function,
+    this.inputType,
     this.isPassword = false,
   });
 
@@ -27,8 +27,6 @@ class InputForm extends StatefulWidget {
 
 class _InputFormState extends State<InputForm> {
   static const password = "Password",
-      email = "Email",
-      emailOrUsername = "Email or username",
       confPassword = "Confirm password",
       newPassword = "New password",
       confNewPassword = "Confirm new password";
@@ -55,10 +53,7 @@ class _InputFormState extends State<InputForm> {
                 widget.hintText == confPassword ||
                 widget.hintText == newPassword ||
                 widget.hintText == confNewPassword,
-            keyboardType:
-                widget.hintText == email || widget.hintText == emailOrUsername
-                    ? TextInputType.emailAddress
-                    : TextInputType.text,
+            keyboardType: widget.inputType,
             maxLines: null,
             decoration: InputDecoration(
               border: InputBorder.none,

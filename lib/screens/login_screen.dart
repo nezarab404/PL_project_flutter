@@ -6,7 +6,9 @@ import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/register_screen.dart';
 import 'package:programming_languages_project/shared/keys.dart';
+import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/storage/shared_helper.dart';
+import 'package:programming_languages_project/shared/validator.dart';
 import 'package:provider/provider.dart';
 
 import '../shared/commponents/input_form.dart';
@@ -80,12 +82,13 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight / 15,
               ),
-              //Login Form
+            
               InputForm(
                 controller: _email,
                 screenWidth: screenWidth,
                 hintText: "Email or Username",
                 pIcon: Icons.email,
+                validator: (val)=>Validator.emailValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -95,6 +98,7 @@ class LoginScreen extends StatelessWidget {
                 screenWidth: screenWidth,
                 hintText: "Password",
                 pIcon: Icons.password,
+                validator: (val)=>Validator.passwordValidator(val),
                 isPassword: true,
               ),
               //Help Text
@@ -133,15 +137,24 @@ class LoginScreen extends StatelessWidget {
                               email: _email.text, password: _password.text)
                           .then((value) {
 
-                        if (provider.loggedInStatus == Status.loggedIn) {
+                        if (provider.loggedInStatus == AuthStatus.loggedIn) {
+
                           SharedHelper.saveData(
                                   key: TOKEN,
                                   value: provider.loginModel!.user!.token)
                               .then((value) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => HomeScreen()));
+                            if(provider.loginModel!.user!.accountConfirmation == 0){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => VerificationCodeScreen()));
+                            }
+                            else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => HomeScreen()));
+                            }
                           }).catchError((error){});
                         }
                         else{

@@ -7,7 +7,9 @@ import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
+import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/storage/shared_helper.dart';
+import 'package:programming_languages_project/shared/validator.dart';
 import 'package:provider/provider.dart';
 
 import '../shared/commponents/input_form.dart';
@@ -90,6 +92,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.person,
                 controller: _name,
                 inputType: TextInputType.name,
+                validator: (val)=>Validator.nameValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -100,6 +103,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.email,
                 controller: _email,
                 inputType: TextInputType.emailAddress,
+                validator: (val)=>Validator.emailValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -110,6 +114,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.password,
                 controller: _password,
                 isPassword: true,
+                validator: (val)=>Validator.passwordValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -120,6 +125,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.check_circle,
                 controller: _confirmPassword,
                 isPassword: true,
+                validator: (val)=>Validator.passwordValidator(val),
               ),
 
               SizedBox(
@@ -139,7 +145,7 @@ class RegisterScreen extends StatelessWidget {
                               confirmPassword: _confirmPassword.text)
                           .then((value) {
                         print("koko :${provider.registerStatus}");
-                        if (provider.registerStatus == Status.registered) {
+                        if (provider.registerStatus == AuthStatus.registered) {
                           print("success");
 
                           SharedHelper.saveData(

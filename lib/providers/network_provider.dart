@@ -5,20 +5,14 @@ import 'package:programming_languages_project/models/login_model.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
+import 'package:programming_languages_project/shared/status.dart';
 
-enum Status {
-  notLoggedIn,
-  notRegistered,
-  loggedIn,
-  registered,
-  authenticating,
-  registering,
-  loggedOut
-}
+
+
 
 class NetworkProvider with ChangeNotifier {
-  Status loggedInStatus = Status.notLoggedIn;
-  Status registerStatus = Status.notRegistered;
+  AuthStatus loggedInStatus = AuthStatus.notLoggedIn;
+  AuthStatus registerStatus = AuthStatus.notRegistered;
 
   String msg = "";
   String Rmsg = "";
@@ -27,7 +21,7 @@ class NetworkProvider with ChangeNotifier {
 
   Future<void> userLogin(
       {required String email, required String password}) async {
-    loggedInStatus = Status.authenticating;
+    loggedInStatus = AuthStatus.authenticating;
     notifyListeners();
     print("getting data");
     await DioHelper.postData(
@@ -38,13 +32,13 @@ class NetworkProvider with ChangeNotifier {
         loginModel = LoginModel.fromJson(value.data);
 
         if (value.data['status']) {
-          loggedInStatus = Status.loggedIn;
+          loggedInStatus = AuthStatus.loggedIn;
           if (loginModel!.user != null) {
             print("token : ${loginModel!.user!.token}");
             token = loginModel!.user!.token!;
           } else {}
         } else {
-          loggedInStatus = Status.notLoggedIn;
+          loggedInStatus = AuthStatus.notLoggedIn;
         }
       }
       else {
@@ -63,7 +57,7 @@ class NetworkProvider with ChangeNotifier {
       required String email,
       required String password,
       required String confirmPassword}) async {
-    registerStatus = Status.registering;
+    registerStatus = AuthStatus.registering;
     notifyListeners();
    await DioHelper.postData(url: REGISTER, data: {
       "name" : name,
@@ -73,7 +67,7 @@ class NetworkProvider with ChangeNotifier {
     }).then((value){
       print(registerStatus);
       if (value.statusCode == 200){
-        registerStatus=Status.registered;
+        registerStatus=AuthStatus.registered;
         print(registerStatus);
         registerModel = LoginModel.fromJson(value.data);
         if (registerModel!.user != null) {
@@ -83,7 +77,7 @@ class NetworkProvider with ChangeNotifier {
         notifyListeners();
       }
       else{
-        registerStatus = Status.notRegistered;
+        registerStatus = AuthStatus.notRegistered;
         print(value.data['msg']);
         Rmsg = value.data['msg'].toString();
       }

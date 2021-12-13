@@ -11,9 +11,9 @@ class Validator {
   static String? passwordValidator(String? val) {
     return val!.isEmpty
         ? "this field is required"
-        : val.length > 5
+        : val.length > 7
             ? null
-            : "6 characters at least";
+            : "8 characters at least";
   }
 
   static String? nameValidator(String? val) {

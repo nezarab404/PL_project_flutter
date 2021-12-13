@@ -32,32 +32,38 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
 
-      body: SingleChildScrollView(
-        physics:const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40,
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (ctx, index) {
-                  return buildCategoryItem();
-                },
-                separatorBuilder: (ctx, index) {
-                  return const SizedBox(
-                    width: 15,
-                  );
-                },
-                itemCount: 10,
+      body: RefreshIndicator(
+        onRefresh: (){
+
+          return provider.getProducts();
+        },
+        child: SingleChildScrollView(
+          physics:const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 40,
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (ctx, index) {
+                    return buildCategoryItem();
+                  },
+                  separatorBuilder: (ctx, index) {
+                    return const SizedBox(
+                      width: 15,
+                    );
+                  },
+                  itemCount: 10,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            MyGridView(itemCount: 10,),
-         const   SizedBox(height: 75,)
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              MyGridView(itemCount: provider.products.length,items: provider.products,),
+           const   SizedBox(height: 75,)
+            ],
+          ),
         ),
       ),
       extendBody: true,
@@ -100,47 +106,47 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildBody2(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 40,
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (ctx, index) {
-                return buildCategoryItem();
-              },
-              separatorBuilder: (ctx, index) {
-                return const SizedBox(
-                  width: 15,
-                );
-              },
-              itemCount: 10,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: StaggeredGridView.countBuilder(
-              staggeredTileBuilder: (index) => const StaggeredTile.count(1, 1),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 2,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (_, index) {
-                return const ProductItem();
-              },
-              itemCount: 50,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget buildBody2(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(10.0),
+  //     child: Column(
+  //       children: [
+  //         SizedBox(
+  //           height: 40,
+  //           child: ListView.separated(
+  //             physics: const BouncingScrollPhysics(),
+  //             scrollDirection: Axis.horizontal,
+  //             itemBuilder: (ctx, index) {
+  //               return buildCategoryItem();
+  //             },
+  //             separatorBuilder: (ctx, index) {
+  //               return const SizedBox(
+  //                 width: 15,
+  //               );
+  //             },
+  //             itemCount: 10,
+  //           ),
+  //         ),
+  //         const SizedBox(
+  //           height: 20,
+  //         ),
+  //         Expanded(
+  //           child: StaggeredGridView.countBuilder(
+  //             staggeredTileBuilder: (index) => const StaggeredTile.count(1, 1),
+  //             crossAxisSpacing: 10,
+  //             mainAxisSpacing: 10,
+  //             crossAxisCount: 2,
+  //             physics: const BouncingScrollPhysics(),
+  //             itemBuilder: (_, index) {
+  //               return const ProductItem();
+  //             },
+  //             itemCount: 50,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget buildCategoryItem() {
     return Container(

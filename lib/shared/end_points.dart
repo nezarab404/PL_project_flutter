@@ -3,3 +3,6 @@
 const LOGIN = "auth/login";
 const REGISTER = "auth/register";
 const VERIFY_REGISTER = "auth/checkRegisterCode";
+const SEND_REGISTER_VERIFY_CODE="auth/sendRegisterCode";
+const ME ="auth/me";
+const PRODUCTS = "products";

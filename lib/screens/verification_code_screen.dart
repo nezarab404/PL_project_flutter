@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
+import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../shared/commponents/input_form.dart';
@@ -46,12 +47,8 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     }
 
     final _formKey = GlobalKey<FormState>();
-    final _code1 = TextEditingController();
-    final _code2 = TextEditingController();
-    final _code3 = TextEditingController();
-    final _code4 = TextEditingController();
-    final _code5 = TextEditingController();
-    final _code6 = TextEditingController();
+    final _code = TextEditingController();
+
     var provider = Provider.of<VerifyProvider>(context);
 
     final focusNode1 = FocusNode();
@@ -148,6 +145,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
               PinCodeTextField(
                 appContext: context,
                 cursorColor: mainRed,
+                controller: _code,
                 textStyle: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
@@ -169,9 +167,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 ),
                 enableActiveFill: true,
                 errorAnimationController: errorController,
-                controller: textEditingController,
                 onCompleted: (v) {
                   print("Completed");
+                  _code.text = v;
                 },
                 // onTap: () {
                 //   print("Pressed");
@@ -190,64 +188,11 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 },
               ),
 
-              // Form(
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       InputForm(
-              //         screenWidth: screenWidth,
-              //         screenName: "VerificationCodeScreen",
-              //         controller: _code1,
-              //         function: (_) {
-              //           node[1].requestFocus();
-              //         },
-              //       ),
-              //       InputForm(
-              //         screenWidth: screenWidth,
-              //         screenName: "VerificationCodeScreen",
-              //         controller: _code2,
-              //         focusNode: node[1],
-              //         function: (_) {
-              //           node[2].requestFocus();
-              //         },
-              //       ),
-              //       InputForm(
-              //           screenWidth: screenWidth,
-              //           screenName: "VerificationCodeScreen",
-              //           controller: _code3,
-              //           focusNode: node[2],
-              //           function: (_) {
-              //             node[3].requestFocus();
-              //           }),
-              //       InputForm(
-              //         screenWidth: screenWidth,
-              //         screenName: "VerificationCodeScreen",
-              //         controller: _code4,
-              //         focusNode: node[3],
-              //         function: (_) {
-              //           node[4].requestFocus();
-              //         },
-              //       ),
-              //       InputForm(
-              //         screenWidth: screenWidth,
-              //         screenName: "VerificationCodeScreen",
-              //         controller: _code5,
-              //         focusNode: node[4],
-              //         function: (_) {
-              //           node[5].requestFocus();
-              //         },
-              //       ),
-              //       InputForm(
-              //         screenWidth: screenWidth,
-              //         screenName: "VerificationCodeScreen",
-              //         controller: _code6,
-              //         focusNode: node[5],
-              //       ),
-              //     ],
-              //   ),
-              // ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<VerifyProvider>(context, listen: false)
+                      .resendCode();
+                },
                 child: Text(
                   "Resend code",
                   style: TextStyle(
@@ -263,16 +208,17 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 width: screenHeight / 10,
                 child: FloatingActionButton(
                   onPressed: () {
-                    String code = _code1.text +
-                        _code2.text +
-                        _code3.text +
-                        _code4.text +
-                        _code5.text +
-                        _code6.text;
                     Provider.of<VerifyProvider>(context, listen: false)
-                        .registerVerify(code: code)
+                        .registerVerify(code: _code.text)
                         .then((value) {
-                      print("kokokokokk");
+                      if (value) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const HomeScreen()));
+                      } else {
+                        print("error");
+                      }
                     });
                   },
                   backgroundColor: mainRed,

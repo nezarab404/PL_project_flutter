@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/screens/product_detailes_screen.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({ Key? key }) : super(key: key);
-
+   ProductItem({ Key? key ,required this.model}) : super(key: key);
+  ProductModel model;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (_) => const ProductDetailesScreen()));
+            MaterialPageRoute(builder: (_) => ProductDetailesScreen(model: model,)));
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
@@ -30,10 +31,10 @@ class ProductItem extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Container(
-                        decoration: const BoxDecoration(
+                        decoration:  BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage("assets/images/image.jpg"),
+                            image: NetworkImage(model.images[0]),
                           ),
                         ),
                       ),
@@ -43,7 +44,9 @@ class ProductItem extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 8),
                         child: Column(
                           children: [
-                            const CircleAvatar(),
+                             CircleAvatar(
+                              backgroundImage: NetworkImage(model.user!.image!),
+                            ),
                             const SizedBox(
                               height: 20,
                             ),
@@ -52,7 +55,7 @@ class ProductItem extends StatelessWidget {
                                 color: red.withOpacity(0.7),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "10",
+                                  "${model.remainingDays}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
@@ -78,16 +81,16 @@ class ProductItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Strawberry",
+                          "${model.name}",
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
-                          "category",
+                          "${model.category}",
                           style: Theme.of(context).textTheme.caption,
                         )
                       ],
                     ),
-                    Text("500\$",
+                    Text("${model.price!.roundToDouble()}\$",
                         style: Theme.of(context)
                             .textTheme
                             .bodyText2!

@@ -9,13 +9,13 @@ class VerifyProvider with ChangeNotifier {
   String msg = "";
 
   Future<bool> registerVerify({required String code}) async {
-    bool verify=false;
+    bool verify = false;
     print("code : $code");
-   await DioHelper.postData(url: VERIFY_REGISTER, token: token, data: {"code": code})
-        .then((value) {
+    await DioHelper.postData(
+        url: VERIFY_REGISTER, token: token, data: {"code": code}).then((value) {
       if (value.statusCode == 200) {
         print(value.data);
-        verify=true;
+        verify = true;
       } else {
         print(value.data);
         msg = value.data['msg'];
@@ -28,5 +28,9 @@ class VerifyProvider with ChangeNotifier {
   Future<void> resendCode() {
     return DioHelper.getData(url: SEND_REGISTER_VERIFY_CODE, token: token)
         .then((value) {});
+  }
+
+  Future<void> resetVerify(String email) async {
+    print("koko");
   }
 }

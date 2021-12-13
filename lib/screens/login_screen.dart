@@ -82,13 +82,13 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight / 15,
               ),
-            
+
               InputForm(
                 controller: _email,
                 screenWidth: screenWidth,
                 hintText: "Email or Username",
                 pIcon: Icons.email,
-                validator: (val)=>Validator.emailValidator(val),
+                validator: (val) => Validator.emailValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -98,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                 screenWidth: screenWidth,
                 hintText: "Password",
                 pIcon: Icons.password,
-                validator: (val)=>Validator.passwordValidator(val),
+                validator: (val) => Validator.passwordValidator(val),
                 isPassword: true,
               ),
               //Help Text
@@ -113,11 +113,51 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      //TODO: back to login
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => VerificationCodeScreen()));
+                      if (_email.text.isEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                },
+                                child: Text(
+                                  'Close',
+                                ),
+                              ),
+                            ],
+                            content: Text(
+                              'Enter email first!',
+                            ),
+                          ),
+                        );
+                      } else if (Validator.emailValidator(_email.text) !=
+                          null) {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                },
+                                child: Text(
+                                  'Close',
+                                ),
+                              ),
+                            ],
+                            content: Text(
+                              'Enter valid email address',
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => VerificationCodeScreen.reset(email: _email.text)));
+                      }
                     },
                     child: Text("ٌReset"),
                   ),
@@ -131,35 +171,35 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     //TODO: login
                     if (_formKey.currentState!.validate()) {
-
                       Provider.of<NetworkProvider>(context, listen: false)
                           .userLogin(
                               email: _email.text, password: _password.text)
                           .then((value) {
-
                         if (provider.loggedInStatus == AuthStatus.loggedIn) {
-
                           SharedHelper.saveData(
                                   key: TOKEN,
                                   value: provider.loginModel!.user!.token)
                               .then((value) {
-                            if(provider.loginModel!.user!.accountConfirmation == 0){
+                            if (provider
+                                    .loginModel!.user!.accountConfirmation ==
+                                0) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => VerificationCodeScreen()));
-                            }
-                            else {
+                                      builder: (_) =>
+                                          VerificationCodeScreen()));
+                            } else {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => HomeScreen()));
                             }
-                          }).catchError((error){});
-                        }
-                        else{
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(provider.msg),backgroundColor: mainRed,));
-
+                          }).catchError((error) {});
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(provider.msg),
+                            backgroundColor: mainRed,
+                          ));
                         }
                       }).catchError((error) {});
                     }
@@ -186,10 +226,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) =>  RegisterScreen()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => RegisterScreen()));
                     },
                     child: Text("Create one now!"),
                   ),

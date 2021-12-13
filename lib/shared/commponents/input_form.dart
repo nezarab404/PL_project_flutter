@@ -14,16 +14,15 @@ class InputForm extends StatefulWidget {
   bool isPassword;
   bool isDescription;
 
-  InputForm({
-    required this.screenWidth,
-    this.controller, 
-    this.hintText,
-    this.pIcon,
-    this.inputType,
-    this.validator,
-    this.isPassword = false,
-    this.isDescription = false
-  });
+  InputForm(
+      {required this.screenWidth,
+      this.controller,
+      this.hintText,
+      this.pIcon,
+      this.inputType,
+      this.validator,
+      this.isPassword = false,
+      this.isDescription = false});
 
   @override
   State<InputForm> createState() => _InputFormState();
@@ -54,12 +53,9 @@ class _InputFormState extends State<InputForm> {
             controller: widget.controller,
             validator: widget.validator,
             textInputAction: TextInputAction.next,
-            obscureText: widget.hintText == password ||
-                widget.hintText == confPassword ||
-                widget.hintText == newPassword ||
-                widget.hintText == confNewPassword,
+            obscureText: widget.isPassword,
             keyboardType: widget.inputType,
-            maxLines: null,
+            maxLines: widget.isDescription ? null : 1,
             decoration: InputDecoration(
               border: InputBorder.none,
               prefixIcon: Icon(widget.pIcon),

@@ -12,8 +12,15 @@ import '../shared/themes/main_theme.dart';
 import '../shared/commponents/header.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
-  const VerificationCodeScreen({Key? key}) : super(key: key);
-
+  VerificationCodeScreen({Key? key}) : super(key: key) {
+    _isReset = false;
+  }
+  VerificationCodeScreen.reset({Key? key, required this.email})
+      : super(key: key) {
+    _isReset = true;
+  }
+  String? email;
+  bool _isReset = false;
   @override
   State<VerificationCodeScreen> createState() => _VerificationCodeScreenState();
 }
@@ -208,18 +215,21 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 width: screenHeight / 10,
                 child: FloatingActionButton(
                   onPressed: () {
-                    Provider.of<VerifyProvider>(context, listen: false)
-                        .registerVerify(code: _code.text)
-                        .then((value) {
-                      if (value) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const HomeScreen()));
-                      } else {
-                        print("error");
-                      }
-                    });
+                    widget._isReset
+                        ? Provider.of<VerifyProvider>(context, listen: false)
+                            .resetVerify(widget.email!)
+                        : Provider.of<VerifyProvider>(context, listen: false)
+                            .registerVerify(code: _code.text)
+                            .then((value) {
+                            if (value) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const HomeScreen()));
+                            } else {
+                              print("error");
+                            }
+                          });
                   },
                   backgroundColor: mainRed,
                   child: Icon(

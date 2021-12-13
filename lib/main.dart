@@ -35,7 +35,7 @@ void main() async {
     if (me!.accountConfirmation == 1) {
       widget = const HomeScreen();
     } else {
-      widget = const VerificationCodeScreen();
+      widget =  VerificationCodeScreen();
     }
   } else {
     widget = LoginScreen();

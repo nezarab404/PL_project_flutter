@@ -92,7 +92,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.person,
                 controller: _name,
                 inputType: TextInputType.name,
-                validator: (val)=>Validator.nameValidator(val),
+                validator: (val) => Validator.nameValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -103,7 +103,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.email,
                 controller: _email,
                 inputType: TextInputType.emailAddress,
-                validator: (val)=>Validator.emailValidator(val),
+                validator: (val) => Validator.emailValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -114,7 +114,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.password,
                 controller: _password,
                 isPassword: true,
-                validator: (val)=>Validator.passwordValidator(val),
+                validator: (val) => Validator.passwordValidator(val),
               ),
               SizedBox(
                 height: screenHeight / 40,
@@ -125,7 +125,7 @@ class RegisterScreen extends StatelessWidget {
                 pIcon: Icons.check_circle,
                 controller: _confirmPassword,
                 isPassword: true,
-                validator: (val)=>Validator.passwordValidator(val),
+                validator: (val) => Validator.passwordValidator(val),
               ),
 
               SizedBox(
@@ -139,10 +139,11 @@ class RegisterScreen extends StatelessWidget {
                     if (_formKey.currentState!.validate()) {
                       await Provider.of<NetworkProvider>(context, listen: false)
                           .userRegister(
-                              name: _name.text,
-                              email: _email.text,
-                              password: _password.text,
-                              confirmPassword: _confirmPassword.text)
+                        name: _name.text,
+                        email: _email.text,
+                        password: _password.text,
+                        confirmPassword: _confirmPassword.text,
+                      )
                           .then((value) {
                         print("koko :${provider.registerStatus}");
                         if (provider.registerStatus == AuthStatus.registered) {

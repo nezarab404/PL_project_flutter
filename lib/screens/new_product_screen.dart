@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
@@ -22,6 +26,20 @@ class NewProductScreen extends StatefulWidget {
 
 class _NewProductScreenState extends State<NewProductScreen> {
   String? value;
+  File? image;
+
+  Future pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      final tempImage = File(image.path);
+      setState(() {
+        this.image = tempImage;
+      });
+    } on PlatformException catch (exception) {
+      print(exception.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,21 +86,95 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 Stack(
                   children: [
                     //add image
-                    SvgPicture.asset(
-                      'assets/images/image_placeholder.svg',
-                      color: darkBlue2,
-                    ),
-                    Positioned(
-                      top: 30,
-                      left: 30,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.add_a_photo,
-                          size: 50,
+                    image == null
+                        ? SvgPicture.asset(
+                            'assets/images/image_placeholder.svg',
+                            color: darkBlue2,
+                          )
+                        : Stack(
+                            children: [
+                              Container(
+                                width: 186,
+                                height: 167,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.white,
+                                ),
+                                child: Image.file(
+                                  image!,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.add_a_photo,
+                                  color: darkBlue,
+                                ),
+                              ),
+                            ],
+                          ),
+                    if (image == null)
+                      Positioned(
+                        top: 30,
+                        left: 30,
+                        child: IconButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              backgroundColor: darkBlue,
+                              context: context,
+                              builder: (context) {
+                                return SizedBox(
+                                  height: screenHeight / 5,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'Pick Image Form',
+                                        style: TextStyle(
+                                          color: mainGrey,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          MBSElement(
+                                            icon: Icons.camera_alt,
+                                            text: 'Camera',
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              pickImage(ImageSource.camera);
+                                            },
+                                          ),
+                                          MBSElement(
+                                            icon: Icons.photo_library,
+                                            text: 'Gallery',
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              pickImage(ImageSource.gallery);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          iconSize: 50,
+                          icon: const Icon(
+                            Icons.add_a_photo,
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
                 //price, quantity and category fields
@@ -109,7 +201,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                           child: DropdownButton<String>(
                             value: value,
                             isExpanded: true,
-
                             hint: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
@@ -311,6 +402,36 @@ class _NewProductScreenState extends State<NewProductScreen> {
           color: darkBlue2,
           indent: 40,
           endIndent: 40,
+        ),
+      ],
+    );
+  }
+}
+
+class MBSElement extends StatelessWidget {
+  IconData? icon;
+  String? text;
+  Function()? onPressed;
+
+  MBSElement({required this.icon, required this.text, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          iconSize: 70,
+          onPressed: onPressed,
+          icon: Icon(
+            icon,
+          ),
+        ),
+        Text(
+          text!,
+          style: TextStyle(
+            color: mainGrey,
+          ),
         ),
       ],
     );

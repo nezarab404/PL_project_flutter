@@ -5,7 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/register_screen.dart';
+import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/keys.dart';
+import 'package:programming_languages_project/shared/network/dio_helper.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/storage/shared_helper.dart';
 import 'package:programming_languages_project/shared/validator.dart';
@@ -14,6 +16,7 @@ import 'package:provider/provider.dart';
 import '../shared/commponents/input_form.dart';
 import '../shared/commponents/header.dart';
 import '../shared/themes/main_theme.dart';
+import 'drawer.dart';
 import 'verification_code_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -24,8 +27,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
+    var screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     var provider = Provider.of<NetworkProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
@@ -112,51 +121,66 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_email.text.isEmpty) {
                         showDialog(
                           context: context,
-                          builder: (ctx) => AlertDialog(
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(ctx);
-                                },
-                                child: Text(
-                                  'Close',
+                          builder: (ctx) =>
+                              AlertDialog(
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: Text(
+                                      'Close',
+                                    ),
+                                  ),
+                                ],
+                                content: Text(
+                                  'Enter email first!',
                                 ),
                               ),
-                            ],
-                            content: Text(
-                              'Enter email first!',
-                            ),
-                          ),
                         );
                       } else if (Validator.emailValidator(_email.text) !=
                           null) {
                         showDialog(
                           context: context,
-                          builder: (ctx) => AlertDialog(
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(ctx);
-                                },
-                                child: Text(
-                                  'Close',
+                          builder: (ctx) =>
+                              AlertDialog(
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: Text(
+                                      'Close',
+                                    ),
+                                  ),
+                                ],
+                                content: Text(
+                                  'Enter valid email address',
                                 ),
                               ),
-                            ],
-                            content: Text(
-                              'Enter valid email address',
-                            ),
-                          ),
                         );
                       } else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => VerificationCodeScreen.reset(email: _email.text)));
+                        await DioHelper.postData(
+                            url: SEND_PASSWORD_VERIVY_EMAIL, data: {
+                          "email": _email.text
+                        })
+                            .then((value) {
+                          if(value.statusCode == 200) {
+                            return Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        VerificationCodeScreen.reset(
+                                            email: _email.text)));
+                          }
+                          else {
+                            print(value.data["msg"]);
+                          }
+                        });
                       }
                     },
                     child: Text("ٌReset"),
@@ -173,15 +197,15 @@ class LoginScreen extends StatelessWidget {
                     if (_formKey.currentState!.validate()) {
                       Provider.of<NetworkProvider>(context, listen: false)
                           .userLogin(
-                              email: _email.text, password: _password.text)
+                          email: _email.text, password: _password.text)
                           .then((value) {
                         if (provider.loggedInStatus == AuthStatus.loggedIn) {
                           SharedHelper.saveData(
-                                  key: TOKEN,
-                                  value: provider.loginModel!.user!.token)
+                              key: TOKEN,
+                              value: provider.loginModel!.user!.token)
                               .then((value) {
                             if (provider
-                                    .loginModel!.user!.accountConfirmation ==
+                                .loginModel!.user!.accountConfirmation ==
                                 0) {
                               Navigator.push(
                                   context,
@@ -192,7 +216,7 @@ class LoginScreen extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => HomeScreen()));
+                                      builder: (_) => MyDrawer()));
                             }
                           }).catchError((error) {});
                         } else {

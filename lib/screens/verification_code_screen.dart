@@ -5,22 +5,28 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
+import 'package:programming_languages_project/shared/status.dart';
 import 'package:provider/provider.dart';
 
 import '../shared/commponents/input_form.dart';
 import '../shared/themes/main_theme.dart';
 import '../shared/commponents/header.dart';
+import 'drawer.dart';
+import 'forgot_password_screen.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
   VerificationCodeScreen({Key? key}) : super(key: key) {
     _isReset = false;
   }
+
   VerificationCodeScreen.reset({Key? key, required this.email})
       : super(key: key) {
     _isReset = true;
   }
+
   String? email;
   bool _isReset = false;
+
   @override
   State<VerificationCodeScreen> createState() => _VerificationCodeScreenState();
 }
@@ -217,7 +223,18 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                   onPressed: () {
                     widget._isReset
                         ? Provider.of<VerifyProvider>(context, listen: false)
-                            .resetVerify(widget.email!)
+                            .resetVerify(email: widget.email!, code: _code.text)
+                            .then((value) {
+                            if (provider.s == Status.success) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) =>
+                                          const ForgotPasswordScreen()));
+                            } else {
+                              print("error");
+                            }
+                          })
                         : Provider.of<VerifyProvider>(context, listen: false)
                             .registerVerify(code: _code.text)
                             .then((value) {
@@ -225,7 +242,8 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) =>  HomeScreen()));
+                                      builder: (_) =>
+                                          const ForgotPasswordScreen()));
                             } else {
                               print("error");
                             }

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/models/user_model.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
+import 'package:programming_languages_project/shared/keys.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
+import 'package:programming_languages_project/shared/status.dart';
+import 'package:programming_languages_project/shared/storage/shared_helper.dart';
 
-enum Status { notVerified, verified, verifying }
+enum Statuss { notVerified, verified, verifying }
 
 class VerifyProvider with ChangeNotifier {
   String msg = "";
+  UserModel? user;
+  Status s = Status.init;
 
   Future<bool> registerVerify({required String code}) async {
     bool verify = false;
@@ -30,7 +36,38 @@ class VerifyProvider with ChangeNotifier {
         .then((value) {});
   }
 
-  Future<void> resetVerify(String email) async {
-    print("koko");
+  Future<void> resetVerify(
+      {required String email, required String code}) async {
+    DioHelper.postData(
+        url: CHECK_PASSWORD_VERIVY_EMAIL,
+        data: {"email": email, "code": code}).then((value) {
+      if (value.statusCode == 200) {
+        user = UserModel.fromJson(value.data['user']);
+        token = user!.token;
+        SharedHelper.saveData(key: TOKEN, value: token);
+        notifyListeners();
+      }
+    }).catchError((e) {});
+    notifyListeners();
+  }
+
+  Future<void> resetPassword(
+      {required String password, required String confirmPassword}) async {
+    s = Status.loading;
+
+     DioHelper.postData(
+            url: RESET_PASSWORD,
+            data: {"password": password, "c_password": confirmPassword})
+        .then((value) {
+      if (value.statusCode == 200) {
+        s = Status.success;
+
+      } else {
+        s = Status.failed;
+      }
+      notifyListeners();
+    }).catchError((e) {
+      s = Status.failed;
+    });
   }
 }

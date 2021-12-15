@@ -109,7 +109,9 @@ class ForgotPasswordScreen extends StatelessWidget {
               height: screenHeight / 10,
               width: screenHeight / 10,
               child: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 backgroundColor: mainRed,
                 child: Icon(
                   Icons.check,

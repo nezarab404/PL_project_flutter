@@ -6,3 +6,6 @@ const VERIFY_REGISTER = "auth/checkRegisterCode";
 const SEND_REGISTER_VERIFY_CODE="auth/sendRegisterCode";
 const ME ="auth/me";
 const PRODUCTS = "products";
+const SEND_PASSWORD_VERIVY_EMAIL = "/auth/sendPasswordResetCode";
+const CHECK_PASSWORD_VERIVY_EMAIL = "/auth/checkPasswordResetCode";
+const RESET_PASSWORD = "/auth/passwordReset";

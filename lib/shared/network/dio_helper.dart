@@ -44,12 +44,18 @@ class DioHelper {
       Map<String, dynamic>? query,
       String lang = 'en',
       String? token}) async {
+    Response response;
     dio.options.headers = {
       "Content-Type": "application/json",
       'lang': lang,
       'auth-token': "$token"
     };
-    return await dio.get(url);
+    try {
+      response= await dio.get(url);
+    } on DioError catch (e) {
+      return e.response!;
+    }
+    return response;
   }
 
   static Future<Response> deleteData(

@@ -26,15 +26,32 @@ class NewProductScreen extends StatefulWidget {
 
 class _NewProductScreenState extends State<NewProductScreen> {
   String? value;
-  File? image;
+  List<File>? images = [];
 
-  Future pickImage(ImageSource source) async {
+  Future pickImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: source);
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
       final tempImage = File(image.path);
       setState(() {
-        this.image = tempImage;
+        images!.add(tempImage);
+      });
+    } on PlatformException catch (exception) {
+      print(exception.message);
+    }
+  }
+
+  Future pickMultiImage() async {
+    try {
+      final imagesList = await ImagePicker().pickMultiImage();
+      if (imagesList!.isEmpty) return;
+      List<File>? tempImages = [];
+      for (var image in imagesList) {
+        tempImages.add(File(image.path));
+      }
+
+      setState(() {
+        images = tempImages;
       });
     } on PlatformException catch (exception) {
       print(exception.message);
@@ -58,12 +75,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
           onPressed: () {},
           icon: const Icon(Icons.arrow_back),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.cancel),
-          ),
-        ],
       ),
 
       //body
@@ -86,7 +97,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 Stack(
                   children: [
                     //add image
-                    image == null
+                    images!.isEmpty
                         ? SvgPicture.asset(
                             'assets/images/image_placeholder.svg',
                             color: darkBlue2,
@@ -101,12 +112,98 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.white,
                                 ),
-                                child: Image.file(
-                                  image!,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: GridView(
+                                    padding: const EdgeInsets.all(5),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 186 / 2,
+                                      crossAxisSpacing: 5,
+                                      mainAxisSpacing: 5,
+                                    ),
+                                    children: List.generate(
+                                      images!.length,
+                                      (f) => Stack(
+                                        fit: StackFit.expand,
+                                        children: [
+                                          Image.file(
+                                            images![f],
+                                            fit: BoxFit.cover,
+                                          ),
+                                          Positioned(
+                                            right: -7,
+                                            bottom: -7,
+                                            child: IconButton(
+                                              padding: EdgeInsets.zero,
+                                              color: mainRed,
+                                              onPressed: () {
+                                                setState(() {
+                                                  images!.remove(images![f]);
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                Icons.remove_circle,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    backgroundColor: darkBlue,
+                                    context: context,
+                                    builder: (context) {
+                                      return SizedBox(
+                                        height: screenHeight / 5,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              'Pick Image Form',
+                                              style: TextStyle(
+                                                color: mainGrey,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 22,
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                MBSElement(
+                                                  icon: Icons.camera_alt,
+                                                  text: 'Camera',
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                    pickImage();
+                                                  },
+                                                ),
+                                                MBSElement(
+                                                  icon: Icons.photo_library,
+                                                  text: 'Gallery',
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                    pickMultiImage();
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                                 icon: Icon(
                                   Icons.add_a_photo,
                                   color: darkBlue,
@@ -114,7 +211,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                               ),
                             ],
                           ),
-                    if (image == null)
+                    if (images!.isEmpty)
                       Positioned(
                         top: 30,
                         left: 30,
@@ -150,7 +247,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                             text: 'Camera',
                                             onPressed: () {
                                               Navigator.of(context).pop();
-                                              pickImage(ImageSource.camera);
+                                              pickImage();
                                             },
                                           ),
                                           MBSElement(
@@ -158,7 +255,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                             text: 'Gallery',
                                             onPressed: () {
                                               Navigator.of(context).pop();
-                                              pickImage(ImageSource.gallery);
+                                              pickMultiImage();
                                             },
                                           ),
                                         ],
@@ -199,6 +296,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                         elevation: 6,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
+                            borderRadius: BorderRadius.circular(15),
                             value: value,
                             isExpanded: true,
                             hint: const Padding(
@@ -479,6 +577,10 @@ Widget DiscountsInputField({Color? cardColor}) {
     ),
     elevation: 6,
     child: TextFormField(
+      cursorColor: cardColor == mainRed ? Colors.white : mainRed,
+      style: TextStyle(
+        color: cardColor == mainRed ? Colors.white : Colors.black,
+      ),
       textAlign: TextAlign.center,
       maxLength: 2,
       textInputAction: TextInputAction.next,

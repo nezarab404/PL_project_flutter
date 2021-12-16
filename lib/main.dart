@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
-import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/login_screen.dart';
-import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
@@ -13,7 +10,7 @@ import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 
 import 'models/user_model.dart';
-import 'providers/add_product_provider.dart';
+import 'providers/new_product_provider.dart';
 import 'providers/home_provider.dart';
 import 'providers/product_detailes_provider.dart';
 import 'providers/verify_provider.dart';
@@ -25,25 +22,22 @@ void main() async {
   DioHelper.init();
   await SharedHelper.init();
   Widget widget = LoginScreen();
-  UserModel? me;
+  
   token = SharedHelper.getData(key: TOKEN);
 
   if (token != null) {
     await DioHelper.getData(url: ME, token: token).then((value) {
-      if(value.statusCode == 200){
+      if (value.statusCode == 200) {
         me = UserModel.fromJson(value.data['user']);
-        print(me!.image);
-      }
-      else{
+        //widget = const MyDrawer();
+      } else {
         widget = LoginScreen();
       }
-
-    }).catchError((error){});
+    }).catchError((error) {});
     if (me != null) {
       if (me!.accountConfirmation == 1) {
-        widget =const MyDrawer();
-      }
-      else {
+        widget = const MyDrawer();
+      } else {
         widget = VerificationCodeScreen();
       }
     }
@@ -70,8 +64,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<HomeProvider>(
           create: (_) => HomeProvider()..getProducts(),
         ),
-        ChangeNotifierProvider<AddProductProvider>(
-          create: (_) => AddProductProvider(),
+        ChangeNotifierProvider<NewProductProvider>(
+          create: (_) => NewProductProvider(),
         ),
         ChangeNotifierProvider<VerifyProvider>(
           create: (_) => VerifyProvider(),

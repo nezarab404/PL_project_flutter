@@ -1,4 +1,4 @@
-//ignore_for_file: avoid_print
+//ignore_for_file: avoid_print, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/login_model.dart';
@@ -78,7 +78,7 @@ class NetworkProvider with ChangeNotifier {
       }
       else{
         registerStatus = AuthStatus.notRegistered;
-        print(value.data['msg']);
+        print("${value.data['msg']}");
         Rmsg = value.data['msg'].toString();
       }
       notifyListeners();

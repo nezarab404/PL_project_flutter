@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
 import 'package:programming_languages_project/shared/storage/shared_helper.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
@@ -27,14 +28,18 @@ class MyDrawer extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 40,
+                  backgroundImage: NetworkImage(me!.image!),
                 ),
-                Text("Name",
+                Text(me!.name!.split(" ").first,
                     style: Theme.of(context)
                         .textTheme
                         .headline4!
                         .copyWith(color: Colors.white, fontSize: 24)),
+                const SizedBox(
+                  height: 20,
+                ),
                 TextButton.icon(
                     onPressed: () {},
                     icon: const Icon(

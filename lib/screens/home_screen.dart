@@ -2,6 +2,7 @@ import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
+import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/shared/commponents/my_grid_view.dart';
 import 'package:programming_languages_project/shared/commponents/product_item.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
@@ -42,23 +43,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        // drawer: ZoomDrawer(
-        //   style: DrawerStyle.Style7,
-        //   controller: _zoomDrawerController,
-        //   menuScreen: HomeScreen(),
-        //   mainScreen: Container(
-        //     color: Colors.amber,
-        //     width: 200,
-        //   ),
-        //   borderRadius: 24.0,
-        //   // showShadow: true,
-        //   // clipMainScreen: true,
-        //   // openCurve: Curves.bounceIn,
-        //   angle: -10.0,
-        //   // backgroundColor: Colors.grey[300]!,
-        //   slideWidth: 100,
-        //   swipeOffset: 10,
-        // ),
         body: RefreshIndicator(
           onRefresh: () {
             return provider.getProducts();
@@ -107,80 +91,22 @@ class HomeScreen extends StatelessWidget {
           borderRadius: 90,
           items: [
             DotNavigationBarItem(icon: const Icon(Icons.home)),
-            DotNavigationBarItem(icon: const Icon(Icons.person)),
-            DotNavigationBarItem(icon: const Icon(Icons.add)),
             DotNavigationBarItem(icon: const Icon(Icons.category)),
+            DotNavigationBarItem(icon: const Icon(Icons.add)),
+            DotNavigationBarItem(icon: const Icon(Icons.shopping_bag)),
           ],
           onTap: (index) {
             Provider.of<HomeProvider>(context, listen: false)
                 .changeIndex(index);
+            if (index == 2) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const NewProductScreen()));
+            }
           },
         ),
       ),
     );
   }
-
-  Widget buildBody(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverStaggeredGrid.extentBuilder(
-          staggeredTileBuilder: (index) =>
-              StaggeredTile.extent(1, (index + 100).toDouble()),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          maxCrossAxisExtent: 200,
-          itemBuilder: (_, index) {
-            return Container(
-              color: Colors.white,
-            );
-          },
-          itemCount: 10,
-        ),
-      ],
-    );
-  }
-
-  // Widget buildBody2(BuildContext context) {
-  //   return Padding(
-  //     padding: const EdgeInsets.all(10.0),
-  //     child: Column(
-  //       children: [
-  //         SizedBox(
-  //           height: 40,
-  //           child: ListView.separated(
-  //             physics: const BouncingScrollPhysics(),
-  //             scrollDirection: Axis.horizontal,
-  //             itemBuilder: (ctx, index) {
-  //               return buildCategoryItem();
-  //             },
-  //             separatorBuilder: (ctx, index) {
-  //               return const SizedBox(
-  //                 width: 15,
-  //               );
-  //             },
-  //             itemCount: 10,
-  //           ),
-  //         ),
-  //         const SizedBox(
-  //           height: 20,
-  //         ),
-  //         Expanded(
-  //           child: StaggeredGridView.countBuilder(
-  //             staggeredTileBuilder: (index) => const StaggeredTile.count(1, 1),
-  //             crossAxisSpacing: 10,
-  //             mainAxisSpacing: 10,
-  //             crossAxisCount: 2,
-  //             physics: const BouncingScrollPhysics(),
-  //             itemBuilder: (_, index) {
-  //               return const ProductItem();
-  //             },
-  //             itemCount: 50,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget buildCategoryItem() {
     return Container(

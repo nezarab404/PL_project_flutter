@@ -87,3 +87,43 @@ class _InputFormState extends State<InputForm> {
     );
   }
 }
+
+class SmallInputField extends StatelessWidget {
+   SmallInputField({Key? key,this.controller,this.icon,this.label}) : super(key: key);
+  TextEditingController? controller;
+  IconData? icon;
+  String? label;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    elevation: 6,
+    child: TextFormField(
+      controller: controller,
+      // textInputAction: TextInputAction.next,
+      //onSaved: (value) => controller!.text = value!,
+      keyboardType: const TextInputType.numberWithOptions(
+        decimal: true,
+        signed: false,
+      ),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        prefixIcon: Icon(
+          icon,
+          color: mainRed,
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 5,
+        ),
+        labelText: label,
+        labelStyle: const TextStyle(
+          fontSize: 12,
+        ),
+      ),
+    ),
+  );
+  }
+}
+

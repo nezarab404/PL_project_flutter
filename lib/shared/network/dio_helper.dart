@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -9,7 +7,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-          baseUrl: "http://192.168.137.1:8000/api/", //TODO
+          baseUrl: "http://192.168.43.120:8000/api/", //TODO
           receiveDataWhenStatusError: true,
           headers: {"Content-Type": "application/json"}),
     );
@@ -17,7 +15,7 @@ class DioHelper {
 
   static Future<Response> postData({
     required String url,
-    required Map<String, dynamic> data,
+    required data,
     Map<String, dynamic>? query,
     String lang = 'en',
     String? token,
@@ -26,17 +24,20 @@ class DioHelper {
       "Content-Type": "application/json",
       'auth-token': "$token"
     };
-    Response response;
+    Response response ;
     try {
       response = await dio.post(
         url,
         data: data,
         queryParameters: query,
       );
+      
     } on DioError catch (e) {
+      //return e.response!;
       return e.response!;
+      print("kokokokokokookok");
     }
-    return response;
+    return  response;
   }
 
   static Future<Response> getData(
@@ -51,7 +52,7 @@ class DioHelper {
       'auth-token': "$token"
     };
     try {
-      response= await dio.get(url);
+      response = await dio.get(url);
     } on DioError catch (e) {
       return e.response!;
     }
@@ -98,19 +99,17 @@ class DioHelper {
       data.files.addAll(
         [
           MapEntry(
-            'image${i+1}',
-            await MultipartFile.fromFile(
-              files[i].path,
-              filename: files[i].path.split('/').last
-            ),
+            'image${i + 1}',
+            await MultipartFile.fromFile(files[i].path,
+                filename: files[i].path.split('/').last),
           ),
         ],
       );
     }
-     dio.options.headers = {
+    dio.options.headers = {
       "Content-Type": "application/json",
       "auth-token": "$token"
     };
-    return dio.post(url,data: data);
+    return dio.post(url, data: data);
   }
 }

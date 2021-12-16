@@ -5,6 +5,7 @@ class UserModel{
   String? bio;
   String? email;
   String? token;
+  // ignore: prefer_typing_uninitialized_variables
   var accountConfirmation;
 
   UserModel.fromJson(Map<String,dynamic> json){

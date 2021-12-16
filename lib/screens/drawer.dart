@@ -30,7 +30,7 @@ class MyDrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundImage: NetworkImage(me!.image!),
+                  backgroundImage:me!.image != null ? NetworkImage(me!.image!):null,
                 ),
                 Text(me!.name!.split(" ").first,
                     style: Theme.of(context)

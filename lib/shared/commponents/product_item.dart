@@ -4,14 +4,19 @@ import 'package:programming_languages_project/screens/product_detailes_screen.da
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 class ProductItem extends StatelessWidget {
-   ProductItem({ Key? key ,required this.model}) : super(key: key);
+  ProductItem({Key? key, required this.model}) : super(key: key);
   ProductModel model;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => ProductDetailesScreen(model: model,)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => ProductDetailesScreen(
+                      model: model,
+                    )));
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
@@ -31,7 +36,7 @@ class ProductItem extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Container(
-                        decoration:  BoxDecoration(
+                        decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(model.images[0]),
@@ -44,8 +49,10 @@ class ProductItem extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 8),
                         child: Column(
                           children: [
-                             CircleAvatar(
-                              backgroundImage: NetworkImage(model.user!.image!),
+                            CircleAvatar(
+                              backgroundImage: model.user!.image != null
+                                  ? NetworkImage(model.user!.image!)
+                                  : null,
                             ),
                             const SizedBox(
                               height: 20,

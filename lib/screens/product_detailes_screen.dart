@@ -32,7 +32,7 @@ class ProductDetailesScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(
-              backgroundImage: NetworkImage(model.user!.image!),
+              backgroundImage: model.user!.image != null?NetworkImage(model.user!.image!):null,
             ),
           )
         ],

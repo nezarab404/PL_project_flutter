@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
@@ -25,10 +26,16 @@ class NewProductProvider with ChangeNotifier {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
-      lastDate: DateTime.utc(2022),
+      lastDate: DateTime.utc(2023),
+
     ).then((value) {
-      if (value == null) return;
+      if (value == null) {
+        print("koko   $value");
+        return;
+      }
       date = value;
+      print(date);
+      print(DateFormat.yMMMd().format(value));
       notifyListeners();
       print(date);
     });
@@ -69,7 +76,7 @@ class NewProductProvider with ChangeNotifier {
     }
   }
 
-  Future<void> addProduct({
+  Future<bool> addProduct({
     required double price,
     required double quantity,
     required String name,
@@ -85,13 +92,16 @@ class NewProductProvider with ChangeNotifier {
     String? facebook,
   }) async {
     addProductStatus = Status.loading;
+    print(addProductStatus);
+    print("koko $quantity");
     FormData imageList = FormData.fromMap({
       "name": name,
       "description": description,
       "category": category,
+      "quantity" :quantity,
       "phone": phone,
       "price": price,
-      "expiration_date": date!.millisecondsSinceEpoch,
+      "expiration_date": date!,
       "discounts": jsonEncode(
         [
           {"remaining_days": rDays1, "discount": discount1},
@@ -114,11 +124,15 @@ class NewProductProvider with ChangeNotifier {
       if (value.statusCode == 200) {
         addProductStatus = Status.success;
         print(addProductStatus);
+        return true;
       } else {
         addProductStatus = Status.failed;
         print(addProductStatus);
-        print(value.data['msg']);
+        //print(value.data['msg']);
+        return false;
       }
+
     });
+    return false;
   }
 }

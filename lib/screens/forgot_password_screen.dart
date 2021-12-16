@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:programming_languages_project/providers/verify_provider.dart';
+import 'package:programming_languages_project/screens/drawer.dart';
+import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/validator.dart';
+import 'package:provider/provider.dart';
 
-import '../shared/commponents/input_form.dart';
 import '../shared/themes/main_theme.dart';
 import '../shared/commponents/header.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatefulWidget {
+  bool passwordState = true;
+
+
+  ForgotPasswordScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  IconData? icon = Icons.visibility;
 
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+    var password = TextEditingController();
+    var confirmPassword = TextEditingController();
+    var provider = Provider.of<VerifyProvider>(context);
+    String x1="",x2="";
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -86,22 +103,113 @@ class ForgotPasswordScreen extends StatelessWidget {
             SizedBox(
               height: screenHeight / 40,
             ),
-            //Reset Form
-            InputForm(
-              screenWidth: screenWidth,
-              hintText: "New password",
-              pIcon: Icons.password,
-              validator: (val)=>Validator.passwordValidator(val),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 6,
+              margin: EdgeInsets.symmetric(
+                horizontal: screenWidth / 10,
+              ),
+              child: Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  TextFormField(
+                    controller: password,
+                    validator: (val)=>Validator.passwordValidator(val),
+                    textInputAction: TextInputAction.next,
+                    obscureText: true,
+                    maxLines: 1,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.password),
+                      contentPadding: EdgeInsets.all(10),
+                      labelText: "New password",
+                    ),
+                  ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.passwordState = !widget.passwordState;
+                          icon == Icons.visibility_off
+                              ? icon = Icons.visibility
+                              : icon = Icons.visibility_off;
+                        });
+                      },
+                      icon: Icon(
+                        icon,
+                        color: icon == Icons.visibility ? mainRed : Colors.grey,
+                      ),
+                      color: Colors.black26,
+                    ),
+                ],
+              ),
             ),
+            //Reset Form
+            // InputForm(
+            //   screenWidth: screenWidth,
+            //   hintText: "New password",
+            //   pIcon: Icons.password,
+            //   isPassword: true,
+            //   validator: (val) => Validator.passwordValidator(val),
+            //   // controller: password,
+            //   value: x1,
+            //
+            // ),
             SizedBox(
               height: screenHeight / 40,
             ),
-            InputForm(
-              screenWidth: screenWidth,
-              hintText: "Confirm new password",
-              pIcon: Icons.check_circle,
-              validator: (val)=>Validator.passwordValidator(val),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 6,
+              margin: EdgeInsets.symmetric(
+                horizontal: screenWidth / 10,
+              ),
+              child: Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  TextFormField(
+                    controller: confirmPassword,
+                    validator: (val)=>Validator.passwordValidator(val),
+                    textInputAction: TextInputAction.next,
+                    obscureText: true,
+                    maxLines: 1,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.check_circle),
+                      contentPadding: EdgeInsets.all(10),
+                      labelText: "Confirm new password",
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        widget.passwordState = !widget.passwordState;
+                        icon == Icons.visibility_off
+                            ? icon = Icons.visibility
+                            : icon = Icons.visibility_off;
+                      });
+                    },
+                    icon: Icon(
+                      icon,
+                      color: icon == Icons.visibility ? mainRed : Colors.grey,
+                    ),
+                    color: Colors.black26,
+                  ),
+                ],
+              ),
             ),
+            // InputForm(
+            //   screenWidth: screenWidth,
+            //   hintText: "Confirm new password",
+            //   pIcon: Icons.check_circle,
+            //   isPassword: true,
+            //   validator: (val) => Validator.passwordValidator(val),
+            //   // controller: confirmPassword,
+            //   value: x2,
+            // ),
             SizedBox(
               height: screenHeight / 10,
             ),
@@ -110,7 +218,19 @@ class ForgotPasswordScreen extends StatelessWidget {
               width: screenHeight / 10,
               child: FloatingActionButton(
                 onPressed: () {
-
+                  Provider.of<VerifyProvider>(context, listen: false)
+                      .resetPassword(
+                          password: password.text,
+                          confirmPassword: confirmPassword.text)
+                      .then((value) {
+                    if (provider.s == Status.success) {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => const MyDrawer()));
+                    }
+                    else{
+                      print("erooooor");
+                    }
+                  });
                 },
                 backgroundColor: mainRed,
                 child: Icon(

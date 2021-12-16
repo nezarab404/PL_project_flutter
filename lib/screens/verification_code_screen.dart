@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
-import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:provider/provider.dart';
 
-import '../shared/commponents/input_form.dart';
 import '../shared/themes/main_theme.dart';
 import '../shared/commponents/header.dart';
 import 'drawer.dart';
@@ -225,13 +223,18 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                         ? Provider.of<VerifyProvider>(context, listen: false)
                             .resetVerify(email: widget.email!, code: _code.text)
                             .then((value) {
+                              print("koo ${widget.email!}");
+                              print(_code.text);
                             if (provider.s == Status.success) {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) =>
-                                          const ForgotPasswordScreen()));
+                                          ForgotPasswordScreen()));
                             } else {
+                              print("moo ${widget.email!}");
+                              print(_code.text);
+                            //  print(value);
                               print("error");
                             }
                           })
@@ -243,7 +246,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) =>
-                                          const ForgotPasswordScreen()));
+                                          const MyDrawer()));
                             } else {
                               print("error");
                             }

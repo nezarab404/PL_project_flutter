@@ -30,7 +30,7 @@ class ProductModel {
     quantity = json['quantity'] * 1.0;
     phone = json['phone'];
     facebook = json['facebook'];
-    price = json['price'];
+    price = json['price']*1.0;
     user = UserModel.fromJson(json['user']);
     views = json['views'];
     likes = json['likes'];

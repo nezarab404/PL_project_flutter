@@ -22,7 +22,7 @@ void main() async {
   DioHelper.init();
   await SharedHelper.init();
   Widget widget = LoginScreen();
-  
+
   token = SharedHelper.getData(key: TOKEN);
 
   if (token != null) {
@@ -72,6 +72,12 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        // localizationsDelegates: const [
+        //   GlobalMaterialLocalizations.delegate
+        // ],
+        // supportedLocales: const[
+        //   Locale('SY'),
+        // ],
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.dark,

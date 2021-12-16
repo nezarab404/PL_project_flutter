@@ -13,6 +13,7 @@ class InputForm extends StatefulWidget {
   final String? Function(String?)? validator;
   bool isPassword;
   bool isDescription;
+  String? value;
 
   InputForm(
       {required this.screenWidth,
@@ -22,7 +23,8 @@ class InputForm extends StatefulWidget {
       this.inputType,
       this.validator,
       this.isPassword = false,
-      this.isDescription = false});
+      this.isDescription = false,
+      this.value});
 
   @override
   State<InputForm> createState() => _InputFormState();
@@ -50,6 +52,11 @@ class _InputFormState extends State<InputForm> {
         alignment: Alignment.centerRight,
         children: [
           TextFormField(
+            onChanged: (val){
+              setState(() {
+                widget.value = val ;
+              });
+            },
             controller: widget.controller,
             validator: widget.validator,
             textInputAction: TextInputAction.next,

@@ -36,6 +36,7 @@ class NetworkProvider with ChangeNotifier {
           if (loginModel!.user != null) {
             print("token : ${loginModel!.user!.token}");
             token = loginModel!.user!.token!;
+            me = loginModel!.user;
           } else {}
         } else {
           loggedInStatus = AuthStatus.notLoggedIn;
@@ -73,6 +74,7 @@ class NetworkProvider with ChangeNotifier {
         if (registerModel!.user != null) {
           print(registerModel!.user!.token);
           token = registerModel!.user!.token;
+          me = registerModel!.user;
         }
         notifyListeners();
       }

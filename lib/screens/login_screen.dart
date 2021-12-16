@@ -213,10 +213,10 @@ class LoginScreen extends StatelessWidget {
                                       builder: (_) =>
                                           VerificationCodeScreen()));
                             } else {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => MyDrawer()));
+                                      builder: (_) => const MyDrawer()));
                             }
                           }).catchError((error) {});
                         } else {

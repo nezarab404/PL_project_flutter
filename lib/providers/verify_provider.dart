@@ -38,16 +38,24 @@ class VerifyProvider with ChangeNotifier {
 
   Future<void> resetVerify(
       {required String email, required String code}) async {
-    DioHelper.postData(
+    s = Status.loading;
+    await DioHelper.postData(
         url: CHECK_PASSWORD_VERIVY_EMAIL,
         data: {"email": email, "code": code}).then((value) {
       if (value.statusCode == 200) {
         user = UserModel.fromJson(value.data['user']);
         token = user!.token;
+        me = user;
         SharedHelper.saveData(key: TOKEN, value: token);
+        s = Status.success;
         notifyListeners();
+      } else {
+        s = Status.failed;
       }
-    }).catchError((e) {});
+    }).catchError((e) {
+      s = Status.failed;
+      notifyListeners();
+    });
     notifyListeners();
   }
 
@@ -55,15 +63,17 @@ class VerifyProvider with ChangeNotifier {
       {required String password, required String confirmPassword}) async {
     s = Status.loading;
 
-     DioHelper.postData(
+    await DioHelper.postData(
             url: RESET_PASSWORD,
+            token: token,
             data: {"password": password, "c_password": confirmPassword})
         .then((value) {
       if (value.statusCode == 200) {
         s = Status.success;
-
+        notifyListeners();
       } else {
         s = Status.failed;
+        print(value);
       }
       notifyListeners();
     }).catchError((e) {

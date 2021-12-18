@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/screens/login_screen.dart';
+import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
@@ -98,7 +99,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: mainDarkBlue,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        home: mainWidget,
+        home: const NewProductScreen(),
       ),
     );
   }

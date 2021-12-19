@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 class InputForm extends StatefulWidget {
-  final double screenWidth;
+  final double? screenWidth;
   final String? hintText;
+  final String? hintText2;
   final IconData? pIcon;
   final TextEditingController? controller;
   final TextInputType? inputType;
@@ -15,16 +16,18 @@ class InputForm extends StatefulWidget {
   bool isDescription;
   String? value;
 
-  InputForm(
-      {required this.screenWidth,
-      this.controller,
-      this.hintText,
-      this.pIcon,
-      this.inputType,
-      this.validator,
-      this.isPassword = false,
-      this.isDescription = false,
-      this.value});
+  InputForm({
+    this.screenWidth,
+    this.controller,
+    this.hintText,
+    this.pIcon,
+    this.inputType,
+    this.validator,
+    this.isPassword = false,
+    this.isDescription = false,
+    this.value,
+    this.hintText2,
+  });
 
   @override
   State<InputForm> createState() => _InputFormState();
@@ -46,15 +49,15 @@ class _InputFormState extends State<InputForm> {
       ),
       elevation: 6,
       margin: EdgeInsets.symmetric(
-        horizontal: widget.screenWidth / 10,
+        horizontal: widget.screenWidth != null ? widget.screenWidth! / 10 : 0,
       ),
       child: Stack(
         alignment: Alignment.centerRight,
         children: [
           TextFormField(
-            onChanged: (val){
+            onChanged: (val) {
               setState(() {
-                widget.value = val ;
+                widget.value = val;
               });
             },
             controller: widget.controller,
@@ -68,6 +71,7 @@ class _InputFormState extends State<InputForm> {
               prefixIcon: Icon(widget.pIcon),
               contentPadding: const EdgeInsets.all(10),
               labelText: widget.hintText,
+              hintText: widget.hintText2,
             ),
           ),
           if (widget.hintText == password ||
@@ -96,41 +100,41 @@ class _InputFormState extends State<InputForm> {
 }
 
 class SmallInputField extends StatelessWidget {
-   SmallInputField({Key? key,this.controller,this.icon,this.label}) : super(key: key);
+  SmallInputField({Key? key, this.controller, this.icon, this.label})
+      : super(key: key);
   TextEditingController? controller;
   IconData? icon;
   String? label;
   @override
   Widget build(BuildContext context) {
     return Card(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
-    ),
-    elevation: 6,
-    child: TextFormField(
-      controller: controller,
-      // textInputAction: TextInputAction.next,
-      //onSaved: (value) => controller!.text = value!,
-      keyboardType: const TextInputType.numberWithOptions(
-        decimal: true,
-        signed: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
       ),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        prefixIcon: Icon(
-          icon,
-          color: mainRed,
+      elevation: 6,
+      child: TextFormField(
+        controller: controller,
+        // textInputAction: TextInputAction.next,
+        //onSaved: (value) => controller!.text = value!,
+        keyboardType: const TextInputType.numberWithOptions(
+          decimal: true,
+          signed: false,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 5,
-        ),
-        labelText: label,
-        labelStyle: const TextStyle(
-          fontSize: 12,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          prefixIcon: Icon(
+            icon,
+            color: mainRed,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 5,
+          ),
+          labelText: label,
+          labelStyle: const TextStyle(
+            fontSize: 12,
+          ),
         ),
       ),
-    ),
-  );
+    );
   }
 }
-

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
+import 'package:programming_languages_project/shared/commponents/comments_layout.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -33,7 +34,9 @@ class ProductDetailesScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(
-              backgroundImage: model.user!.image != null?NetworkImage(model.user!.image!):null,
+              backgroundImage: model.user!.image != null
+                  ? NetworkImage(model.user!.image!)
+                  : null,
             ),
           )
         ],
@@ -92,7 +95,20 @@ class ProductDetailesScreen extends StatelessWidget {
             ),
             FloatingActionButton(
               backgroundColor: mainRed,
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  context: context,
+                  builder: (context) =>
+                      Wrap(children: const [CommentsLayout()]),
+                );
+              },
               heroTag: "comment",
               child: const Icon(Icons.comment),
             ),
@@ -238,6 +254,8 @@ class ProductDetailesScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 //  Row(
 //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

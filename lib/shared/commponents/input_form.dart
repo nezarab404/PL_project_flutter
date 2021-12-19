@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 class InputForm extends StatefulWidget {
-  final double screenWidth;
+  final double? screenWidth;
   final String? hintText;
+  final String? hintText2;
   final IconData? pIcon;
   final TextEditingController? controller;
   final TextInputType? inputType;
@@ -15,16 +16,18 @@ class InputForm extends StatefulWidget {
   bool isDescription;
   String? value;
 
-  InputForm(
-      {required this.screenWidth,
-      this.controller,
-      this.hintText,
-      this.pIcon,
-      this.inputType,
-      this.validator,
-      this.isPassword = false,
-      this.isDescription = false,
-      this.value});
+  InputForm({
+    this.screenWidth,
+    this.controller,
+    this.hintText,
+    this.pIcon,
+    this.inputType,
+    this.validator,
+    this.isPassword = false,
+    this.isDescription = false,
+    this.value,
+    this.hintText2,
+  });
 
   @override
   State<InputForm> createState() => _InputFormState();
@@ -41,7 +44,7 @@ class _InputFormState extends State<InputForm> {
       ),
       elevation: 6,
       margin: EdgeInsets.symmetric(
-        horizontal: widget.screenWidth / 10,
+        horizontal: widget.screenWidth != null ? widget.screenWidth! / 10 : 0,
       ),
       child: Stack(
         alignment: Alignment.centerRight,
@@ -80,6 +83,7 @@ class _InputFormState extends State<InputForm> {
               prefixIcon: Icon(widget.pIcon),
               contentPadding: const EdgeInsets.all(10),
               labelText: widget.hintText,
+              hintText: widget.hintText2,
             ),
           ),
         ],

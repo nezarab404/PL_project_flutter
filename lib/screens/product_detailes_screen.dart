@@ -13,6 +13,7 @@ class ProductDetailesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     var controller = CarouselController();
     var provider = Provider.of<ProductDetailesProvider>(context);
     var size = MediaQuery.of(context).size;
@@ -49,7 +50,7 @@ class ProductDetailesScreen extends StatelessWidget {
                 backgroundColor: mainRed,
                 heroTag: "buy",
                 label: SizedBox(
-                  width: 200,
+                  width: size.width/2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,7 +70,7 @@ class ProductDetailesScreen extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        width: 100,
+                        width: size.width/4,
                         height: 40,
                         decoration: BoxDecoration(
                             color: mainGrey,

@@ -9,6 +9,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -21,8 +22,8 @@ class ProductItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: Container(
-          width: 200,
-          height: 200,
+          width: size.width / 2 - 15,
+          height: size.width / 2 - 15,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             color: const Color(0xffd3d3d3),
@@ -35,13 +36,11 @@ class ProductItem extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 2,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(model.images[0]),
-                          ),
-                        ),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: "assets/images/loading.gif",
+                        image: model.images[0],
+                        fit: BoxFit.fill,
+                        height: double.infinity,
                       ),
                     ),
                     Expanded(

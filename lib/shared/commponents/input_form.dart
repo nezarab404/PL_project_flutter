@@ -31,11 +31,6 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
-  static const password = "Password",
-      confPassword = "Confirm password",
-      newPassword = "New password",
-      confNewPassword = "Confirm new password";
-
   var icon = Icons.visibility;
 
   @override
@@ -52,9 +47,9 @@ class _InputFormState extends State<InputForm> {
         alignment: Alignment.centerRight,
         children: [
           TextFormField(
-            onChanged: (val){
+            onChanged: (val) {
               setState(() {
-                widget.value = val ;
+                widget.value = val;
               });
             },
             controller: widget.controller,
@@ -65,30 +60,28 @@ class _InputFormState extends State<InputForm> {
             maxLines: widget.isDescription ? null : 1,
             decoration: InputDecoration(
               border: InputBorder.none,
+              suffixIcon: 
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.isPassword = !widget.isPassword;
+                          icon == Icons.visibility_off
+                              ? icon = Icons.visibility
+                              : icon = Icons.visibility_off;
+                        });
+                      },
+                      icon: Icon(
+                        icon,
+                        color: icon == Icons.visibility ? mainRed : Colors.grey,
+                      ),
+                      color: Colors.black26,
+                    )
+                   ,
               prefixIcon: Icon(widget.pIcon),
               contentPadding: const EdgeInsets.all(10),
               labelText: widget.hintText,
             ),
           ),
-          if (widget.hintText == password ||
-              widget.hintText == confPassword ||
-              widget.hintText == newPassword ||
-              widget.hintText == confNewPassword)
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  widget.isPassword = !widget.isPassword;
-                  icon == Icons.visibility_off
-                      ? icon = Icons.visibility
-                      : icon = Icons.visibility_off;
-                });
-              },
-              icon: Icon(
-                icon,
-                color: icon == Icons.visibility ? mainRed : Colors.grey,
-              ),
-              color: Colors.black26,
-            ),
         ],
       ),
     );
@@ -96,41 +89,41 @@ class _InputFormState extends State<InputForm> {
 }
 
 class SmallInputField extends StatelessWidget {
-   SmallInputField({Key? key,this.controller,this.icon,this.label}) : super(key: key);
+  SmallInputField({Key? key, this.controller, this.icon, this.label})
+      : super(key: key);
   TextEditingController? controller;
   IconData? icon;
   String? label;
   @override
   Widget build(BuildContext context) {
     return Card(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
-    ),
-    elevation: 6,
-    child: TextFormField(
-      controller: controller,
-      // textInputAction: TextInputAction.next,
-      //onSaved: (value) => controller!.text = value!,
-      keyboardType: const TextInputType.numberWithOptions(
-        decimal: true,
-        signed: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
       ),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        prefixIcon: Icon(
-          icon,
-          color: mainRed,
+      elevation: 6,
+      child: TextFormField(
+        controller: controller,
+        // textInputAction: TextInputAction.next,
+        //onSaved: (value) => controller!.text = value!,
+        keyboardType: const TextInputType.numberWithOptions(
+          decimal: true,
+          signed: false,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 5,
-        ),
-        labelText: label,
-        labelStyle: const TextStyle(
-          fontSize: 12,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          prefixIcon: Icon(
+            icon,
+            color: mainRed,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 5,
+          ),
+          labelText: label,
+          labelStyle: const TextStyle(
+            fontSize: 12,
+          ),
         ),
       ),
-    ),
-  );
+    );
   }
 }
-

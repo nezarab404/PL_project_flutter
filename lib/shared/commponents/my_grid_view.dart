@@ -18,7 +18,7 @@ class MyGridView extends StatelessWidget {
           children: List.generate(
               itemCount.isEven ? (itemCount ~/ 2) : (itemCount ~/ 2) + 1,
               (index) =>  Padding(
-                    padding: EdgeInsets.only(bottom: 10, right: 10),
+                    padding:const EdgeInsets.only(bottom: 10, right: 10),
                     child: ProductItem(
                       model: items[index*2],
                     ),

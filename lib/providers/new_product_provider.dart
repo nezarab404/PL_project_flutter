@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -10,6 +12,7 @@ import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
 import 'package:programming_languages_project/shared/status.dart';
+import 'package:file_picker/file_picker.dart';
 
 class NewProductProvider with ChangeNotifier {
   List<File>? images = [];
@@ -27,7 +30,6 @@ class NewProductProvider with ChangeNotifier {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.utc(2023),
-
     ).then((value) {
       if (value == null) {
         print("koko   $value");
@@ -48,18 +50,35 @@ class NewProductProvider with ChangeNotifier {
   }
 
   Future pickMultiImage() async {
-    try {
-      final imagesList = await ImagePicker().pickMultiImage();
-      if (imagesList!.isEmpty) return;
-      List<File>? tempImages = [];
-      for (var image in imagesList) {
-        tempImages.add(File(image.path));
-      }
+    if(Platform.isLinux){
+      FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
 
-      images!.addAll(tempImages);
-      notifyListeners();
-    } on PlatformException catch (exception) {
-      print(exception.message);
+if (result != null) {
+  var imagesList = result.paths.map((path) => File(path!)).toList();
+  List<File>? tempImages = [];
+        for (var image in imagesList) {
+          tempImages.add(File(image.path));
+        }
+        images!.addAll(tempImages);
+        notifyListeners();
+} else {
+  // User canceled the picker
+}
+    }
+    else {
+      try {
+        final imagesList = await ImagePicker().pickMultiImage();
+        if (imagesList!.isEmpty) return;
+        List<File>? tempImages = [];
+        for (var image in imagesList) {
+          tempImages.add(File(image.path));
+        }
+
+        images!.addAll(tempImages);
+        notifyListeners();
+      } on PlatformException catch (exception) {
+        print(exception.message);
+      }
     }
   }
 
@@ -98,7 +117,7 @@ class NewProductProvider with ChangeNotifier {
       "name": name,
       "description": description,
       "category": category,
-      "quantity" :quantity,
+      "quantity": quantity,
       "phone": phone,
       "price": price,
       "expiration_date": date!,
@@ -131,7 +150,6 @@ class NewProductProvider with ChangeNotifier {
         //print(value.data['msg']);
         return false;
       }
-
     });
     return false;
   }

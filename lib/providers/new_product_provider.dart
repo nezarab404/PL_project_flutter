@@ -73,7 +73,6 @@ if (result != null) {
         for (var image in imagesList) {
           tempImages.add(File(image.path));
         }
-
         images!.addAll(tempImages);
         notifyListeners();
       } on PlatformException catch (exception) {

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/user_model.dart';
 import 'package:programming_languages_project/shared/constants.dart';
@@ -39,6 +40,7 @@ class VerifyProvider with ChangeNotifier {
   Future<void> resetVerify(
       {required String email, required String code}) async {
     s = Status.loading;
+    notifyListeners();
     await DioHelper.postData(
         url: CHECK_PASSWORD_VERIVY_EMAIL,
         data: {"email": email, "code": code}).then((value) {
@@ -50,10 +52,14 @@ class VerifyProvider with ChangeNotifier {
         s = Status.success;
         notifyListeners();
       } else {
+        print("soso");
         s = Status.failed;
+        notifyListeners();
       }
-    }).catchError((e) {
+    }).catchError(( e) {
       s = Status.failed;
+
+      print("koko");
       notifyListeners();
     });
     notifyListeners();

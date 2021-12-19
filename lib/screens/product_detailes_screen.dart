@@ -114,8 +114,15 @@ class ProductDetailesScreen extends StatelessWidget {
             ),
             FloatingActionButton(
               backgroundColor: mainRed,
-              onPressed: () {},
-              child: const Icon(Icons.thumb_up),
+              onPressed: () {
+                context.read<ProductDetailesProvider>().like(model.id!);
+              },
+              child: Column(
+                children: [
+                  const Icon(Icons.thumb_up),
+                  Text("${model.likes}")
+                ],
+              ),
               heroTag: "like",
             ),
           ],

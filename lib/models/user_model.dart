@@ -5,8 +5,8 @@ class UserModel {
   String? bio;
   String? email;
   String? token;
-  int? accountConfirmation;
-  int? resetPassword;
+  var accountConfirmation;
+  var resetPassword;
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

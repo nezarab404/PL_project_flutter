@@ -137,7 +137,7 @@ if (result != null) {
               filename: images![i].path.split('/').last)));
     }
 
-    DioHelper.postData(url: PRODUCTS, token: token, data: imageList)
+    await DioHelper.postData(url: PRODUCTS, token: token, data: imageList)
         .then((value) {
       if (value.statusCode == 200) {
         addProductStatus = Status.success;

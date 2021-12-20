@@ -9,3 +9,4 @@ const PRODUCTS = "products";
 const SEND_PASSWORD_VERIVY_EMAIL = "/auth/sendPasswordResetCode";
 const CHECK_PASSWORD_VERIVY_EMAIL = "/auth/checkPasswordResetCode";
 const RESET_PASSWORD = "/auth/passwordReset";
+const LIKE = "/products/like";

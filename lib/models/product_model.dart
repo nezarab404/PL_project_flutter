@@ -34,6 +34,6 @@ class ProductModel {
     user = UserModel.fromJson(json['user']);
     views = json['views'];
     likes = json['likes'];
-    isLike = json['is_like'];
+    isLike = json['meLikes'];
   }
 }

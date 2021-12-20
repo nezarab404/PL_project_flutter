@@ -45,9 +45,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.arrow_back,
-          color: mainRed,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: mainRed,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,

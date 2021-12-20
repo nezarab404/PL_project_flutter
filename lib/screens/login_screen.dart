@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
-import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/register_screen.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/keys.dart';
@@ -93,6 +92,7 @@ class LoginScreen extends StatelessWidget {
                 hintText: "Email or Username",
                 pIcon: Icons.email,
                 validator: (val) => Validator.emailValidator(val),
+                inputType: TextInputType.emailAddress,
               ),
               SizedBox(
                 height: screenHeight / 40,

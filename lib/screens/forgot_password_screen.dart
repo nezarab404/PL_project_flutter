@@ -111,38 +111,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               margin: EdgeInsets.symmetric(
                 horizontal: screenWidth / 10,
               ),
-              child: Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  TextFormField(
-                    controller: widget.password,
-                    validator: (val)=>Validator.passwordValidator(val),
-                    textInputAction: TextInputAction.next,
-                    obscureText: true,
-                    maxLines: 1,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.password),
-                      contentPadding: EdgeInsets.all(10),
-                      labelText: "New password",
-                    ),
+              child: TextFormField(
+                controller: widget.password,
+                //validator: (val)=>Validator.passwordValidator(val),
+                textInputAction: TextInputAction.next,
+                obscureText: true,
+                maxLines: 1,
+                decoration:  InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.passwordState = !widget.passwordState;
+                      icon == Icons.visibility_off
+                          ? icon = Icons.visibility
+                          : icon = Icons.visibility_off;
+                    });
+                  },
+                  icon: Icon(
+                    icon,
+                    color: icon == Icons.visibility ? mainRed : Colors.grey,
                   ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          widget.passwordState = !widget.passwordState;
-                          icon == Icons.visibility_off
-                              ? icon = Icons.visibility
-                              : icon = Icons.visibility_off;
-                        });
-                      },
-                      icon: Icon(
-                        icon,
-                        color: icon == Icons.visibility ? mainRed : Colors.grey,
-                      ),
-                      color: Colors.black26,
-                    ),
-                ],
+                  color: Colors.black26,
+                ),
+                  contentPadding: const EdgeInsets.all(10),
+                  labelText: "New password",
+                ),
               ),
             ),
             //Reset Form

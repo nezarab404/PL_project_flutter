@@ -62,22 +62,6 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
 
     var provider = Provider.of<VerifyProvider>(context);
 
-    final focusNode1 = FocusNode();
-    final focusNode2 = FocusNode();
-    final focusNode3 = FocusNode();
-    final focusNode4 = FocusNode();
-    final focusNode5 = FocusNode();
-    final focusNode6 = FocusNode();
-
-    final List<FocusNode> node = [
-      focusNode1,
-      focusNode2,
-      focusNode3,
-      focusNode4,
-      focusNode5,
-      focusNode6,
-    ];
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(

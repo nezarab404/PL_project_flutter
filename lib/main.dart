@@ -3,7 +3,7 @@ import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/screens/login_screen.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:programming_languages_project/shared/commponents/comments_layout.dart';
-import 'package:programming_languages_project/shared/commponents/profile_layout.dart';
+import 'package:programming_languages_project/screens/profile_screen.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: mainDarkBlue,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        home:mainWidget,
+        home: ProfileLayout(),
       ),
     );
   }

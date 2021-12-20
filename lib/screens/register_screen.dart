@@ -26,9 +26,9 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    var provider = Provider.of<NetworkProvider>(context);
+    var provider = Provider.of<NetworkProvider>(context);    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar:AppBar(),
       body: SingleChildScrollView(

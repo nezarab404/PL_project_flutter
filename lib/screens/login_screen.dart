@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/register_screen.dart';
@@ -27,14 +28,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    var screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     var provider = Provider.of<NetworkProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
@@ -125,59 +120,54 @@ class LoginScreen extends StatelessWidget {
                       if (_email.text.isEmpty) {
                         showDialog(
                           context: context,
-                          builder: (ctx) =>
-                              AlertDialog(
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(ctx);
-                                    },
-                                    child: Text(
-                                      'Close',
-                                    ),
-                                  ),
-                                ],
-                                content: Text(
-                                  'Enter email first!',
+                          builder: (ctx) => AlertDialog(
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                },
+                                child: Text(
+                                  'Close',
                                 ),
                               ),
+                            ],
+                            content: Text(
+                              'Enter email first!',
+                            ),
+                          ),
                         );
                       } else if (Validator.emailValidator(_email.text) !=
                           null) {
                         showDialog(
                           context: context,
-                          builder: (ctx) =>
-                              AlertDialog(
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(ctx);
-                                    },
-                                    child: Text(
-                                      'Close',
-                                    ),
-                                  ),
-                                ],
-                                content: Text(
-                                  'Enter valid email address',
+                          builder: (ctx) => AlertDialog(
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                },
+                                child: Text(
+                                  'Close',
                                 ),
                               ),
+                            ],
+                            content: Text(
+                              'Enter valid email address',
+                            ),
+                          ),
                         );
                       } else {
                         await DioHelper.postData(
-                            url: SEND_PASSWORD_VERIVY_EMAIL, data: {
-                          "email": _email.text
-                        })
-                            .then((value) {
-                          if(value.statusCode == 200) {
+                            url: SEND_PASSWORD_VERIVY_EMAIL,
+                            data: {"email": _email.text}).then((value) {
+                          if (value.statusCode == 200) {
                             return Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) =>
                                         VerificationCodeScreen.reset(
                                             email: _email.text)));
-                          }
-                          else {
+                          } else {
                             print(value.data["msg"]);
                           }
                         });
@@ -192,20 +182,20 @@ class LoginScreen extends StatelessWidget {
                 height: screenHeight / 10,
                 width: screenHeight / 10,
                 child: FloatingActionButton(
-                  onPressed: () {
+                  onPressed: () async {
                     //TODO: login
                     if (_formKey.currentState!.validate()) {
                       Provider.of<NetworkProvider>(context, listen: false)
                           .userLogin(
-                          email: _email.text, password: _password.text)
+                              email: _email.text, password: _password.text)
                           .then((value) {
                         if (provider.loggedInStatus == AuthStatus.loggedIn) {
                           SharedHelper.saveData(
-                              key: TOKEN,
-                              value: provider.loginModel!.user!.token)
-                              .then((value) {
+                                  key: TOKEN,
+                                  value: provider.loginModel!.user!.token)
+                              .then((value)  {
                             if (provider
-                                .loginModel!.user!.accountConfirmation ==
+                                    .loginModel!.user!.accountConfirmation ==
                                 0) {
                               Navigator.push(
                                   context,
@@ -213,6 +203,8 @@ class LoginScreen extends StatelessWidget {
                                       builder: (_) =>
                                           VerificationCodeScreen()));
                             } else {
+                               Provider.of<HomeProvider>(context, listen: false)
+                                  .getProducts();
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

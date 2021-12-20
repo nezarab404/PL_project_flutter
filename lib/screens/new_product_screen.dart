@@ -510,21 +510,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                       discount1: double.parse(per1.text + ".0"),
                       discount2: double.parse(per2.text + ".0"),
                       discount3: double.parse(per3.text + ".0"),
-
-                      // price: 55.5,
-                      // quantity: 10.0,
-                      // name: "koko",
-                      // description:
-                      //     " description.text description.text description.text",
-                      // phone: "0000",
-                      // rDays1: 10,
-                      // rDays2: 6,
-                      // rDays3: 2,
-
-                      // discount1: 70,
-                      // discount2: 60,
-                      // discount3: 40,
-                      // date: DateTime(2021,12,20).millisecondsSinceEpoch,
                     )
                         .then((value) {
                       Provider.of<HomeProvider>(context, listen: false)

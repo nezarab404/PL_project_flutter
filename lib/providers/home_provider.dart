@@ -28,10 +28,8 @@ class HomeProvider with ChangeNotifier {
           products.add(ProductModel.fromJson(product));
         });
         getProductsStatus = Status.success;
-
       } else {
         getProductsStatus = Status.failed;
-
       }
       print(getProductsStatus);
       notifyListeners();
@@ -39,5 +37,17 @@ class HomeProvider with ChangeNotifier {
       getProductsStatus = Status.failed;
       notifyListeners();
     });
+  }
+
+  void addLike(int id) {
+    int index = products.indexWhere((element) => element.id == id);
+    if (!products[index].isLike!) {
+      products[index].likes = products[index].likes! + 1;
+      products[index].isLike = true;
+    } else {
+      products[index].likes = products[index].likes! - 1;
+      products[index].isLike = false;
+    }
+    notifyListeners();
   }
 }

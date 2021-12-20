@@ -100,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                 .changeIndex(index);
             if (index == 2) {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const NewProductScreen()));
+                  MaterialPageRoute(builder: (_) => NewProductScreen()));
             }
           },
         ),

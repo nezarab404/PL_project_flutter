@@ -1,39 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:programming_languages_project/providers/profile_provider.dart';
+import 'package:programming_languages_project/shared/commponents/mbs_element.dart';
+import 'package:provider/provider.dart';
 import '../shared/commponents/profile_info_field.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
-class ProfileLayout extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   bool myProfile = false;
 
-  ProfileLayout({
+  ProfileScreen({
     Key? key,
     this.myProfile = false,
   }) : super(key: key);
 
-  ProfileLayout.myProfile({
+  ProfileScreen.myProfile({
     Key? key,
     this.myProfile = true,
   }) : super(key: key);
 
   @override
-  _ProfileLayoutState createState() => _ProfileLayoutState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileLayoutState extends State<ProfileLayout> {
+class _ProfileScreenState extends State<ProfileScreen> {
   bool onEdit = false;
 
-  final bioController = TextEditingController();
-  final mobileNumberController = TextEditingController();
-  final emailController = TextEditingController();
-  final facebookAccountController = TextEditingController();
-  final passwordController = TextEditingController();
+  final bioController = TextEditingController(
+      text: 'User description User description User description');
+  final mobileNumberController = TextEditingController(text: '+963992663032');
+  final emailController =
+      TextEditingController(text: 'huthaifazyadeh@gmail.com');
+  final facebookAccountController = TextEditingController(text: 'Facebook URL');
+  final passwordController = TextEditingController(text: 'user password');
 
   @override
   Widget build(BuildContext context) {
-    //////very important to move before run////////
+    //////very important to delete before run////////
     widget.myProfile = true;
-    //////very important to move before run////////
+    //////very important to delete before run////////
 
+    var provider = Provider.of<ProfileProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
     // final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -55,13 +62,19 @@ class _ProfileLayoutState extends State<ProfileLayout> {
               children: [
                 Container(
                   height: screenHeight / 2,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/images.jpeg'),
+                      image: provider.profileImage == null
+                          ? const AssetImage(
+                              'assets/images/images.jpeg',
+                            )
+                          : FileImage(
+                              provider.profileImage!,
+                            ) as ImageProvider,
                       fit: BoxFit.cover,
                     ),
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
                     ),
@@ -97,7 +110,58 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                     ),
                     child: widget.myProfile
                         ? IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                backgroundColor: darkBlue,
+                                context: context,
+                                builder: (context) {
+                                  return SizedBox(
+                                    height: screenHeight / 5,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Pick Image Form',
+                                          style: TextStyle(
+                                            color: mainGrey,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            MBSElement(
+                                              icon: Icons.camera_alt,
+                                              text: 'Camera',
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                provider.pickImage(
+                                                    ImageSource.camera);
+                                              },
+                                            ),
+                                            MBSElement(
+                                              icon: Icons.photo_library,
+                                              text: 'Gallery',
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                provider.pickImage(
+                                                    ImageSource.gallery);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                             color: mainRed,
                             icon: const Icon(
                               Icons.camera_alt,
@@ -119,8 +183,6 @@ class _ProfileLayoutState extends State<ProfileLayout> {
             ),
             ProfileInfoField(
               icon: Icons.info,
-              text:
-                  'User descriptionUser descriptionUser descriptionUser descriptionUser descriptionUser descriptionUser description',
               title: 'Bio',
               function: () {},
               onEdit: onEdit,
@@ -131,7 +193,6 @@ class _ProfileLayoutState extends State<ProfileLayout> {
             ),
             ProfileInfoField(
               icon: Icons.smartphone,
-              text: '+963992663032',
               title: 'Mobile',
               function: () {},
               onEdit: onEdit,
@@ -142,7 +203,6 @@ class _ProfileLayoutState extends State<ProfileLayout> {
             ),
             ProfileInfoField(
               icon: Icons.email,
-              text: 'huthaifazyadeh@gmail.com',
               title: 'Email',
               function: () {},
               onEdit: onEdit,
@@ -153,7 +213,6 @@ class _ProfileLayoutState extends State<ProfileLayout> {
             ),
             ProfileInfoField(
               icon: Icons.facebook,
-              text: 'Facebook URL',
               title: 'Facebook',
               function: () {},
               onEdit: onEdit,
@@ -166,10 +225,10 @@ class _ProfileLayoutState extends State<ProfileLayout> {
             if (widget.myProfile)
               ProfileInfoField(
                 icon: Icons.password,
-                text: '********',
                 title: 'Password',
                 function: () {},
                 onEdit: onEdit,
+                isPassword: true,
                 controller: passwordController,
               ),
             const SizedBox(

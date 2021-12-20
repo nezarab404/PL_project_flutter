@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
+import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/screens/login_screen.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:programming_languages_project/shared/commponents/comments_layout.dart';
@@ -72,6 +73,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<VerifyProvider>(
           create: (_) => VerifyProvider(),
         ),
+        ChangeNotifierProvider<ProfileProvider>(
+          create: (_) => ProfileProvider(),
+        ),
       ],
       child: MaterialApp(
         // localizationsDelegates: const [
@@ -100,7 +104,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: mainDarkBlue,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        home: ProfileLayout(),
+        home: ProfileScreen(),
       ),
     );
   }

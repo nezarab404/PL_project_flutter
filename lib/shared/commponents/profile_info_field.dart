@@ -1,24 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
-class ProfileInfoField extends StatelessWidget {
-  const ProfileInfoField({
+
+class ProfileInfoField extends StatefulWidget {
+  ProfileInfoField({
     Key? key,
     required this.title,
     required this.text,
     required this.icon,
-    this.suffix,
+    // this.suffix,
+    required this.onEdit,
+    required this.controller,
     this.function,
   }) : super(key: key);
 
   final String? title;
-  final String? text;
+  String? text;
   final IconData? icon;
-  final IconData? suffix;
+  final bool onEdit;
+  final TextEditingController controller;
+  // final IconData? suffix;
   final Function()? function;
+
+  @override
+  State<ProfileInfoField> createState() => _ProfileInfoFieldState();
+}
+
+class _ProfileInfoFieldState extends State<ProfileInfoField> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: function,
+      onPressed: widget.function,
       style: ElevatedButton.styleFrom(
         primary: Colors.transparent,
         elevation: 0,
@@ -40,7 +51,7 @@ class ProfileInfoField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(40),
               ),
               child: Icon(
-                icon,
+                widget.icon,
                 color: mainRed,
               ),
             ),
@@ -51,7 +62,7 @@ class ProfileInfoField extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title!,
+                  widget.title!,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -60,14 +71,25 @@ class ProfileInfoField extends StatelessWidget {
                 ),
                 SizedBox(
                   width: 300,
-                  child: Text(
-                    text!,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 18,
-                    ),
-                  ),
+                  child: widget.onEdit
+                      ? TextFormField(
+                          controller: widget.controller,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 18,
+                          ),
+                        )
+                      : Text(
+                          widget.controller.text.isEmpty
+                              ? widget.text!
+                              : widget.controller.text,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 18,
+                          ),
+                        ),
                 ),
               ],
             ),

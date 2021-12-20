@@ -34,11 +34,6 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
-  static const password = "Password",
-      confPassword = "Confirm password",
-      newPassword = "New password",
-      confNewPassword = "Confirm new password";
-
   var icon = Icons.visibility;
 
   @override
@@ -68,31 +63,29 @@ class _InputFormState extends State<InputForm> {
             maxLines: widget.isDescription ? null : 1,
             decoration: InputDecoration(
               border: InputBorder.none,
+              suffixIcon: 
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.isPassword = !widget.isPassword;
+                          icon == Icons.visibility_off
+                              ? icon = Icons.visibility
+                              : icon = Icons.visibility_off;
+                        });
+                      },
+                      icon: Icon(
+                        icon,
+                        color: icon == Icons.visibility ? mainRed : Colors.grey,
+                      ),
+                      color: Colors.black26,
+                    )
+                   ,
               prefixIcon: Icon(widget.pIcon),
               contentPadding: const EdgeInsets.all(10),
               labelText: widget.hintText,
               hintText: widget.hintText2,
             ),
           ),
-          if (widget.hintText == password ||
-              widget.hintText == confPassword ||
-              widget.hintText == newPassword ||
-              widget.hintText == confNewPassword)
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  widget.isPassword = !widget.isPassword;
-                  icon == Icons.visibility_off
-                      ? icon = Icons.visibility
-                      : icon = Icons.visibility_off;
-                });
-              },
-              icon: Icon(
-                icon,
-                color: icon == Icons.visibility ? mainRed : Colors.grey,
-              ),
-              color: Colors.black26,
-            ),
         ],
       ),
     );

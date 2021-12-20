@@ -30,6 +30,7 @@ class RegisterScreen extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
     var provider = Provider.of<NetworkProvider>(context);
     return Scaffold(
+      appBar:AppBar(),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,

@@ -371,6 +371,12 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   provider.pickDate(context);
                 },
                 child: Text('Expiration date')),
+            // Container(
+            //   width: 370,
+            //   height: 50,
+            //   decoration: BoxDecoration(
+            //       color: Colors.white, borderRadius: BorderRadius.circular(20)),
+            // ),
             SizedBox(
               height: screenHeight / 40,
             ),
@@ -486,58 +492,56 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 10,
               width: screenHeight / 10,
-              child: Builder(
-                builder: (ctx) {
-                  return FloatingActionButton(
-                    onPressed: () {
-                      print("momo ${quantity.text}");
-                      Provider.of<NewProductProvider>(context, listen: false)
-                          .addProduct(
-                        price: double.parse(price.text + ".0"),
-                        quantity: double.parse(
-                            quantity.text.isEmpty ? "1.0" :quantity.text + ".0"),
-                        name: name.text,
-                        description: description.text,
-                        phone: number.text,
-                        rDays1: int.parse(rDays1.text),
-                        rDays2: int.parse(rDays2.text),
-                        rDays3: int.parse(rDays3.text),
-                        discount1: double.parse(per1.text + ".0"),
-                        discount2: double.parse(per2.text + ".0"),
-                        discount3: double.parse(per3.text + ".0"),
+              child: Builder(builder: (ctx) {
+                return FloatingActionButton(
+                  onPressed: () {
+                    print("momo ${quantity.text}");
+                    Provider.of<NewProductProvider>(context, listen: false)
+                        .addProduct(
+                      price: double.parse(price.text + ".0"),
+                      quantity: double.parse(
+                          quantity.text.isEmpty ? "1.0" : quantity.text + ".0"),
+                      name: name.text,
+                      description: description.text,
+                      phone: number.text,
+                      rDays1: int.parse(rDays1.text),
+                      rDays2: int.parse(rDays2.text),
+                      rDays3: int.parse(rDays3.text),
+                      discount1: double.parse(per1.text + ".0"),
+                      discount2: double.parse(per2.text + ".0"),
+                      discount3: double.parse(per3.text + ".0"),
 
-                        // price: 55.5,
-                        // quantity: 10.0,
-                        // name: "koko",
-                        // description:
-                        //     " description.text description.text description.text",
-                        // phone: "0000",
-                        // rDays1: 10,
-                        // rDays2: 6,
-                        // rDays3: 2,
+                      // price: 55.5,
+                      // quantity: 10.0,
+                      // name: "koko",
+                      // description:
+                      //     " description.text description.text description.text",
+                      // phone: "0000",
+                      // rDays1: 10,
+                      // rDays2: 6,
+                      // rDays3: 2,
 
-                        // discount1: 70,
-                        // discount2: 60,
-                        // discount3: 40,
-                        // date: DateTime(2021,12,20).millisecondsSinceEpoch,
-                      )
-                          .then((value) {
-
-                          Provider.of<HomeProvider>(context).getProducts();
-                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (_)=>MyDrawer()));
-                        
-                      }); //1640905200
-                    },
-                    backgroundColor: mainRed,
-                    child: Icon(
-                      Icons.check,
-                      color: mainDarkBlue,
-                      size: 40,
-                    ),
-                    elevation: 6,
-                  );
-                }
-              ),
+                      // discount1: 70,
+                      // discount2: 60,
+                      // discount3: 40,
+                      // date: DateTime(2021,12,20).millisecondsSinceEpoch,
+                    )
+                        .then((value) {
+                      Provider.of<HomeProvider>(context, listen: false)
+                          .getProducts();
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => MyDrawer()));
+                    }); //1640905200
+                  },
+                  backgroundColor: mainRed,
+                  child: Icon(
+                    Icons.check,
+                    color: mainDarkBlue,
+                    size: 40,
+                  ),
+                  elevation: 6,
+                );
+              }),
             ),
             SizedBox(
               height: screenHeight / 30,

@@ -202,14 +202,17 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 height: screenHeight / 10,
                 width: screenHeight / 10,
                 child: FloatingActionButton(
-                  onPressed: () {
+                  onPressed: () async{
                     widget._isReset
-                        ? Provider.of<VerifyProvider>(context, listen: false)
+                        ? await Provider.of<VerifyProvider>(context, listen: false)
                             .resetVerify(email: widget.email!, code: _code.text)
                             .then((value) {
                               print("koo ${widget.email!}");
                               print(_code.text);
-                            if (provider.s == Status.success) {
+                            if(provider.s == Status.loading){
+                              print(provider.s);
+                            }
+                              if (provider.s == Status.success) {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

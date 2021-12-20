@@ -11,7 +11,8 @@ import '../shared/commponents/header.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   bool passwordState = true;
-
+  var password = TextEditingController();
+  var confirmPassword = TextEditingController();
 
   ForgotPasswordScreen({Key? key}) : super(key: key);
 
@@ -26,8 +27,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    var password = TextEditingController();
-    var confirmPassword = TextEditingController();
+
     var provider = Provider.of<VerifyProvider>(context);
     String x1="",x2="";
     return Scaffold(
@@ -111,38 +111,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               margin: EdgeInsets.symmetric(
                 horizontal: screenWidth / 10,
               ),
-              child: Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  TextFormField(
-                    controller: password,
-                    validator: (val)=>Validator.passwordValidator(val),
-                    textInputAction: TextInputAction.next,
-                    obscureText: true,
-                    maxLines: 1,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.password),
-                      contentPadding: EdgeInsets.all(10),
-                      labelText: "New password",
-                    ),
+              child: TextFormField(
+                controller: widget.password,
+                //validator: (val)=>Validator.passwordValidator(val),
+                textInputAction: TextInputAction.next,
+                obscureText: true,
+                maxLines: 1,
+                decoration:  InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.passwordState = !widget.passwordState;
+                      icon == Icons.visibility_off
+                          ? icon = Icons.visibility
+                          : icon = Icons.visibility_off;
+                    });
+                  },
+                  icon: Icon(
+                    icon,
+                    color: icon == Icons.visibility ? mainRed : Colors.grey,
                   ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          widget.passwordState = !widget.passwordState;
-                          icon == Icons.visibility_off
-                              ? icon = Icons.visibility
-                              : icon = Icons.visibility_off;
-                        });
-                      },
-                      icon: Icon(
-                        icon,
-                        color: icon == Icons.visibility ? mainRed : Colors.grey,
-                      ),
-                      color: Colors.black26,
-                    ),
-                ],
+                  color: Colors.black26,
+                ),
+                  contentPadding: const EdgeInsets.all(10),
+                  labelText: "New password",
+                ),
               ),
             ),
             //Reset Form
@@ -171,7 +165,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 alignment: Alignment.centerRight,
                 children: [
                   TextFormField(
-                    controller: confirmPassword,
+                    controller: widget.confirmPassword,
                     validator: (val)=>Validator.passwordValidator(val),
                     textInputAction: TextInputAction.next,
                     obscureText: true,
@@ -220,8 +214,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 onPressed: () {
                   Provider.of<VerifyProvider>(context, listen: false)
                       .resetPassword(
-                          password: password.text,
-                          confirmPassword: confirmPassword.text)
+                          password: widget.password.text,
+                          confirmPassword: widget.confirmPassword.text)
                       .then((value) {
                     if (provider.s == Status.success) {
                       Navigator.pushReplacement(context,

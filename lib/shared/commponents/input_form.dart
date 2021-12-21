@@ -12,6 +12,7 @@ class InputForm extends StatefulWidget {
   final TextEditingController? controller;
   final TextInputType? inputType;
   final String? Function(String?)? validator;
+  final void Function(String?)? saveFunction;
   bool isPassword;
   bool isDescription;
 
@@ -25,6 +26,7 @@ class InputForm extends StatefulWidget {
     this.isPassword = false,
     this.isDescription = false,
     this.hintText2,
+    this.saveFunction,
   });
 
   @override
@@ -33,6 +35,8 @@ class InputForm extends StatefulWidget {
 
 class _InputFormState extends State<InputForm> {
   var icon = Icons.visibility;
+
+  bool visibility = true;
 
   @override
   Widget build(BuildContext context) {
@@ -45,29 +49,32 @@ class _InputFormState extends State<InputForm> {
         horizontal: widget.screenWidth != null ? widget.screenWidth! / 10 : 0,
       ),
       child: TextFormField(
+        onSaved: widget.saveFunction,
         controller: widget.controller,
         validator: widget.validator,
         textInputAction: TextInputAction.next,
-        obscureText: widget.isPassword,
+        obscureText: visibility,
         keyboardType: widget.inputType,
         maxLines: widget.isDescription ? null : 1,
         decoration: InputDecoration(
           border: InputBorder.none,
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                widget.isPassword = !widget.isPassword;
-                icon == Icons.visibility_off
-                    ? icon = Icons.visibility
-                    : icon = Icons.visibility_off;
-              });
-            },
-            icon: Icon(
-              icon,
-              color: icon == Icons.visibility ? mainRed : Colors.grey,
-            ),
-            color: Colors.black26,
-          ),
+          suffixIcon: widget.isPassword
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      visibility = !visibility;
+                      icon == Icons.visibility_off
+                          ? icon = Icons.visibility
+                          : icon = Icons.visibility_off;
+                    });
+                  },
+                  icon: Icon(
+                    icon,
+                    color: icon == Icons.visibility ? mainRed : Colors.grey,
+                  ),
+                  color: Colors.black26,
+                )
+              : null,
           prefixIcon: Icon(widget.pIcon),
           contentPadding: const EdgeInsets.all(10),
           labelText: widget.hintText,

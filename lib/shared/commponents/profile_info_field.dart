@@ -132,61 +132,65 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
         return AlertDialog(
           content: SizedBox(
             height: 300,
-            child: Column(
-              children: [
-                InputForm(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  InputForm(
                     isPassword: true,
                     controller: oldPassController,
                     hintText2: 'Current password',
-                    pIcon: Icons.lock_clock),
-                const SizedBox(
-                  height: 20,
-                ),
-                InputForm(
-                  isPassword: true,
-                  controller: newPassController,
-                  hintText2: 'New password',
-                  pIcon: Icons.password,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                InputForm(
-                  isPassword: true,
-                  controller: confirmController,
-                  hintText2: 'Confirm password',
-                  pIcon: Icons.check,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                oldPassController.text.isEmpty
-                    ? const Text('')
-                    : (confirmController.text == newPassController.text) &&
-                            (newPassController.text.isNotEmpty)
-                        ? const Icon(
-                            Icons.check_circle_outline,
-                            color: Colors.green,
-                            size: 50,
-                          )
-                        : Row(
-                            children: const [
-                              Icon(
-                                Icons.info_outline,
-                                color: Colors.red,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Passwords do not match',
-                                style: TextStyle(
+                    pIcon: Icons.lock_clock,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  InputForm(
+                    isPassword: true,
+                    controller: newPassController,
+                    hintText2: 'New password',
+                    pIcon: Icons.password,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  InputForm(
+                    isPassword: true,
+                    controller: confirmController,
+                    hintText2: 'Confirm password',
+                    pIcon: Icons.check,
+                    saveFunction:(_)=> setState(() {}),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  oldPassController.text.isEmpty
+                      ? const Text('')
+                      : (confirmController.text == newPassController.text) &&
+                              (newPassController.text.isNotEmpty)
+                          ? const Icon(
+                              Icons.check_circle_outline,
+                              color: Colors.green,
+                              size: 50,
+                            )
+                          : Row(
+                              children: const [
+                                Icon(
+                                  Icons.info_outline,
                                   color: Colors.red,
                                 ),
-                              ),
-                            ],
-                          ),
-              ],
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Passwords do not match',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                ],
+              ),
             ),
           ),
           actions: [

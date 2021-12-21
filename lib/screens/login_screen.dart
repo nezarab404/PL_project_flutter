@@ -193,7 +193,7 @@ class LoginScreen extends StatelessWidget {
                           SharedHelper.saveData(
                                   key: TOKEN,
                                   value: provider.loginModel!.user!.token)
-                              .then((value)  {
+                              .then((value) {
                             if (provider
                                     .loginModel!.user!.accountConfirmation ==
                                 0) {
@@ -203,7 +203,7 @@ class LoginScreen extends StatelessWidget {
                                       builder: (_) =>
                                           VerificationCodeScreen()));
                             } else {
-                               Provider.of<HomeProvider>(context, listen: false)
+                              Provider.of<HomeProvider>(context, listen: false)
                                   .getProducts();
                               Navigator.pushReplacement(
                                   context,

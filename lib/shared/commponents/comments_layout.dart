@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:programming_languages_project/providers/product_detailes_provider.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
+import 'package:provider/provider.dart';
 
 class CommentsLayout extends StatefulWidget {
   const CommentsLayout({Key? key}) : super(key: key);
@@ -67,6 +70,7 @@ class _CommentsLayoutState extends State<CommentsLayout> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProductDetailesProvider>(context);
     return Container(
       height: 600,
       decoration: BoxDecoration(
@@ -89,8 +93,13 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //user profile photo
-                      const CircleAvatar(
-                        child: Icon(Icons.person),
+                      CircleAvatar(
+                        child: provider.comments[index].user!.image == null
+                            ? const Icon(Icons.person)
+                            : Image.network(
+                                provider.comments[index].user!.image!,
+                                fit: BoxFit.cover,
+                              ),
                         radius: 25,
                         backgroundColor: Colors.white,
                       ),
@@ -113,19 +122,42 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //username
-                                Text(
-                                  users[index]['name']!,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(provider.comments[index].user!.name!),
+                                    Text(
+                                      provider.comments[index].time!,
+                                      style: const TextStyle(
+                                        color: Colors.black26,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(
                                   height: 5,
                                 ),
                                 //user comment
                                 Text(
-                                  users[index]['comment']!,
+                                  provider.comments[index].comment!,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                provider.comments[index].edit == 1
+                                    ? const Text(
+                                        'Edited',
+                                        style: TextStyle(
+                                          color: Colors.black26,
+                                          fontSize: 12,
+                                        ),
+                                      )
+                                    : const SizedBox(),
                               ],
                             ),
                           ),
@@ -135,7 +167,7 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                   ),
                 );
               },
-              itemCount: users.length,
+              itemCount: provider.comments.length,
             ),
           ),
 
@@ -194,6 +226,10 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                 ),
               ),
             ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
           ),
         ],
       ),

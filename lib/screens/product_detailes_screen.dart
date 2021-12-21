@@ -114,6 +114,8 @@ class ProductDetailesScreen extends StatelessWidget {
               FloatingActionButton(
                 backgroundColor: mainRed,
                 onPressed: () {
+                  Provider.of<ProductDetailesProvider>(context, listen: false)
+                      .getComments(model.id!);
                   showModalBottomSheet(
                     isScrollControlled: true,
                     shape: const RoundedRectangleBorder(
@@ -123,8 +125,7 @@ class ProductDetailesScreen extends StatelessWidget {
                       ),
                     ),
                     context: context,
-                    builder: (context) =>
-                        Wrap(children: const [CommentsLayout()]),
+                    builder: (context) => Wrap(children: [CommentsLayout()]),
                   );
                 },
                 heroTag: "comment",

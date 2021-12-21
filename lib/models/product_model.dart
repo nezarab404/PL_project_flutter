@@ -32,8 +32,8 @@ class ProductModel {
     facebook = json['facebook'];
     price = json['price']*1.0;
     user = UserModel.fromJson(json['user']);
-    views = json['views'];
-    likes = json['likes'];
-    isLike = json['meLikes'];
+    views = json['views_count'];
+    likes = json['likes_count'];
+    isLike = json['me_likes'];
   }
 }

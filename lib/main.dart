@@ -104,7 +104,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: mainDarkBlue,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        home: ProfileScreen(),
+        home: mainWidget,
       ),
     );
   }

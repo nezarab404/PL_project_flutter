@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/comment_model.dart';
 import 'package:programming_languages_project/models/product_model.dart';

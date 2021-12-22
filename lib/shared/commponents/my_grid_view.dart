@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/shared/commponents/product_item.dart';
 
+// ignore: must_be_immutable
 class MyGridView extends StatelessWidget {
   MyGridView({Key? key, required this.itemCount , required this.items}) : super(key: key);
   int itemCount;
   List<ProductModel> items;
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment:itemCount == 1 ? MainAxisAlignment.start: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ class MyGridView extends StatelessWidget {
               children: List.generate(
                   itemCount ~/ 2,
                   (index) =>  Padding(
-                        padding: EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: ProductItem(model: items[(index*2)+1],),
                       ))),
         )

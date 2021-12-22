@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
+// ignore: must_be_immutable
 class MBSElement extends StatelessWidget {
   IconData? icon;
   String? text;

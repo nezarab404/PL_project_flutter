@@ -14,8 +14,10 @@ import 'models/user_model.dart';
 import 'providers/new_product_provider.dart';
 import 'providers/home_provider.dart';
 import 'providers/product_detailes_provider.dart';
+import 'providers/products_i_like_provider.dart';
 import 'providers/verify_provider.dart';
 import 'screens/drawer.dart';
+import 'screens/products_i_like_screen.dart';
 import 'shared/end_points.dart';
 
 void main() async {
@@ -30,11 +32,13 @@ void main() async {
     await DioHelper.getData(url: ME, token: token).then((value) {
       if (value.statusCode == 200) {
         me = UserModel.fromJson(value.data['user']);
-        //widget = const MyDrawer();
       } else {
         widget = LoginScreen();
       }
-    }).catchError((error) {});
+    }).catchError((error) {
+      // ignore: avoid_print
+      print(error);
+    });
     if (me != null) {
       if (me!.accountConfirmation == 1) {
         widget = const MyDrawer();
@@ -74,14 +78,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProfileProvider>(
           create: (_) => ProfileProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ProductILikeProvider()..getLikedProducts(),
+        ),
       ],
       child: MaterialApp(
-        // localizationsDelegates: const [
-        //   GlobalMaterialLocalizations.delegate
-        // ],
-        // supportedLocales: const[
-        //   Locale('SY'),
-        // ],
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.dark,

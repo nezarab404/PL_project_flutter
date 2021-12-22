@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import '../shared/commponents/header.dart';
 import 'drawer.dart';
 import 'forgot_password_screen.dart';
 
+// ignore: must_be_immutable
 class VerificationCodeScreen extends StatefulWidget {
   VerificationCodeScreen({Key? key}) : super(key: key) {
     _isReset = false;
@@ -35,7 +38,6 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
-    TextEditingController textEditingController = TextEditingController();
     // ..text = "123456";
 
     // ignore: close_sinks
@@ -65,6 +67,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               Stack(

@@ -1,19 +1,15 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/shared/commponents/my_grid_view.dart';
-import 'package:programming_languages_project/shared/commponents/product_item.dart';
-import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
-  final _zoomDrawerController = ZoomDrawerController();
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<HomeProvider>(context);

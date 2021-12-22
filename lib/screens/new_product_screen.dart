@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,6 +14,7 @@ import 'package:programming_languages_project/shared/commponents/text_divider.da
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class NewProductScreen extends StatefulWidget {
   var price = TextEditingController();
   var quantity = TextEditingController();
@@ -26,7 +29,7 @@ class NewProductScreen extends StatefulWidget {
   var number = TextEditingController();
   var facebook = TextEditingController();
   var date = TextEditingController();
-  var key = GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
   NewProductScreen({Key? key}) : super(key: key);
 
   static const _categories = [

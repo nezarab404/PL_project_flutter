@@ -10,6 +10,7 @@ import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+// ignore: must_be_immutable
 class ProductDetailesScreen extends StatelessWidget {
   ProductDetailesScreen({Key? key, required this.model}) : super(key: key);
   ProductModel model;
@@ -125,7 +126,7 @@ class ProductDetailesScreen extends StatelessWidget {
                       ),
                     ),
                     context: context,
-                    builder: (context) => Wrap(children: [CommentsLayout()]),
+                    builder: (context) => Wrap(children: const[ CommentsLayout()]),
                   );
                 },
                 heroTag: "comment",

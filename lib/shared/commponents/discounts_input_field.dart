@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
+// ignore: must_be_immutable
 class DiscountsInputField extends StatelessWidget {
   DiscountsInputField({Key? key, this.cardColor,this.controller}) : super(key: key);
   Color? cardColor;

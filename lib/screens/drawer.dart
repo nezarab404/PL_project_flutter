@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
+import 'package:programming_languages_project/screens/products_i_like_screen.dart';
 import 'package:programming_languages_project/screens/profile_screen.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
@@ -20,9 +21,11 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<HomeProvider>(context);
+
     return ZoomDrawer(
       style: DrawerStyle.Style1,
-      mainScreen: HomeScreen(),
+      mainScreen: const HomeScreen(),
       menuScreen: Container(
         padding: const EdgeInsets.all(10),
         color: darkBlue2,
@@ -37,7 +40,9 @@ class _MyDrawerState extends State<MyDrawer> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProfileScreen(),
+                    builder: (_) => ProfileScreen(
+                      myProfile: true,
+                    ),
                   ),
                 );
               },
@@ -58,12 +63,17 @@ class _MyDrawerState extends State<MyDrawer> {
                     height: 20,
                   ),
                   TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>const ProductsILikeScreen()));
+                      },
                       icon: const Icon(
                         Icons.dangerous,
                         color: Colors.white,
                       ),
-                      label: const Text("My Products",
+                      label: const Text("Products I Liked",
                           style: TextStyle(
                             color: Colors.white,
                           ))),

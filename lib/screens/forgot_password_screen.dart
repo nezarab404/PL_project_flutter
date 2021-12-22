@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
@@ -9,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../shared/themes/main_theme.dart';
 import '../shared/commponents/header.dart';
 
+// ignore: must_be_immutable
 class ForgotPasswordScreen extends StatefulWidget {
   bool passwordState = true;
   var password = TextEditingController();
@@ -29,7 +32,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     var screenWidth = MediaQuery.of(context).size.width;
 
     var provider = Provider.of<VerifyProvider>(context);
-    String x1="",x2="";
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

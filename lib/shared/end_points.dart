@@ -11,3 +11,4 @@ const CHECK_PASSWORD_VERIVY_EMAIL = "/auth/checkPasswordResetCode";
 const RESET_PASSWORD = "/auth/passwordReset";
 const LIKE = "/products/like";
 const COMMENTS = "/products/comments";
+const LIKED_PRODUCTS = "/products/my/products/like";

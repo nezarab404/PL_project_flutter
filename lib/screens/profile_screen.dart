@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../shared/commponents/profile_info_field.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
+// ignore: must_be_immutable
 class ProfileScreen extends StatefulWidget {
   bool myProfile = false;
 

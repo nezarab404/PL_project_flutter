@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
+// ignore: must_be_immutable
 class ProfileInfoField extends StatefulWidget {
   ProfileInfoField({
     Key? key,

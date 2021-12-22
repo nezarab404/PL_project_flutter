@@ -9,7 +9,9 @@ import 'package:programming_languages_project/shared/status.dart';
 
 class HomeProvider with ChangeNotifier {
   int bottomNavBarIndex = 0;
+
   List<ProductModel> products = [];
+
   Status getProductsStatus = Status.init;
 
   void changeIndex(int index) {

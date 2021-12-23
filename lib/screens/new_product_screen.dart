@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
+import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/new_product_provider.dart';
 import 'package:programming_languages_project/screens/drawer.dart';
 import 'package:programming_languages_project/shared/commponents/discounts_input_field.dart';
@@ -16,6 +18,8 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class NewProductScreen extends StatefulWidget {
+  bool isEdit = false;
+  ProductModel? model;
   var price = TextEditingController();
   var quantity = TextEditingController();
   var name = TextEditingController();
@@ -30,9 +34,41 @@ class NewProductScreen extends StatefulWidget {
   var facebook = TextEditingController();
   var date = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  NewProductScreen({Key? key}) : super(key: key);
 
-  static const _categories = [
+  NewProductScreen({Key? key}) : super(key: key);
+  NewProductScreen.edit({Key? key, required this.model}) : super(key: key) {
+    isEdit = true;
+    price = TextEditingController(text: isEdit ? model!.price.toString() : "");
+    quantity =
+        TextEditingController(text: isEdit ? model!.quantity.toString() : "");
+    name = TextEditingController(text: isEdit ? model!.name : "");
+    description = TextEditingController(text: isEdit ? model!.description : "");
+    rDays1 = TextEditingController(
+        text: isEdit
+            ? model!.priceInfo!.discounts[0].remainingDays.toString()
+            : "");
+    rDays2 = TextEditingController(
+        text: isEdit
+            ? model!.priceInfo!.discounts[1].remainingDays.toString()
+            : "");
+    rDays3 = TextEditingController(
+        text: isEdit
+            ? model!.priceInfo!.discounts[2].remainingDays.toString()
+            : "");
+    per1 = TextEditingController(
+        text:
+            isEdit ? model!.priceInfo!.discounts[0].percentage.toString() : "");
+    per2 = TextEditingController(
+        text:
+            isEdit ? model!.priceInfo!.discounts[1].percentage.toString() : "");
+    per3 = TextEditingController(
+        text:
+            isEdit ? model!.priceInfo!.discounts[2].percentage.toString() : "");
+    number = TextEditingController(text: isEdit ? model!.phone : "");
+    facebook = TextEditingController(text: isEdit ? model!.facebook : "");
+  }
+
+  static var _categories = [
     'Food',
     'Medicines',
     'Cosmetics',
@@ -51,6 +87,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     var provider = Provider.of<NewProductProvider>(context);
+    if (widget.isEdit) {
+      provider.setCategory(widget.model!.category!);
+    }
     return Scaffold(
       //screen appbar
       appBar: AppBar(
@@ -252,16 +291,18 @@ class _NewProductScreenState extends State<NewProductScreen> {
             //   pIcon: Icons.date_range,
             //   //TODO
             // ),
-            ElevatedButton(
-              onPressed: () {
-                provider.pickDate(context);
-              },
-              child: const Text('Expiration date'),
-            ),
+            if (!widget.isEdit)
+              ElevatedButton(
+                onPressed: () {
+                  provider.pickDate(context);
+                },
+                child: const Text('Expiration date'),
+              ),
 
-            SizedBox(
-              height: screenHeight / 40,
-            ),
+            if (!widget.isEdit)
+              SizedBox(
+                height: screenHeight / 40,
+              ),
             //add description
             InputForm(
               screenWidth: screenWidth,
@@ -379,7 +420,39 @@ class _NewProductScreenState extends State<NewProductScreen> {
               child: Builder(builder: (ctx) {
                 return FloatingActionButton(
                   onPressed: () {
-                    print("momo ${widget.quantity.text}");
+                    widget.isEdit
+                        ? Provider.of<NewProductProvider>(context,
+                                listen: false)
+                            .updateMyProduct(
+                            productId: widget.model!.id!,
+                            price: double.parse(widget.price.text + ".0"),
+                            quantity: double.parse(
+                              widget.quantity.text.isEmpty
+                                  ? "1.0"
+                                  : widget.quantity.text + ".0",
+                            ),
+                            name: widget.name.text,
+                            description: widget.description.text,
+                            phone: widget.number.text,
+                            rDays1: int.parse(widget.rDays1.text),
+                            rDays2: int.parse(widget.rDays2.text),
+                            rDays3: int.parse(widget.rDays3.text),
+                            discount1: double.parse(widget.per1.text + ".0"),
+                            discount2: double.parse(widget.per2.text + ".0"),
+                            discount3: double.parse(widget.per3.text + ".0"),
+                          )
+                            .then((value) {
+                            Provider.of<HomeProvider>(context, listen: false)
+                                .getProducts();
+                            Provider.of<MyProductsProvider>(context,
+                                    listen: false)
+                                .getMyProducts();
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const MyDrawer()));
+                          })
+                        : print("momo ${widget.quantity.text}");
                     Provider.of<NewProductProvider>(context, listen: false)
                         .addProduct(
                       price: double.parse(widget.price.text + ".0"),
@@ -401,6 +474,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
                         .then((value) {
                       Provider.of<HomeProvider>(context, listen: false)
                           .getProducts();
+                      Provider.of<MyProductsProvider>(context, listen: false)
+                          .getMyProducts();
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (_) => const MyDrawer()));
                     }); //1640905200

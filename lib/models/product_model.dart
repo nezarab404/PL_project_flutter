@@ -1,5 +1,7 @@
 import 'package:programming_languages_project/models/user_model.dart';
 
+import 'descount_model.dart';
+
 class ProductModel {
   int? id;
   String? name;
@@ -17,6 +19,7 @@ class ProductModel {
   int? views;
   int? likes;
   bool? isLike;
+  DiscountsModel? priceInfo;
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -30,10 +33,11 @@ class ProductModel {
     quantity = json['quantity'] * 1.0;
     phone = json['phone'];
     facebook = json['facebook'];
-    price = json['price']*1.0;
+    price = json['price'] * 1.0;
     user = UserModel.fromJson(json['user']);
     views = json['views_count'];
     likes = json['likes_count'];
     isLike = json['me_likes'];
+    priceInfo = DiscountsModel.fromJson(json['discounts']);
   }
 }

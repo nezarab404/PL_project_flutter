@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/screens/login_screen.dart';
@@ -17,7 +18,6 @@ import 'providers/product_detailes_provider.dart';
 import 'providers/products_i_like_provider.dart';
 import 'providers/verify_provider.dart';
 import 'screens/drawer.dart';
-import 'screens/products_i_like_screen.dart';
 import 'shared/end_points.dart';
 
 void main() async {
@@ -80,6 +80,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ProductILikeProvider()..getLikedProducts(),
+        ),ChangeNotifierProvider<MyProductsProvider>(
+          create: (_) => MyProductsProvider()..getMyProducts(),
         ),
       ],
       child: MaterialApp(

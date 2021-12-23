@@ -126,11 +126,28 @@ class ProductDetailesScreen extends StatelessWidget {
                       ),
                     ),
                     context: context,
-                    builder: (context) => Wrap(children: const[ CommentsLayout()]),
+                    builder: (context) => Wrap(
+                      children: [
+                        CommentsLayout(
+                          productId: model.id!,
+                        )
+                      ],
+                    ),
                   );
                 },
                 heroTag: "comment",
-                child: const Icon(Icons.comment),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.comment),
+                    Text(
+                      Provider.of<ProductDetailesProvider>(context)
+                          .comments
+                          .length
+                          .toString(),
+                    )
+                  ],
+                ),
               ),
               FloatingActionButton(
                 backgroundColor: mainRed,

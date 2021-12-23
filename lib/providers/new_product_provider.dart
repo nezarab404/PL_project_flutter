@@ -43,12 +43,6 @@ class NewProductProvider with ChangeNotifier {
     });
   }
 
-  void uploadImage() async {
-    final picker = ImagePicker();
-    var file = await picker.pickImage(source: ImageSource.gallery);
-    DioHelper.uploadFile(url: "", file: file!);
-  }
-
   Future pickMultiImage() async {
     if(Platform.isLinux){
       FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -138,6 +132,65 @@ if (result != null) {
     }
 
     await DioHelper.postData(url: PRODUCTS, token: token, data: imageList)
+        .then((value) {
+      if (value.statusCode == 200) {
+        addProductStatus = Status.success;
+        print(addProductStatus);
+        return true;
+      } else {
+        addProductStatus = Status.failed;
+        print(addProductStatus);
+        //print(value.data['msg']);
+        return false;
+      }
+    });
+    return false;
+  }
+
+  Future<bool> updateMyProduct({
+    required int productId,
+    required double price,
+    required double quantity,
+    required String name,
+    required String description,
+    required String phone,
+    required int rDays1,
+    required int rDays2,
+    required int rDays3,
+    required double discount1,
+    required double discount2,
+    required double discount3,
+    //required int date,
+    String? facebook,
+  }) async {
+    addProductStatus = Status.loading;
+    print(addProductStatus);
+    print("koko $quantity");
+    FormData imageList = FormData.fromMap({
+      "name": name,
+      "description": description,
+      "category": category,
+      "quantity": quantity,
+      "phone": phone,
+      "price": price,
+      "discounts": jsonEncode(
+        [
+          {"remaining_days": rDays1, "discount": discount1},
+          {"remaining_days": rDays2, "discount": discount2},
+          {"remaining_days": rDays3, "discount": discount3},
+        ],
+      ),
+      "image1": await MultipartFile.fromFile(images![0].path,
+          filename: images![0].path.split('/').last)
+    });
+    for (var i = 1; i < images!.length; i++) {
+      imageList.files.add(MapEntry(
+          "image${i + 1}",
+          await MultipartFile.fromFile(images![i].path,
+              filename: images![i].path.split('/').last)));
+    }
+
+    await DioHelper.postData(url: PRODUCTS+'/$productId', token: token, data: imageList)
         .then((value) {
       if (value.statusCode == 200) {
         addProductStatus = Status.success;

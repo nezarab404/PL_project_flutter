@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/product_model.dart';
+import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/screens/product_detailes_screen.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 // ignore: must_be_immutable
 class ProductItem extends StatelessWidget {
   ProductItem({Key? key, required this.model}) : super(key: key);
-  ProductItem.tile({Key? key, required this.model}) : super(key: key) {
+  ProductItem.tile({Key? key, required this.model, this.isMyProduct})
+      : super(key: key) {
     _isTile = true;
   }
   ProductModel model;
   bool _isTile = false;
+  bool? isMyProduct = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -26,7 +29,11 @@ class ProductItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Image.network(model.images[0], fit: BoxFit.fill),
+                  Image.network(
+                    model.images[0],
+                    fit: BoxFit.fill,
+                    width: 120,
+                  ),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -91,8 +98,9 @@ class ProductItem extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) =>
-                                        ProductDetailesScreen(model: model)));
+                                    builder: (_) => isMyProduct!
+                                        ? NewProductScreen.edit(model: model)
+                                        : ProductDetailesScreen(model: model)));
                           },
                           child: const Icon(
                             Icons.arrow_forward_ios,

@@ -1,70 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:programming_languages_project/models/comment_model.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 
 class CommentsLayout extends StatefulWidget {
-  const CommentsLayout({Key? key}) : super(key: key);
+  final int productId;
+  const CommentsLayout({Key? key, required this.productId}) : super(key: key);
 
   @override
   _CommentsLayoutState createState() => _CommentsLayoutState();
 }
 
 class _CommentsLayoutState extends State<CommentsLayout> {
-  final users = [
-    {
-      'name': 'Ahmed',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Ali',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Nizar',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Huthaifa',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Ward',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Hakam',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Adel',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Adel',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Adel',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-    {
-      'name': 'Adel',
-      'comment':
-          'Whatever Whatever Whatever Whatever Whatever Whatever Whatever Whatever',
-    },
-  ];
-
   var commentController = TextEditingController();
 
   @override
@@ -208,20 +157,34 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                   color: mainRed,
                   borderRadius: BorderRadius.circular(40),
                 ),
-                child: IconButton(
-                  onPressed: () {
-                    setState(
-                      () {
-                        if (commentController.text.isNotEmpty) {
-                          users.add({
-                            'name': 'Name',
-                            'comment': commentController.text,
-                          });
-                        }
-                      },
-                    );
-                  },
-                  icon: const Icon(Icons.send),
+                child: InkWell(
+                  focusColor: Colors.amber,
+                  //TODO:
+                  // onLongPress: () {
+                  //   showMenu(
+                  //       context: context,
+                  //       position: RelativeRect.fromSize(
+                  //           Rect.largest, const Size(150, 300)),
+                  //       items: [
+                  //         PopupMenuItem(
+                  //           child: Text('edit'),
+                  //         ),
+                  //       ]);
+                  // },
+                  child: IconButton(
+                    onPressed: () {
+                      if (commentController.text.isNotEmpty) {
+                        Provider.of<ProductDetailesProvider>(context,
+                                listen: false)
+                            .postComment(
+                          productId: widget.productId,
+                          comment: commentController.text,
+                        );
+                        commentController.text = '';
+                      }
+                    },
+                    icon: const Icon(Icons.send),
+                  ),
                 ),
               ),
             ],

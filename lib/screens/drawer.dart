@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
+import 'package:programming_languages_project/screens/my_products_screen.dart';
 import 'package:programming_languages_project/screens/products_i_like_screen.dart';
 import 'package:programming_languages_project/screens/profile_screen.dart';
 import 'package:programming_languages_project/shared/constants.dart';
@@ -40,9 +41,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProfileScreen(
-                      myProfile: true,
-                    ),
+                    builder: (_) => ProfileScreen.myProfile(),
                   ),
                 );
               },
@@ -63,20 +62,43 @@ class _MyDrawerState extends State<MyDrawer> {
                     height: 20,
                   ),
                   TextButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) =>const ProductsILikeScreen()));
-                      },
-                      icon: const Icon(
-                        Icons.dangerous,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const ProductsILikeScreen()));
+                    },
+                    icon: const Icon(
+                      Icons.dangerous,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      "Products I Liked",
+                      style: TextStyle(
                         color: Colors.white,
                       ),
-                      label: const Text("Products I Liked",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ))),
+                    ),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MyProductsScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.my_library_add,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      'My Products',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

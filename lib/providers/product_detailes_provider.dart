@@ -75,7 +75,30 @@ class ProductDetailesProvider with ChangeNotifier {
           notifyListeners();
         });
       } else {
-        productStatus = Status.failed;
+        commentStatus = Status.failed;
+      }
+      notifyListeners();
+    }).catchError((e) {
+      commentStatus = Status.failed;
+      notifyListeners();
+    });
+  }
+
+  Future<void> postComment({
+    required int productId,
+    required String comment,
+  }) async {
+    commentStatus = Status.loading;
+    await DioHelper.postData(
+      url: COMMENTS + "/$productId",
+      token: token,
+      data: {"text": comment},
+    ).then((value) {
+      if (value.statusCode == 200) {
+        getComments(productId);
+        notifyListeners();
+      } else {
+        commentStatus = Status.failed;
       }
       notifyListeners();
     }).catchError((e) {

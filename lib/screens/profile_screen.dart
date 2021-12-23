@@ -12,8 +12,9 @@ class ProfileScreen extends StatefulWidget {
 
   ProfileScreen({
     Key? key,
-    this.myProfile = false,
-  }) : super(key: key);
+  }) : super(key: key) {
+    myProfile = false;
+  }
 
   ProfileScreen.myProfile({
     Key? key,

@@ -42,16 +42,21 @@ class DioHelper {
     return response;
   }
 
-  static Future<Response> getData(
-      {required String url,
-      Map<String, dynamic>? query,
-      String lang = 'en',
-      String? token}) async {
+  static Future<Response> getData({
+    required String url,
+    Map<String, dynamic>? query,
+    String lang = 'en',
+    String? token,
+    String? sort,
+    bool? desc,
+  }) async {
     Response response;
     dio.options.headers = {
       "Content-Type": "application/json",
       'lang': lang,
-      'auth-token': "$token"
+      'auth-token': "$token",
+      'sort': sort,
+      'desc' : desc
     };
     try {
       response = await dio.get(url);

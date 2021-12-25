@@ -37,10 +37,14 @@ class _InputFormState extends State<InputForm> {
   var icon = Icons.visibility;
 
   bool visibility = false;
+  @override
+  void initState() {
+    visibility = widget.isPassword;
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
-    visibility = widget.isPassword;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),

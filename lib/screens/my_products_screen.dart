@@ -6,6 +6,7 @@ import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/shared/commponents/product_item.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class MyProductsScreen extends StatelessWidget {
   MyProductsScreen({Key? key}) : super(key: key);
 
@@ -38,20 +39,10 @@ class MyProductsScreen extends StatelessWidget {
           child: ListView.separated(
               itemBuilder: (context, index) {
                 return Slidable(
-                  // Specify a key if the Slidable is dismissible.
                   key: const ValueKey(0),
-
-                  // The start action pane is the one at the left or the top side.
                   startActionPane: ActionPane(
-                    // A motion is a widget used to control how the pane animates.
                     motion: const ScrollMotion(),
-
-                    // A pane can dismiss the Slidable.
-                    //   dismissible: DismissiblePane(onDismissed: () {}),
-
-                    // All actions are defined in the children parameter.
                     children: [
-                      // A SlidableAction can have an icon and/or a label.
                       SlidableAction(
                         onPressed: (context) {
                           showDialog(
@@ -91,13 +82,6 @@ class MyProductsScreen extends StatelessWidget {
                         icon: Icons.delete,
                         label: 'Delete',
                       ),
-                      // SlidableAction(
-                      //   onPressed: (context) {},
-                      //   backgroundColor: Color(0xFF21B7CA),
-                      //   foregroundColor: Colors.white,
-                      //   icon: Icons.share,
-                      //   label: 'Share',
-                      // ),
                     ],
                   ),
 

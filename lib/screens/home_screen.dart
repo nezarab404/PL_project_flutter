@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/shared/commponents/my_grid_view.dart';
+import 'package:programming_languages_project/shared/commponents/my_radio_buttons.dart';
+import 'package:programming_languages_project/shared/constants.dart';
+import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -13,6 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<HomeProvider>(context);
+    var size = MediaQuery.of(context).size;
     return GestureDetector(
       onHorizontalDragStart: (details) {
         ZoomDrawer.of(context)!.toggle();
@@ -40,45 +44,69 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: RefreshIndicator(
-          onRefresh: () {
-            return provider.getProducts();
-          },
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 40,
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx, index) {
-                      return buildCategoryItem();
-                    },
-                    separatorBuilder: (ctx, index) {
-                      return const SizedBox(
-                        width: 15,
-                      );
-                    },
-                    itemCount: 10,
+        body: provider.getProductsStatus == Status.loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : RefreshIndicator(
+                onRefresh: () {
+                  return provider.getProducts();
+                },
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Provider.of<HomeProvider>(context, listen: false)
+                                  .changeSort();
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.sort_rounded,
+                                  size: 16,
+                                ),
+                                const Text("Sort by",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.white)),
+                                Icon(
+                                  provider.desc
+                                      ? Icons.arrow_drop_down
+                                      : Icons.arrow_drop_up,
+                                  size: 16,
+                                ),
+                              ],
+                            ),
+                          ),
+                          MyRadioButtons(
+                            titles: sortngOptions,
+                            width: size.width - 100,
+                            height: 40,
+                            onTap: (title) {
+                              provider.getProducts(title: title);
+                            },
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      MyGridView(
+                        itemCount: provider.products.length,
+                        items: provider.products,
+                      ),
+                      const SizedBox(
+                        height: 75,
+                      )
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                MyGridView(
-                  itemCount: provider.products.length,
-                  items: provider.products,
-                ),
-                const SizedBox(
-                  height: 75,
-                )
-              ],
-            ),
-          ),
-        ),
+              ),
         extendBody: true,
         bottomNavigationBar: DotNavigationBar(
           currentIndex: provider.bottomNavBarIndex,
@@ -102,15 +130,6 @@ class HomeScreen extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-
-  Widget buildCategoryItem() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: mainRed),
-      width: 50,
-      height: 25,
     );
   }
 }

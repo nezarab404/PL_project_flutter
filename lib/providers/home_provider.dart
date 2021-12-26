@@ -9,9 +9,9 @@ import 'package:programming_languages_project/shared/status.dart';
 
 class HomeProvider with ChangeNotifier {
   int bottomNavBarIndex = 0;
-
+  bool desc = true;
   List<ProductModel> products = [];
-
+  String? lastTitle;
   Status getProductsStatus = Status.init;
 
   void changeIndex(int index) {
@@ -19,13 +19,22 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getProducts() {
+  void changeSort() {
+    desc = !desc;
+    getProducts(title: lastTitle);
+    notifyListeners();
+  }
+
+  Future<void> getProducts({String? title = "remaining_days"}) {
     products = [];
+    lastTitle = title;
     getProductsStatus = Status.loading;
+
     print(getProductsStatus);
-    return DioHelper.getData(url: PRODUCTS, token: token).then((value) {
+    return DioHelper.getData(
+            url: PRODUCTS, token: token, sort: title, desc: desc)
+        .then((value) {
       if (value.statusCode == 200) {
-        print(value.data["products"][0]['category']);
         value.data["products"].forEach((product) {
           products.add(ProductModel.fromJson(product));
         });

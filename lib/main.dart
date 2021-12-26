@@ -96,6 +96,7 @@ class MyApp extends StatelessWidget {
         darkTheme: ThemeData(
           primarySwatch: mainRed,
           backgroundColor: mainDarkBlue,
+          fontFamily: "Baloo2",
           textTheme: const TextTheme(
             bodyText1: TextStyle(color: Colors.white),
             bodyText2: TextStyle(

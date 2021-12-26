@@ -13,3 +13,5 @@ const LIKE = "/products/like";
 const COMMENTS = "/products/comments";
 const LIKED_PRODUCTS = "/products/my/products/like";
 const MY_PRODUCTS = "/products/my/products";
+const UPDATEUSER = "/auth/updateUser";
+const CHANGE_PASSWORD = "/auth/changePassword";

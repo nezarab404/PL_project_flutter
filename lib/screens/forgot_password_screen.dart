@@ -7,6 +7,7 @@ import 'package:programming_languages_project/screens/drawer.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/validator.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../shared/themes/main_theme.dart';
 import '../shared/commponents/header.dart';
@@ -30,7 +31,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-
+    var lan = AppLocalizations.of(context)!;
     var provider = Provider.of<VerifyProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
@@ -74,9 +75,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Container(
                   height: screenHeight / 2.4,
                   alignment: Alignment.bottomCenter,
-                  child: const Text(
-                    "Reset",
-                    style: TextStyle(
+                  child: Text(
+                    lan.reset,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       fontSize: 42,
@@ -93,9 +94,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               margin: const EdgeInsets.symmetric(
                 horizontal: 30,
               ),
-              child: const Text(
-                "Enter your new password below:",
-                style: TextStyle(
+              child: Text(
+                lan.enterYourNewPasswordBelow,
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
                 ),
@@ -119,25 +120,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 textInputAction: TextInputAction.next,
                 obscureText: true,
                 maxLines: 1,
-                decoration:  InputDecoration(
+                decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.passwordState = !widget.passwordState;
-                      icon == Icons.visibility_off
-                          ? icon = Icons.visibility
-                          : icon = Icons.visibility_off;
-                    });
-                  },
-                  icon: Icon(
-                    icon,
-                    color: icon == Icons.visibility ? mainRed : Colors.grey,
+                    onPressed: () {
+                      setState(() {
+                        widget.passwordState = !widget.passwordState;
+                        icon == Icons.visibility_off
+                            ? icon = Icons.visibility
+                            : icon = Icons.visibility_off;
+                      });
+                    },
+                    icon: Icon(
+                      icon,
+                      color: icon == Icons.visibility ? mainRed : Colors.grey,
+                    ),
+                    color: Colors.black26,
                   ),
-                  color: Colors.black26,
-                ),
                   contentPadding: const EdgeInsets.all(10),
-                  labelText: "New password",
+                  labelText: lan.newPassword,
                 ),
               ),
             ),
@@ -168,15 +169,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 children: [
                   TextFormField(
                     controller: widget.confirmPassword,
-                    validator: (val)=>Validator.passwordValidator(val),
+                    validator: (val) => Validator.passwordValidator(val),
                     textInputAction: TextInputAction.next,
                     obscureText: true,
                     maxLines: 1,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: InputBorder.none,
-                      prefixIcon: Icon(Icons.check_circle),
-                      contentPadding: EdgeInsets.all(10),
-                      labelText: "Confirm new password",
+                      prefixIcon: const Icon(Icons.check_circle),
+                      contentPadding: const EdgeInsets.all(10),
+                      labelText: lan.confirmNewPassword,
                     ),
                   ),
                   IconButton(
@@ -222,8 +223,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     if (provider.s == Status.success) {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (_) => const MyDrawer()));
-                    }
-                    else{
+                    } else {
                       print("erooooor");
                     }
                   });

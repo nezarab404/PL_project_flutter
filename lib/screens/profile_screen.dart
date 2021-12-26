@@ -5,6 +5,7 @@ import 'package:programming_languages_project/shared/commponents/mbs_element.dar
 import 'package:provider/provider.dart';
 import '../shared/commponents/profile_info_field.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class ProfileScreen extends StatefulWidget {
@@ -41,8 +42,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //////very important to delete before run////////
     widget.myProfile = true;
     //////very important to delete before run////////
-
     var provider = Provider.of<ProfileProvider>(context);
+    var lan = AppLocalizations.of(context)!;
     final screenHeight = MediaQuery.of(context).size.height;
     // final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -98,9 +99,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       bottomRight: Radius.circular(30),
                     ),
                   ),
-                  child: const Text(
-                    'Username',
-                    style: TextStyle(
+                  child:  Text(
+                    lan.username,
+                    style:const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -132,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Text(
-                                          'Pick Image Form',
+                                          lan.pickImageForm,
                                           style: TextStyle(
                                             color: mainGrey,
                                             fontWeight: FontWeight.bold,
@@ -145,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           children: [
                                             MBSElement(
                                               icon: Icons.camera_alt,
-                                              text: 'Camera',
+                                              text: lan.camera,
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                                 provider.pickImage(
@@ -154,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ),
                                             MBSElement(
                                               icon: Icons.photo_library,
-                                              text: 'Gallery',
+                                              text: lan.gallery,
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                                 provider.pickImage(
@@ -190,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             ProfileInfoField(
               icon: Icons.info,
-              title: 'Bio',
+              title: lan.bio,
               function: () {},
               onEdit: onEdit,
               controller: bioController,
@@ -200,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             ProfileInfoField(
               icon: Icons.smartphone,
-              title: 'Mobile',
+              title: lan.phoneNumber.split(' ').first,
               function: () {},
               onEdit: onEdit,
               controller: mobileNumberController,
@@ -210,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             ProfileInfoField(
               icon: Icons.email,
-              title: 'Email',
+              title: lan.email,
               function: () {},
               onEdit: onEdit,
               controller: emailController,
@@ -220,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             ProfileInfoField(
               icon: Icons.facebook,
-              title: 'Facebook',
+              title: lan.facebook,
               function: () {},
               onEdit: onEdit,
               controller: facebookAccountController,
@@ -232,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (widget.myProfile)
               ProfileInfoField(
                 icon: Icons.password,
-                title: 'Password',
+                title:lan.password,
                 function: () {},
                 onEdit: onEdit,
                 isPassword: true,
@@ -254,15 +255,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
               backgroundColor: mainRed,
               label: onEdit
-                  ? const Text(
-                      'Done',
-                      style: TextStyle(
+                  ?  Text(
+                      lan.done,
+                      style:const TextStyle(
                         fontSize: 22,
                       ),
                     )
-                  : const Text(
-                      'Edit',
-                      style: TextStyle(
+                  :  Text(
+                      lan.edit,
+                      style:const TextStyle(
                         fontSize: 22,
                       ),
                     ),
@@ -280,9 +281,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           : FloatingActionButton.extended(
               onPressed: () {},
               backgroundColor: mainRed,
-              label: const Text(
-                'Products',
-                style: TextStyle(
+              label:  Text(
+                lan.products,
+                style:const TextStyle(
                   fontSize: 22,
                 ),
               ),

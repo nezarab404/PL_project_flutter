@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
@@ -15,6 +16,7 @@ class MyProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MyProductsProvider>(context);
+    var lan = AppLocalizations.of(context)!;
     return WillPopScope(
       onWillPop: () async {
         Provider.of<HomeProvider>(context, listen: false)
@@ -31,7 +33,7 @@ class MyProductsScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("My Products"),
+          title:  Text(lan.myProducts),
           centerTitle: true,
         ),
         body: Padding(
@@ -49,17 +51,17 @@ class MyProductsScreen extends StatelessWidget {
                               context: context,
                               builder: (ctx) {
                                 return AlertDialog(
-                                  title: const Text('Confirm Delete'),
-                                  content: const Text(
-                                    'Are you sure to delete this item?',
+                                  title:  Text(lan.confirmDelete),
+                                  content:  Text(
+                                  lan.confirmDeleteMessage,
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
                                         Navigator.pop(ctx);
                                       },
-                                      child: const Text(
-                                        'Cancel',
+                                      child:  Text(
+                                      lan.cancle,
                                       ),
                                     ),
                                     TextButton(
@@ -69,8 +71,8 @@ class MyProductsScreen extends StatelessWidget {
                                             .deleteMyProduct(
                                                 provider.products[index].id!);
                                       },
-                                      child: const Text(
-                                        'Confirm',
+                                      child:  Text(
+                                        lan.confirm,
                                       ),
                                     ),
                                   ],
@@ -80,7 +82,7 @@ class MyProductsScreen extends StatelessWidget {
                         backgroundColor: Color(0xFFFE4A49),
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
-                        label: 'Delete',
+                        label: lan.delete,
                       ),
                     ],
                   ),

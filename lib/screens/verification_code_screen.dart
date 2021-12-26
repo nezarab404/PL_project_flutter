@@ -8,6 +8,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../shared/themes/main_theme.dart';
 import '../shared/commponents/header.dart';
@@ -37,27 +38,28 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+    var lan = AppLocalizations.of(context)!;
 
     // ..text = "123456";
 
     // ignore: close_sinks
     StreamController<ErrorAnimationType>? errorController;
 
-    bool hasError = false;
+    //bool hasError = false;
     String currentText = "";
 
-    @override
-    void initState() {
-      errorController = StreamController<ErrorAnimationType>();
-      super.initState();
-    }
+    // @override
+    // void initState() {
+    //   errorController = StreamController<ErrorAnimationType>();
+    //   super.initState();
+    // }
 
-    @override
-    void dispose() {
-      errorController!.close();
+    // @override
+    // void dispose() {
+    //   errorController!.close();
 
-      super.dispose();
-    }
+    //   super.dispose();
+    // }
 
     final _formKey = GlobalKey<FormState>();
     final _code = TextEditingController();
@@ -108,9 +110,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                   Container(
                     height: screenHeight / 2.4,
                     alignment: Alignment.bottomCenter,
-                    child: const Text(
-                      "Verify",
-                      style: TextStyle(
+                    child:  Text(
+                      lan.verify,
+                      style:const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 42,
@@ -127,9 +129,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 margin: const EdgeInsets.symmetric(
                   horizontal: 30,
                 ),
-                child: const Text(
-                  "Please check your inbox for the 6-digit code that has been sent to your email address",
-                  style: TextStyle(
+                child:  Text(
+                  lan.verifyMsg,
+                  style:const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
                   ),
@@ -192,7 +194,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                       .resendCode();
                 },
                 child: Text(
-                  "Resend code",
+                  lan.resendCode,
                   style: TextStyle(
                     color: mainRed,
                   ),

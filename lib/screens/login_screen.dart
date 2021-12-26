@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,6 +31,7 @@ class LoginScreen extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     var provider = Provider.of<NetworkProvider>(context);
+    var lan = AppLocalizations.of(context)!;
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
@@ -47,16 +49,6 @@ class LoginScreen extends StatelessWidget {
                     height: screenHeight / 2.45,
                     color: darkBlue2,
                   ),
-                  //Main Header
-                  //Color Gradient for Header
-                  // decoration: BoxDecoration(
-                  //   gradient: LinearGradient(
-                  //     colors: [
-                  //       Color(0xff63657D),
-                  //       Color(0xffd3d3d3),
-                  //     ],
-                  //     begin: Alignment.topCenter,
-                  //     end: Alignment.bottomCenter,
 
                   //Logo
                   Positioned(
@@ -72,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                     height: screenHeight / 2.4,
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      "Login",
+                      lan.login,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -89,7 +81,7 @@ class LoginScreen extends StatelessWidget {
               InputForm(
                 controller: _email,
                 screenWidth: screenWidth,
-                hintText: "Email or Username",
+                hintText: lan.email,
                 pIcon: Icons.email,
                 validator: (val) => Validator.emailValidator(val),
                 inputType: TextInputType.emailAddress,
@@ -100,7 +92,7 @@ class LoginScreen extends StatelessWidget {
               InputForm(
                 controller: _password,
                 screenWidth: screenWidth,
-                hintText: "Password",
+                hintText: lan.password,
                 pIcon: Icons.password,
                 validator: (val) => Validator.passwordValidator(val),
                 isPassword: true,
@@ -110,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Forgot password?",
+                    lan.forgetPassword,
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -127,12 +119,12 @@ class LoginScreen extends StatelessWidget {
                                   Navigator.pop(ctx);
                                 },
                                 child: Text(
-                                  'Close',
+                                  lan.close,
                                 ),
                               ),
                             ],
                             content: Text(
-                              'Enter email first!',
+                            lan.enterEmailFirst,
                             ),
                           ),
                         );
@@ -147,12 +139,12 @@ class LoginScreen extends StatelessWidget {
                                   Navigator.pop(ctx);
                                 },
                                 child: Text(
-                                  'Close',
+                                  lan.close,
                                 ),
                               ),
                             ],
                             content: Text(
-                              'Enter valid email address',
+                              lan.enterValidEmailAddress,
                             ),
                           ),
                         );
@@ -173,7 +165,7 @@ class LoginScreen extends StatelessWidget {
                         });
                       }
                     },
-                    child: Text("ٌReset"),
+                    child: Text(lan.reset),
                   ),
                 ],
               ),
@@ -235,7 +227,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an account?",
+                    lan.dontHaveAnAccount,
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -245,7 +237,7 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => RegisterScreen()));
                     },
-                    child: Text("Create one now!"),
+                    child: Text(lan.createOnNow),
                   ),
                 ],
               ),

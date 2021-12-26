@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
@@ -58,6 +60,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<NetworkProvider>(
@@ -80,13 +83,25 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ProductILikeProvider()..getLikedProducts(),
-        ),ChangeNotifierProvider<MyProductsProvider>(
+        ),
+        ChangeNotifierProvider<MyProductsProvider>(
           create: (_) => MyProductsProvider()..getMyProducts(),
         ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        locale: const Locale('ar'),
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', ''), // English, no country code
+          Locale('ar', ''),
+        ],
         themeMode: ThemeMode.dark,
         theme: ThemeData(
           primarySwatch: mainRed,

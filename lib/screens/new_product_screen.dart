@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'package:intl/intl.dart';
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
@@ -279,25 +280,21 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 40,
             ),
-            //add date
+
+            //TODO
             // InputForm(
             //   screenWidth: screenWidth,
-            //   hintText: 'Expiration date',
+            //   hintText2: 'Expiration date',
             //   pIcon: Icons.date_range,
-            //   //TODO
-            // ),
-            if (!widget.isEdit)
-              ElevatedButton(
-                onPressed: () {
-                  provider.pickDate(context);
-                },
-                child:  Text(lan.expirationDate),
-              ),
+            //   controller: widget.date,
+            //   inputType: TextInputType.none,
+            //   isDate: true,
+            //   dateFunction: () {
+            //     provider.pickDate(context);
 
-            if (!widget.isEdit)
-              SizedBox(
-                height: screenHeight / 40,
-              ),
+            //   },
+            // ),
+
             //add description
             InputForm(
               screenWidth: screenWidth,
@@ -306,6 +303,50 @@ class _NewProductScreenState extends State<NewProductScreen> {
               isDescription: true,
               controller: widget.description,
             ),
+
+            // add date
+            if (!widget.isEdit)
+              SizedBox(
+                height: screenHeight / 40,
+              ),
+            if (!widget.isEdit)
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                elevation: 6,
+                margin: EdgeInsets.symmetric(
+                  horizontal: screenWidth / 10,
+                ),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: TextFormField(
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.utc(2023),
+                      ).then((value) {
+                        if (value == null) {
+                          return;
+                        }
+                        widget.date.text = DateFormat.yMMMd().format(value);
+                        provider.date = value;
+                      });
+                    },
+                    keyboardType: TextInputType.none,
+                    showCursor: false,
+                    controller: widget.date,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.date_range),
+                      border: InputBorder.none,
+                      labelText: 'Expiration date',
+                      contentPadding: EdgeInsets.all(10),
+                    ),
+                  ),
+                ),
+              ),
             SizedBox(
               height: screenHeight / 30,
             ),

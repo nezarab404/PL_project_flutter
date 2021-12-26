@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:programming_languages_project/models/user_model.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/shared/commponents/mbs_element.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +11,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore: must_be_immutable
 class ProfileScreen extends StatefulWidget {
   bool myProfile = false;
+  UserModel? userModel;
+
+  bool onEdit = false;
+
+  var nameController = TextEditingController();
+  var bioController = TextEditingController();
+  var mobileNumberController = TextEditingController();
+  var emailController = TextEditingController();
+  var facebookAccountController = TextEditingController();
+  var passwordController = TextEditingController();
 
   ProfileScreen({
     Key? key,
-  }) : super(key: key) {
-    myProfile = false;
-  }
+    this.myProfile = false,
+  }) : super(key: key);
 
   ProfileScreen.myProfile({
     Key? key,
@@ -27,16 +37,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool onEdit = false;
-
-  final bioController = TextEditingController(
-      text: 'User description User description User description');
-  final mobileNumberController = TextEditingController(text: '+963992663032');
-  final emailController =
-      TextEditingController(text: 'huthaifazyadeh@gmail.com');
-  final facebookAccountController = TextEditingController(text: 'Facebook URL');
-  final passwordController = TextEditingController(text: 'user password');
-
   @override
   Widget build(BuildContext context) {
     //////very important to delete before run////////
@@ -99,14 +99,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       bottomRight: Radius.circular(30),
                     ),
                   ),
-                  child:  Text(
-                    lan.username,
-                    style:const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
-                  ),
+                  child: widget.onEdit
+                      ? TextFormField(
+                          controller: widget.nameController,
+                        )
+                      :  Text(
+                          lan.username,
+                          style:const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        ),
                 ),
                 Positioned(
                   right: 40,
@@ -193,8 +197,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.info,
               title: lan.bio,
               function: () {},
-              onEdit: onEdit,
-              controller: bioController,
+              onEdit: widget.onEdit,
+              controller: widget.bioController,
             ),
             const SizedBox(
               height: 15,
@@ -203,8 +207,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.smartphone,
               title: lan.phoneNumber.split(' ').first,
               function: () {},
-              onEdit: onEdit,
-              controller: mobileNumberController,
+              onEdit: widget.onEdit,
+              controller: widget.mobileNumberController,
             ),
             const SizedBox(
               height: 15,
@@ -213,8 +217,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.email,
               title: lan.email,
               function: () {},
-              onEdit: onEdit,
-              controller: emailController,
+              onEdit: widget.onEdit,
+              controller: widget.emailController,
             ),
             const SizedBox(
               height: 15,
@@ -223,8 +227,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.facebook,
               title: lan.facebook,
               function: () {},
-              onEdit: onEdit,
-              controller: facebookAccountController,
+              onEdit: widget.onEdit,
+              controller: widget.facebookAccountController,
             ),
             if (widget.myProfile)
               const SizedBox(
@@ -235,9 +239,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 icon: Icons.password,
                 title:lan.password,
                 function: () {},
-                onEdit: onEdit,
+                onEdit: widget.onEdit,
                 isPassword: true,
-                controller: passwordController,
+                controller: widget.passwordController,
               ),
             const SizedBox(
               height: 80,
@@ -250,14 +254,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ? FloatingActionButton.extended(
               onPressed: () {
                 setState(() {
-                  onEdit = !onEdit;
+                  widget.onEdit = !widget.onEdit;
                 });
               },
               backgroundColor: mainRed,
-              label: onEdit
+              label: widget.onEdit
                   ?  Text(
                       lan.done,
-                      style:const TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                       ),
                     )
@@ -267,7 +271,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontSize: 22,
                       ),
                     ),
-              icon: onEdit
+              icon: widget.onEdit
                   ? const Icon(
                       Icons.check,
                       size: 30,

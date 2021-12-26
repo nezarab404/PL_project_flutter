@@ -13,8 +13,10 @@ class InputForm extends StatefulWidget {
   final TextInputType? inputType;
   final String? Function(String?)? validator;
   final void Function(String?)? saveFunction;
+  // final Function()? dateFunction;
   bool isPassword;
   bool isDescription;
+  // bool isDate;
 
   InputForm({
     this.screenWidth,
@@ -27,6 +29,8 @@ class InputForm extends StatefulWidget {
     this.isDescription = false,
     this.hintText2,
     this.saveFunction,
+    // this.isDate = false,
+    // this.dateFunction,
   });
 
   @override
@@ -38,12 +42,6 @@ class _InputFormState extends State<InputForm> {
 
   bool visibility = false;
   @override
-  void initState() {
-    visibility = widget.isPassword;
-    super.initState();
-  }
-  
-  @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -54,6 +52,7 @@ class _InputFormState extends State<InputForm> {
         horizontal: widget.screenWidth != null ? widget.screenWidth! / 10 : 0,
       ),
       child: TextFormField(
+      
         onSaved: widget.saveFunction,
         controller: widget.controller,
         validator: widget.validator,
@@ -85,6 +84,7 @@ class _InputFormState extends State<InputForm> {
           labelText: widget.hintText,
           hintText: widget.hintText2,
         ),
+        // onTap: widget.isDate ? widget.dateFunction : null,
       ),
     );
   }

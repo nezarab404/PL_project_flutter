@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:programming_languages_project/models/user_model.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
@@ -10,26 +11,40 @@ import 'package:programming_languages_project/shared/themes/main_theme.dart';
 // ignore: must_be_immutable
 class ProfileScreen extends StatefulWidget {
   bool myProfile = false;
-  UserModel? userModel;
+  UserModel? user;
 
   bool onEdit = false;
 
+//controllers
   var nameController = TextEditingController();
   var bioController = TextEditingController();
   var mobileNumberController = TextEditingController();
   var emailController = TextEditingController();
   var facebookAccountController = TextEditingController();
-  var passwordController = TextEditingController();
+
+  var passwordController = TextEditingController(text: 'password');
 
   ProfileScreen({
     Key? key,
     this.myProfile = false,
-  }) : super(key: key);
+    required this.user,
+  }) : super(key: key) {
+    //initializing controllers
+    nameController.text = user!.name!;
+    bioController.text = user!.bio!;
+    emailController.text = user!.email!;
+  }
 
   ProfileScreen.myProfile({
     Key? key,
     this.myProfile = true,
-  }) : super(key: key);
+    required this.user,
+  }) : super(key: key) {
+    //initializing controllers
+    nameController.text = user!.name!;
+    bioController.text = user!.bio!;
+    emailController.text = user!.email!;
+  }
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -38,13 +53,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    //////very important to delete before run////////
-    widget.myProfile = true;
-    //////very important to delete before run////////
-
+    var noListenProvider = Provider.of<ProfileProvider>(context, listen: false);
+    noListenProvider.getProfile();
     var provider = Provider.of<ProfileProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
     // final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -60,9 +74,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 0,
       ),
       extendBodyBehindAppBar: true,
+      //body
       body: SingleChildScrollView(
         child: Column(
           children: [
+            //profile photo + username + call/change photo icon button
             Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.bottomCenter,
@@ -71,13 +87,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: screenHeight / 2,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: provider.profileImage == null
-                          ? const AssetImage(
-                              'assets/images/images.jpeg',
-                            )
-                          : FileImage(
-                              provider.profileImage!,
-                            ) as ImageProvider,
+                      image: widget.user!.image == null
+                          ? SvgPicture.asset(
+                              'assets/images/avatar.svg',
+                            ) as ImageProvider
+                          : NetworkImage(
+                              widget.user!.image!,
+                            ),
                       fit: BoxFit.cover,
                     ),
                     color: Colors.white,
@@ -98,19 +114,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       bottomRight: Radius.circular(30),
                     ),
                   ),
+                  //username field
                   child: widget.onEdit
                       ? TextFormField(
                           controller: widget.nameController,
                         )
-                      : const Text(
-                          'Username',
-                          style: TextStyle(
+                      : Text(
+                          widget.nameController.text,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                           ),
                         ),
                 ),
+                //icon button position and function
                 Positioned(
                   right: 40,
                   bottom: -20,
@@ -122,6 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: widget.myProfile
                         ? IconButton(
                             onPressed: () {
+                              //to change photo
                               showModalBottomSheet(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
@@ -152,8 +171,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               text: 'Camera',
                                               onPressed: () {
                                                 Navigator.of(context).pop();
-                                                provider.pickImage(
-                                                    ImageSource.camera);
+                                                noListenProvider.pickImage(
+                                                  ImageSource.camera,
+                                                );
                                               },
                                             ),
                                             MBSElement(
@@ -161,8 +181,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               text: 'Gallery',
                                               onPressed: () {
                                                 Navigator.of(context).pop();
-                                                provider.pickImage(
-                                                    ImageSource.gallery);
+                                                noListenProvider
+                                                    .pickImage(
+                                                  ImageSource.gallery,
+                                                )
+                                                    .then((value) {
+                                                  noListenProvider
+                                                      .updateProfile(
+                                                    bio: widget
+                                                        .bioController.text,
+                                                    email: widget
+                                                        .emailController.text,
+                                                    name: widget
+                                                        .nameController.text,
+                                                    image:
+                                                        provider.profileImage,
+                                                  );
+                                                });
                                               },
                                             ),
                                           ],
@@ -178,7 +213,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Icons.camera_alt,
                             ),
                           )
-                        : IconButton(
+                        : //to call
+                        IconButton(
                             onPressed: () {},
                             color: Colors.green,
                             icon: const Icon(
@@ -192,6 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 40,
             ),
+            //bio field
             ProfileInfoField(
               icon: Icons.info,
               title: 'Bio',
@@ -202,6 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 15,
             ),
+            //mobile phone number field
             ProfileInfoField(
               icon: Icons.smartphone,
               title: 'Mobile',
@@ -212,6 +250,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 15,
             ),
+            //email address field
             ProfileInfoField(
               icon: Icons.email,
               title: 'Email',
@@ -222,6 +261,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 15,
             ),
+            //facebokk account field
             ProfileInfoField(
               icon: Icons.facebook,
               title: 'Facebook',
@@ -233,6 +273,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(
                 height: 15,
               ),
+            //password field if user is in his own profile
             if (widget.myProfile)
               ProfileInfoField(
                 icon: Icons.password,
@@ -248,11 +289,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+      //edit /done editing FAB
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: widget.myProfile
           ? FloatingActionButton.extended(
               onPressed: () {
                 setState(() {
+                  if (widget.onEdit) {
+                    noListenProvider.updateProfile(
+                      bio: widget.bioController.text,
+                      email: widget.emailController.text,
+                      name: widget.nameController.text,
+                      image: provider.profileImage,
+                    );
+                  }
                   widget.onEdit = !widget.onEdit;
                 });
               },
@@ -281,7 +331,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
               extendedPadding: const EdgeInsets.all(30),
             )
-          : FloatingActionButton.extended(
+          : //see products FAB
+          FloatingActionButton.extended(
               onPressed: () {},
               backgroundColor: mainRed,
               label: const Text(

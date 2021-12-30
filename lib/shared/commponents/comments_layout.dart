@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:programming_languages_project/models/comment_model.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,20 @@ class CommentsLayout extends StatefulWidget {
 
 class _CommentsLayoutState extends State<CommentsLayout> {
   var commentController = TextEditingController();
+  int onEditCommentIndex = -1;
+
+  late FocusNode inputFieldNode;
+  @override
+  void initState() {
+    super.initState();
+    inputFieldNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    inputFieldNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,58 +70,89 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                         width: 5,
                       ),
                       Expanded(
-                        //comment body
-                        child: Card(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(15),
-                              bottomRight: Radius.circular(15),
-                              topRight: Radius.circular(15),
-                            ),
+                        //comment body TODO
+                        child: FocusedMenuHolder(
+                          onPressed: () {},
+                          menuWidth: 100,
+                          menuBoxDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //username
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(provider.comments[index].user!.name!),
-                                    Text(
-                                      provider.comments[index].time!,
-                                      style: const TextStyle(
-                                        color: Colors.black26,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                //user comment
-                                Text(
-                                  provider.comments[index].comment!,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                provider.comments[index].edit == 1
-                                    ? const Text(
-                                        'Edited',
-                                        style: TextStyle(
+                          menuItems: [
+                            FocusedMenuItem(
+                              onPressed: () {
+                                commentController.text =
+                                    provider.comments[index].comment!;
+                                inputFieldNode.requestFocus();
+                                onEditCommentIndex = provider.comments[index].commentId!;
+                              },
+                              title: const Text('Edit'),
+                            ),
+                            FocusedMenuItem(
+                              onPressed: () {
+                                Provider.of<ProductDetailesProvider>(
+                                  context,
+                                  listen: false,
+                                ).deleteMyComment(
+                                  provider.comments[index].commentId!,
+                                  widget.productId,
+                                );
+                              },
+                              title: const Text('Delete'),
+                            ),
+                          ],
+                          child: Card(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //username
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          provider.comments[index].user!.name!),
+                                      Text(
+                                        provider.comments[index].time!,
+                                        style: const TextStyle(
                                           color: Colors.black26,
                                           fontSize: 12,
                                         ),
-                                      )
-                                    : const SizedBox(),
-                              ],
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  //user comment
+                                  Text(
+                                    provider.comments[index].comment!,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  provider.comments[index].edit == 1
+                                      ? const Text(
+                                          'Edited',
+                                          style: TextStyle(
+                                            color: Colors.black26,
+                                            fontSize: 12,
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -138,6 +184,7 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                       vertical: 2,
                     ),
                     child: TextFormField(
+                      focusNode: inputFieldNode,
                       controller: commentController,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
@@ -157,34 +204,30 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                   color: mainRed,
                   borderRadius: BorderRadius.circular(40),
                 ),
-                child: InkWell(
-                  focusColor: Colors.amber,
-                  //TODO:
-                  // onLongPress: () {
-                  //   showMenu(
-                  //       context: context,
-                  //       position: RelativeRect.fromSize(
-                  //           Rect.largest, const Size(150, 300)),
-                  //       items: [
-                  //         PopupMenuItem(
-                  //           child: Text('edit'),
-                  //         ),
-                  //       ]);
-                  // },
-                  child: IconButton(
-                    onPressed: () {
-                      if (commentController.text.isNotEmpty) {
-                        Provider.of<ProductDetailesProvider>(context,
-                                listen: false)
-                            .postComment(
-                          productId: widget.productId,
-                          comment: commentController.text,
-                        );
-                        commentController.text = '';
-                      }
-                    },
-                    icon: const Icon(Icons.send),
-                  ),
+                child: IconButton(
+                  onPressed: () {
+                    if (commentController.text.isNotEmpty &&
+                        onEditCommentIndex == -1) {
+                      Provider.of<ProductDetailesProvider>(context,
+                              listen: false)
+                          .postComment(
+                        productId: widget.productId,
+                        comment: commentController.text,
+                      );
+                      commentController.text = '';
+                    } else if (onEditCommentIndex != -1) {
+                      Provider.of<ProductDetailesProvider>(context,
+                              listen: false)
+                          .updateMyComment(
+                        onEditCommentIndex,
+                        widget.productId,
+                        commentController.text,
+                      );
+                      commentController.text = '';
+                      onEditCommentIndex = -1;
+                    }
+                  },
+                  icon: const Icon(Icons.send),
                 ),
               ),
             ],

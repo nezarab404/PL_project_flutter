@@ -41,7 +41,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProfileScreen.myProfile(),
+                    builder: (_) => ProfileScreen.myProfile(user: me,),
                   ),
                 );
               },

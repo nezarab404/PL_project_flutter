@@ -7,7 +7,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: "http://192.168.1.103:8000/api/", //TODO
+        baseUrl: "http://10.65.1.75:8000/api/", //TODO
         receiveDataWhenStatusError: true,
         headers: {
           "Content-Type": "application/json",

@@ -42,6 +42,12 @@ class _InputFormState extends State<InputForm> {
 
   bool visibility = false;
   @override
+  void initState() {
+    if (widget.isPassword) visibility = true;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -52,7 +58,6 @@ class _InputFormState extends State<InputForm> {
         horizontal: widget.screenWidth != null ? widget.screenWidth! / 10 : 0,
       ),
       child: TextFormField(
-      
         onSaved: widget.saveFunction,
         controller: widget.controller,
         validator: widget.validator,

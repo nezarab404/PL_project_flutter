@@ -21,11 +21,12 @@ class ProfileProvider with ChangeNotifier {
 
   //TODO link with database
 
-  Future<void> getProfile(int id, BuildContext context) async {
+  Future<void> getProfile() async {
     profileGetStatus = Status.loading;
     await DioHelper.getData(url: ME, token: token).then((value) {
       if (value.statusCode == 200) {
-        user = UserModel.fromJson(value.data);
+        me = user = UserModel.fromJson(value.data["user"]);
+        profileImage = File(user!.image!);
         notifyListeners();
         profileGetStatus = Status.success;
       } else {
@@ -43,7 +44,6 @@ class ProfileProvider with ChangeNotifier {
       var image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
       final tempImage = File(image.path);
-
       profileImage = tempImage;
       notifyListeners();
     } on PlatformException catch (exception) {
@@ -77,11 +77,12 @@ class ProfileProvider with ChangeNotifier {
   }
 
   Future<bool> updateProfile({
-    String? name,
-    String? bio,
-    String? email,
-    File? profileImage,
+    required String? name,
+    required String? bio,
+    required String? email,
+    required File? image,
   }) async {
+    profileImage = image;
     profileInfoStatus = Status.loading;
     print(profileInfoStatus);
     FormData info = FormData.fromMap({
@@ -90,7 +91,7 @@ class ProfileProvider with ChangeNotifier {
       "email": email,
       "image": await MultipartFile.fromFile(
         profileImage!.path,
-        filename: profileImage.path.split('/').last,
+        filename: profileImage!.path.split('/').last,
       ),
     });
 

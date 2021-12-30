@@ -53,7 +53,9 @@ class ProductDetailesScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProfileScreen(),
+                    builder: (_) => ProfileScreen(
+                      user: model.user,
+                    ),
                   ),
                 );
               },
@@ -200,16 +202,17 @@ class ProductDetailesScreen extends StatelessWidget {
                     CarouselSlider(
                       carouselController: controller,
                       items: List.generate(
-                          model.images.length,
-                          (index) => Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(vertical: 5),
-                                child: FadeInImage.assetNetwork(
-                                  placeholder: "assets/images/loading.gif",
-                                  image: model.images[index],
-                                  fit: BoxFit.fill,
-                                ),
-                              )),
+                        model.images.length,
+                        (index) => Container(
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: "assets/images/loading.gif",
+                            image: model.images[index],
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       options: CarouselOptions(
                           autoPlay: true,
                           enlargeCenterPage: true,

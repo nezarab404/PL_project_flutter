@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
+import 'package:programming_languages_project/screens/optional_user_info_screen.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,7 +29,10 @@ class VerificationCodeScreen extends StatefulWidget {
 
   String? email;
   bool _isReset = false;
-final _code = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  final _code = TextEditingController();
+
   @override
   State<VerificationCodeScreen> createState() => _VerificationCodeScreenState();
 }
@@ -61,7 +65,6 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     //   super.dispose();
     // }
 
-    final _formKey = GlobalKey<FormState>();
     
 
     var provider = Provider.of<VerifyProvider>(context);
@@ -69,7 +72,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          key: widget._formKey,
           child: Column(
             children: [
               Stack(
@@ -207,7 +210,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 height: screenHeight / 10,
                 width: screenHeight / 10,
                 child: FloatingActionButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     widget._isReset
                         ? await Provider.of<VerifyProvider>(context, listen: false)
                             .resetVerify(email: widget.email!, code: widget._code.text)
@@ -217,16 +220,16 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                             if(provider.s == Status.loading){
                               print(provider.s);
                             }
-                              if (provider.s == Status.success) {
+                            if (provider.s == Status.success) {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) =>
-                                          ForgotPasswordScreen()));
+                                      builder: (_) => ForgotPasswordScreen()));
                             } else {
                               print("moo ${widget.email!}");
                               print(widget._code.text);
                             //  print(value);
+                              //  print(value);
                               print("error");
                             }
                           })
@@ -235,10 +238,11 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                             .then((value) {
                             if (value) {
                               Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          const MyDrawer()));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => OptionalUserInfoScreen(),
+                                ),
+                              );
                             } else {
                               print("error");
                             }

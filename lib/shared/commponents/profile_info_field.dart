@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
@@ -161,7 +163,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                     controller: confirmController,
                     hintText2: lan.confirmPassowrd,
                     pIcon: Icons.check,
-                    saveFunction:(_)=> setState(() {}),
+                    saveFunction: (_) => setState(() {}),
                   ),
                   const SizedBox(
                     height: 20,
@@ -206,6 +208,12 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
             TextButton(
               onPressed: () {
                 widget.controller.text = newPassController.text;
+                Provider.of<ProfileProvider>(context, listen: false)
+                    .updatePassword(
+                  oldPassword: oldPassController.text,
+                  newPassword: newPassController.text,
+                  confirmPassword: confirmController.text,
+                );
               },
               child:  Text(lan.confirm),
             ),

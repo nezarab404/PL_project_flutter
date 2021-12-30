@@ -110,4 +110,45 @@ class ProductDetailesProvider with ChangeNotifier {
   view(int productID) {
     DioHelper.getData(url: VIEW_PRODUCT, token: token);
   }
+
+  Future<void> deleteMyComment(int commentId, int productId) async {
+    commentStatus = Status.loading;
+    DioHelper.deleteData(url: COMMENTS + '/$commentId').then((value) {
+      if (value.statusCode == 200) {
+        commentStatus = Status.success;
+        getComments(productId);
+        print(commentStatus);
+      } else {
+        commentStatus = Status.failed;
+        print(commentStatus);
+      }
+      notifyListeners();
+    }).catchError((e) {
+      print(e);
+      commentStatus = Status.failed;
+      notifyListeners();
+    });
+  }
+
+  Future<void> updateMyComment(
+      int commentId, int productId, String? comment) async {
+    commentStatus = Status.loading;
+    DioHelper.updateData(url: COMMENTS + '/$commentId', token: token, data: {
+      "text": comment,
+    }).then((value) {
+      if (value.statusCode == 200) {
+        commentStatus = Status.success;
+        getComments(productId);
+        print(commentStatus);
+      } else {
+        commentStatus = Status.failed;
+        print(commentStatus);
+      }
+      notifyListeners();
+    }).catchError((e) {
+      print(e);
+      commentStatus = Status.failed;
+      notifyListeners();
+    });
+  }
 }

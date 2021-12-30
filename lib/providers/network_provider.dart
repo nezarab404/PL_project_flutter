@@ -76,7 +76,7 @@ class NetworkProvider with ChangeNotifier {
         notifyListeners();
       } else {
         userStatus = AuthStatus.notRegistered;
-        print("${value.data['msg']}");
+        print("${value.data}");
         Rmsg = value.data['msg'].toString();
       }
       notifyListeners();

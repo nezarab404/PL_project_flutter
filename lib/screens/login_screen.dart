@@ -160,7 +160,7 @@ class LoginScreen extends StatelessWidget {
                                         VerificationCodeScreen.reset(
                                             email: _email.text)));
                           } else {
-                            print(value.data["msg"]);
+                            print("value.data['msg']");
                           }
                         });
                       }

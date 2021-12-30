@@ -3,6 +3,7 @@ import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class ProfileInfoField extends StatefulWidget {
@@ -132,6 +133,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
         var oldPassController = TextEditingController();
         var newPassController = TextEditingController();
         var confirmController = TextEditingController();
+        var lan = AppLocalizations.of(context)!;
         return AlertDialog(
           content: SizedBox(
             height: 300,
@@ -141,7 +143,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                   InputForm(
                     isPassword: true,
                     controller: oldPassController,
-                    hintText2: 'Current password',
+                    hintText2: lan.currentPassword,
                     pIcon: Icons.lock_clock,
                   ),
                   const SizedBox(
@@ -150,7 +152,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                   InputForm(
                     isPassword: true,
                     controller: newPassController,
-                    hintText2: 'New password',
+                    hintText2: lan.newPassword,
                     pIcon: Icons.password,
                   ),
                   const SizedBox(
@@ -159,7 +161,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                   InputForm(
                     isPassword: true,
                     controller: confirmController,
-                    hintText2: 'Confirm password',
+                    hintText2: lan.confirmPassowrd,
                     pIcon: Icons.check,
                     saveFunction: (_) => setState(() {}),
                   ),
@@ -176,17 +178,17 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                               size: 50,
                             )
                           : Row(
-                              children: const [
-                                Icon(
+                              children:  [
+                              const  Icon(
                                   Icons.info_outline,
                                   color: Colors.red,
                                 ),
-                                SizedBox(
+                               const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
-                                  'Passwords do not match',
-                                  style: TextStyle(
+                                  lan.passwordsDnotMatch,
+                                  style: const TextStyle(
                                     color: Colors.red,
                                   ),
                                 ),
@@ -201,7 +203,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child:  Text(lan.cancle),
             ),
             TextButton(
               onPressed: () {
@@ -213,7 +215,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                   confirmPassword: confirmController.text,
                 );
               },
-              child: const Text('Ok'),
+              child:  Text(lan.confirm),
             ),
           ],
         );

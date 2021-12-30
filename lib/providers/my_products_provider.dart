@@ -2,12 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:programming_languages_project/models/product_model.dart';
-import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
 import 'package:programming_languages_project/shared/status.dart';
-import 'package:provider/provider.dart';
 
 class MyProductsProvider with ChangeNotifier {
   List<ProductModel> products = [];

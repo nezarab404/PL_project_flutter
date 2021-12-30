@@ -3,6 +3,7 @@ import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/screens/product_detailes_screen.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class ProductItem extends StatelessWidget {
@@ -82,9 +83,9 @@ class ProductItem extends StatelessWidget {
                           child: RichText(
                               text: TextSpan(children: [
                             TextSpan(text: "${model.remainingDays}"),
-                            const TextSpan(
-                              text: " Days",
-                              style: TextStyle(
+                             TextSpan(
+                              text: AppLocalizations.of(context)!.days,
+                              style:const TextStyle(
                                 fontSize: 9,
                                 fontStyle: FontStyle.italic,
                               ),

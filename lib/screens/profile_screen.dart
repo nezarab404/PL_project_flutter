@@ -7,6 +7,7 @@ import 'package:programming_languages_project/shared/commponents/mbs_element.dar
 import 'package:provider/provider.dart';
 import '../shared/commponents/profile_info_field.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class ProfileScreen extends StatefulWidget {
@@ -56,6 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var noListenProvider = Provider.of<ProfileProvider>(context, listen: false);
     noListenProvider.getProfile();
     var provider = Provider.of<ProfileProvider>(context);
+    var lan = AppLocalizations.of(context)!;
     final screenHeight = MediaQuery.of(context).size.height;
     // final screenWidth = MediaQuery.of(context).size.width;
 
@@ -155,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Text(
-                                          'Pick Image Form',
+                                          lan.pickImageForm,
                                           style: TextStyle(
                                             color: mainGrey,
                                             fontWeight: FontWeight.bold,
@@ -168,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           children: [
                                             MBSElement(
                                               icon: Icons.camera_alt,
-                                              text: 'Camera',
+                                              text: lan.camera,
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                                 noListenProvider.pickImage(
@@ -178,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ),
                                             MBSElement(
                                               icon: Icons.photo_library,
-                                              text: 'Gallery',
+                                              text: lan.gallery,
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                                 noListenProvider
@@ -231,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //bio field
             ProfileInfoField(
               icon: Icons.info,
-              title: 'Bio',
+              title: lan.bio,
               function: () {},
               onEdit: widget.onEdit,
               controller: widget.bioController,
@@ -242,7 +244,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //mobile phone number field
             ProfileInfoField(
               icon: Icons.smartphone,
-              title: 'Mobile',
+              title: lan.phoneNumber.split(' ').first,
               function: () {},
               onEdit: widget.onEdit,
               controller: widget.mobileNumberController,
@@ -253,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //email address field
             ProfileInfoField(
               icon: Icons.email,
-              title: 'Email',
+              title: lan.email,
               function: () {},
               onEdit: widget.onEdit,
               controller: widget.emailController,
@@ -264,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //facebokk account field
             ProfileInfoField(
               icon: Icons.facebook,
-              title: 'Facebook',
+              title: lan.facebook,
               function: () {},
               onEdit: widget.onEdit,
               controller: widget.facebookAccountController,
@@ -277,7 +279,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (widget.myProfile)
               ProfileInfoField(
                 icon: Icons.password,
-                title: 'Password',
+                title:lan.password,
                 function: () {},
                 onEdit: widget.onEdit,
                 isPassword: true,
@@ -308,15 +310,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
               backgroundColor: mainRed,
               label: widget.onEdit
-                  ? const Text(
-                      'Done',
-                      style: TextStyle(
+                  ?  Text(
+                      lan.done,
+                      style: const TextStyle(
                         fontSize: 22,
                       ),
                     )
-                  : const Text(
-                      'Edit',
-                      style: TextStyle(
+                  :  Text(
+                      lan.edit,
+                      style:const TextStyle(
                         fontSize: 22,
                       ),
                     ),
@@ -335,9 +337,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           FloatingActionButton.extended(
               onPressed: () {},
               backgroundColor: mainRed,
-              label: const Text(
-                'Products',
-                style: TextStyle(
+              label:  Text(
+                lan.products,
+                style:const TextStyle(
                   fontSize: 22,
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
@@ -20,6 +20,7 @@ class ProductDetailesScreen extends StatelessWidget {
     var controller = CarouselController();
     var provider = Provider.of<ProductDetailesProvider>(context);
     var size = MediaQuery.of(context).size;
+    var lan = AppLocalizations.of(context)!;
 
     return WillPopScope(
       onWillPop: () async {
@@ -80,7 +81,7 @@ class ProductDetailesScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text("Buy",
+                            Text(lan.buy,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText2!
@@ -263,7 +264,7 @@ class ProductDetailesScreen extends StatelessWidget {
                           Column(
                             children: [
                               const Text("⏳", style: TextStyle(fontSize: 30)),
-                              Text("${model.remainingDays} days")
+                              Text("${model.remainingDays} ${lan.days}")
                             ],
                           ),
                           Column(
@@ -288,7 +289,7 @@ class ProductDetailesScreen extends StatelessWidget {
                       height: size.height / 2.5 - 95,
                       child: SingleChildScrollView(
                         child: Text(
-                          "${model.description}",
+                          "${lan.description}: ${model.description}",
                           style: Theme.of(context)
                               .textTheme
                               .caption!
@@ -308,38 +309,3 @@ class ProductDetailesScreen extends StatelessWidget {
     );
   }
 }
-
-//  Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Row(
-//                       children: [
-//                         Column(
-//                           children: [
-//                             IconButton(
-//                               onPressed: () {},
-//                               icon: const Icon(Icons.comment),
-//                             ),
-//                             Text(
-//                               "99",
-//                               style: Theme.of(context).textTheme.bodyText1,
-//                             ),
-//                           ],
-//                         ),
-//                         Column(
-//                           children: [
-//                             IconButton(
-//                               onPressed: () {},
-//                               icon: const Icon(Icons.thumb_up),
-//                             ),
-//                             Text(
-//                               "99",
-//                               style: Theme.of(context).textTheme.bodyText1,
-//                             ),
-//                           ],
-//                         ),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//                 const SizedBox(height: 20),

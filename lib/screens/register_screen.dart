@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
@@ -29,6 +29,7 @@ class RegisterScreen extends StatelessWidget {
     var provider = Provider.of<NetworkProvider>(context);
     var screenHeight = MediaQuery.of(context).size.height;
 
+    var lan = AppLocalizations.of(context)!;
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
@@ -72,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                     height: screenHeight / 2.4,
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      "Register",
+                      lan.register,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -88,7 +89,7 @@ class RegisterScreen extends StatelessWidget {
               //Register Form
               InputForm(
                 screenWidth: screenWidth,
-                hintText: "Username",
+                hintText: lan.username,
                 pIcon: Icons.person,
                 controller: _name,
                 inputType: TextInputType.name,
@@ -99,7 +100,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               InputForm(
                 screenWidth: screenWidth,
-                hintText: "Email",
+                hintText: lan.email,
                 pIcon: Icons.email,
                 controller: _email,
                 inputType: TextInputType.emailAddress,
@@ -110,7 +111,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               InputForm(
                 screenWidth: screenWidth,
-                hintText: "Password",
+                hintText: lan.password,
                 pIcon: Icons.password,
                 controller: _password,
                 isPassword: true,
@@ -121,7 +122,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               InputForm(
                 screenWidth: screenWidth,
-                hintText: "Confirm password",
+                hintText: lan.confirmPassowrd,
                 pIcon: Icons.check_circle,
                 controller: _confirmPassword,
                 isPassword: true,

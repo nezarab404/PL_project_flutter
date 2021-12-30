@@ -1,5 +1,7 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/shared/commponents/my_grid_view.dart';
@@ -17,6 +19,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var provider = Provider.of<HomeProvider>(context);
     var size = MediaQuery.of(context).size;
+    var lan = AppLocalizations.of(context)!;
     return GestureDetector(
       onHorizontalDragStart: (details) {
         ZoomDrawer.of(context)!.toggle();
@@ -26,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: mainDarkBlue,
           elevation: 0.0,
           title: Text(
-            "Home",
+            lan.home,
             style: Theme.of(context)
                 .textTheme
                 .headline5!
@@ -71,8 +74,8 @@ class HomeScreen extends StatelessWidget {
                                   Icons.sort_rounded,
                                   size: 16,
                                 ),
-                                const Text("Sort by",
-                                    style: TextStyle(
+                                 Text(lan.sortBy,
+                                    style: const TextStyle(
                                         fontSize: 14, color: Colors.white)),
                                 Icon(
                                   provider.desc
@@ -84,8 +87,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           MyRadioButtons(
-                            titles: sortngOptions,
-                            width: size.width - 100,
+                            titles: sortngOptions!,
+                            width: size.width - 110,
                             height: 40,
                             onTap: (title) {
                               provider.getProducts(title: title);

@@ -4,6 +4,7 @@ import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class CommentsLayout extends StatefulWidget {
@@ -34,6 +35,7 @@ class _CommentsLayoutState extends State<CommentsLayout> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ProductDetailesProvider>(context);
+    var lan = AppLocalizations.of(context)!;
     return Container(
       height: 600,
       decoration: BoxDecoration(
@@ -83,9 +85,12 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                                 commentController.text =
                                     provider.comments[index].comment!;
                                 inputFieldNode.requestFocus();
-                                onEditCommentIndex = provider.comments[index].commentId!;
+                                onEditCommentIndex =
+                                    provider.comments[index].commentId!;
                               },
-                              title: const Text('Edit'),
+                              title: Text(
+                                AppLocalizations.of(context)!.edit,
+                              ),
                             ),
                             FocusedMenuItem(
                               onPressed: () {
@@ -97,7 +102,9 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                                   widget.productId,
                                 );
                               },
-                              title: const Text('Delete'),
+                              title: Text(
+                                AppLocalizations.of(context)!.delete,
+                              ),
                             ),
                           ],
                           child: Card(
@@ -143,9 +150,9 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                                     height: 5,
                                   ),
                                   provider.comments[index].edit == 1
-                                      ? const Text(
-                                          'Edited',
-                                          style: TextStyle(
+                                      ? Text(
+                                          AppLocalizations.of(context)!.edited,
+                                          style: const TextStyle(
                                             color: Colors.black26,
                                             fontSize: 12,
                                           ),
@@ -188,9 +195,9 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                       controller: commentController,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Say something about this',
+                        hintText: lan.commentsHint,
                       ),
                     ),
                   ),

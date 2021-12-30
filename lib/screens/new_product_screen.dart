@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:intl/intl.dart';
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
@@ -13,6 +15,7 @@ import 'package:programming_languages_project/shared/commponents/discounts_input
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 import 'package:programming_languages_project/shared/commponents/mbs_element.dart';
 import 'package:programming_languages_project/shared/commponents/text_divider.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
@@ -69,15 +72,6 @@ class NewProductScreen extends StatefulWidget {
     facebook = TextEditingController(text: isEdit ? model!.facebook : "");
   }
 
-  static const _categories = [
-    'Food',
-    'Medicines',
-    'Cosmetics',
-    'Chemicals',
-    'Detergents',
-    'Other',
-  ];
-
   @override
   State<NewProductScreen> createState() => _NewProductScreenState();
 }
@@ -88,6 +82,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     var provider = Provider.of<NewProductProvider>(context);
+    var lan = AppLocalizations.of(context)!;
     if (widget.isEdit) {
       provider.setCategory(widget.model!.category!);
     }
@@ -96,8 +91,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
       appBar: AppBar(
         backgroundColor: darkBlue2,
         centerTitle: true,
-        title: const Text(
-          'Add Your Product',
+        title:  Text(
+          lan.addYourProduct,
         ),
       ),
 
@@ -110,8 +105,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
               height: screenHeight / 30,
             ),
             //decoration divider
-            const TextDivider(
-              text: 'Product specifications',
+             TextDivider(
+              text: lan.productSpecifications,
             ),
             SizedBox(
               height: screenHeight / 100,
@@ -218,11 +213,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SmallInputField(
-                          label: 'Initial price',
+                          label: lan.initialPrice,
                           icon: Icons.attach_money_outlined,
                           controller: widget.price),
                       SmallInputField(
-                          label: 'Quantity',
+                          label: lan.quantity,
                           icon: Icons.production_quantity_limits,
                           controller: widget.quantity),
                       //category
@@ -236,11 +231,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
                               borderRadius: BorderRadius.circular(15),
                               value: provider.category,
                               isExpanded: true,
-                              hint: const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              hint:  Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  '-Select category-',
-                                  style: TextStyle(
+                                  lan.selectCategory,
+                                  style:const TextStyle(
                                     fontSize: 12,
                                   ),
                                 ),
@@ -249,7 +244,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                 Icons.arrow_drop_down_circle,
                                 color: mainRed,
                               ),
-                              items: NewProductScreen._categories.map((cat) {
+                              items: categories!.map((cat) {
                                 return DropdownMenuItem<String>(
                                   value: cat,
                                   child: Padding(
@@ -278,7 +273,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             //add name
             InputForm(
               screenWidth: screenWidth,
-              hintText: 'Product name',
+              hintText: lan.productName,
               pIcon: Icons.label,
               controller: widget.name,
             ),
@@ -303,7 +298,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             //add description
             InputForm(
               screenWidth: screenWidth,
-              hintText: 'Description',
+              hintText: lan.description,
               pIcon: Icons.description,
               isDescription: true,
               controller: widget.description,
@@ -355,7 +350,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 30,
             ),
-            const TextDivider(text: 'Discounts'),
+             TextDivider(text: lan.discounts),
             SizedBox(
               height: screenHeight / 100,
             ),
@@ -366,9 +361,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
               children: [
                 Column(
                   children: [
-                    const Text(
-                      'Remaining days',
-                      style: TextStyle(
+                     Text(
+                      lan.remainingDays,
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -424,8 +419,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 30,
             ),
-            const TextDivider(
-              text: 'Seller contact info',
+             TextDivider(
+              text: lan.sellerContactInfo,
             ),
             SizedBox(
               height: screenHeight / 100,
@@ -434,7 +429,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             //phone num
             InputForm(
               screenWidth: screenWidth,
-              hintText: 'Phone number',
+              hintText: lan.phoneNumber,
               inputType: TextInputType.phone,
               pIcon: Icons.phone,
               controller: widget.number,
@@ -445,7 +440,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             //facebook account
             InputForm(
               screenWidth: screenWidth,
-              hintText: 'Facebook account (Optional)',
+              hintText: lan.facebooko,
               inputType: TextInputType.url,
               pIcon: Icons.facebook,
               controller: widget.facebook,
@@ -545,8 +540,9 @@ void showAddImagesSheet(
   BuildContext context,
   double screenHeight,
   NewProductProvider provider,
-) =>
-    showModalBottomSheet(
+) {
+  var lan = AppLocalizations.of(context)!;
+   showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
@@ -559,7 +555,7 @@ void showAddImagesSheet(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                'Pick Image Form',
+                lan.pickImageForm,
                 style: TextStyle(
                   color: mainGrey,
                   fontWeight: FontWeight.bold,
@@ -571,7 +567,7 @@ void showAddImagesSheet(
                 children: [
                   MBSElement(
                     icon: Icons.camera_alt,
-                    text: 'Camera',
+                    text: lan.camera,
                     onPressed: () {
                       Navigator.of(context).pop();
                       provider.pickImage();
@@ -579,7 +575,7 @@ void showAddImagesSheet(
                   ),
                   MBSElement(
                     icon: Icons.photo_library,
-                    text: 'Gallery',
+                    text: lan.gallery,
                     onPressed: () {
                       Navigator.of(context).pop();
                       provider.pickMultiImage();
@@ -592,3 +588,4 @@ void showAddImagesSheet(
         );
       },
     );
+}

@@ -106,4 +106,8 @@ class ProductDetailesProvider with ChangeNotifier {
       notifyListeners();
     });
   }
+
+  view(int productID) {
+    DioHelper.getData(url: VIEW_PRODUCT, token: token);
+  }
 }

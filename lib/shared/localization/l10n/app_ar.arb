@@ -64,6 +64,11 @@
     "currentPassword":"كلمة السر الحالية",
     "passwordsDnotMatch":"كلمتا السر غير متطابقتين",
     "edited":"تم التعديل",
-    "commentsHint":"اكتب تعليقا حول المنتج..."
+    "commentsHint":"اكتب تعليقا حول المنتج...",
+    "search":"البحث عن منتج",
+    "byName":"حسب الاسم",
+    "byDate":"حسب التاريخ",
+    "noProductsFound":"لا يوجد منتجات"
+
     
 }

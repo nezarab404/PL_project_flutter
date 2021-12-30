@@ -64,5 +64,9 @@
     "currentPassword":"Current password",
     "passwordsDnotMatch":"Passwords don't match",
     "edited":"Edited",
-    "commentsHint":"Say something about this"
+    "commentsHint":"Say something about this",
+    "search":"Search for a product",
+    "byName":"By Name",
+    "byDate":"By Date",
+    "noProductsFound":"No Products Found"
 }

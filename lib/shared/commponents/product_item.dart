@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore: must_be_immutable
 class ProductItem extends StatelessWidget {
   ProductItem({Key? key, required this.model}) : super(key: key);
-  ProductItem.tile({Key? key, required this.model, this.isMyProduct})
+  ProductItem.tile({Key? key, required this.model, this.isMyProduct = false})
       : super(key: key) {
     _isTile = true;
   }
@@ -30,11 +30,16 @@ class ProductItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Image.network(
-                    model.images[0],
-                    fit: BoxFit.fill,
+                  SizedBox(
                     width: 120,
+                    child: FadeInImage.assetNetwork(
+                                placeholder: "assets/images/loading.gif",
+                                image: model.images[0],
+                                fit: BoxFit.fill,
+                                height: double.infinity,
+                              ),
                   ),
+               
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -83,11 +88,10 @@ class ProductItem extends StatelessWidget {
                           child: RichText(
                               text: TextSpan(children: [
                             TextSpan(text: "${model.remainingDays}"),
-                             TextSpan(
+                            TextSpan(
                               text: AppLocalizations.of(context)!.days,
-                              style:const TextStyle(
+                              style: const TextStyle(
                                 fontSize: 9,
-                                fontStyle: FontStyle.italic,
                               ),
                             ),
                           ])),
@@ -103,8 +107,8 @@ class ProductItem extends StatelessWidget {
                                         ? NewProductScreen.edit(model: model)
                                         : ProductDetailesScreen(model: model)));
                           },
-                          child: const Icon(
-                            Icons.arrow_forward_ios,
+                          child: Icon(
+                            isMyProduct! ? Icons.edit : Icons.arrow_forward_ios,
                             color: Colors.white,
                             size: 18,
                           ),

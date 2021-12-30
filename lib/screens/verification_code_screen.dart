@@ -28,7 +28,7 @@ class VerificationCodeScreen extends StatefulWidget {
 
   String? email;
   bool _isReset = false;
-
+final _code = TextEditingController();
   @override
   State<VerificationCodeScreen> createState() => _VerificationCodeScreenState();
 }
@@ -62,7 +62,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     // }
 
     final _formKey = GlobalKey<FormState>();
-    final _code = TextEditingController();
+    
 
     var provider = Provider.of<VerifyProvider>(context);
 
@@ -145,7 +145,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
               PinCodeTextField(
                 appContext: context,
                 cursorColor: mainRed,
-                controller: _code,
+                controller: widget._code,
                 textStyle: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
@@ -169,7 +169,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 errorAnimationController: errorController,
                 onCompleted: (v) {
                   print("Completed");
-                  _code.text = v;
+                  widget._code.text = v;
                 },
                 // onTap: () {
                 //   print("Pressed");
@@ -210,10 +210,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                   onPressed: () async{
                     widget._isReset
                         ? await Provider.of<VerifyProvider>(context, listen: false)
-                            .resetVerify(email: widget.email!, code: _code.text)
+                            .resetVerify(email: widget.email!, code: widget._code.text)
                             .then((value) {
                               print("koo ${widget.email!}");
-                              print(_code.text);
+                              print(widget._code.text);
                             if(provider.s == Status.loading){
                               print(provider.s);
                             }
@@ -225,13 +225,13 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                                           ForgotPasswordScreen()));
                             } else {
                               print("moo ${widget.email!}");
-                              print(_code.text);
+                              print(widget._code.text);
                             //  print(value);
                               print("error");
                             }
                           })
                         : Provider.of<VerifyProvider>(context, listen: false)
-                            .registerVerify(code: _code.text)
+                            .registerVerify(code: widget._code.text)
                             .then((value) {
                             if (value) {
                               Navigator.pushReplacement(

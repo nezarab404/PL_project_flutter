@@ -39,8 +39,11 @@ class HomeProvider with ChangeNotifier {
           products.add(ProductModel.fromJson(product));
         });
         getProductsStatus = Status.success;
+        print(getProductsStatus);
+
       } else {
         getProductsStatus = Status.failed;
+        print(getProductsStatus);
       }
       print(getProductsStatus);
       notifyListeners();

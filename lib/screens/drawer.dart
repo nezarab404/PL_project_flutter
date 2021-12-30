@@ -24,106 +24,122 @@ class _MyDrawerState extends State<MyDrawer> {
     var lan = AppLocalizations.of(context)!;
     setCategories(context);
     setSortingOptions(context);
+    setSearchOptions(context);
     return ZoomDrawer(
       style: DrawerStyle.Style1,
-      isRtl: true,
+      isRtl: Localizations.localeOf(context) == const Locale('ar'),
       mainScreen: const HomeScreen(),
-      menuScreen: Container(
-        padding: const EdgeInsets.all(10),
-        color: darkBlue2,
-        width: double.infinity,
-        alignment: Alignment.centerLeft,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => ProfileScreen.myProfile(),
-                  ),
-                );
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage:
-                        me!.image != null ? NetworkImage(me!.image!) : null,
-                  ),
-                  Text(me!.name!.split(" ").first,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: Colors.white, fontSize: 24)),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextButton.icon(
-                    onPressed: () {
-                      Navigator.push(
+      menuScreen: Directionality(
+        textDirection: Localizations.localeOf(context) == const Locale('ar')
+            ? TextDirection.rtl
+            : TextDirection.ltr,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          color: darkBlue2,
+          width: double.infinity,
+          alignment: Localizations.localeOf(context) == const Locale('ar')
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProfileScreen.myProfile(),
+                    ),
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage:
+                          me!.image != null ? NetworkImage(me!.image!) : null,
+                    ),
+                    Text(me!.name!.split(" ").first,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(color: Colors.white, fontSize: 24)),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const ProductsILikeScreen()));
+                      },
+                      icon: const Icon(
+                        Icons.dangerous,
+                        color: Colors.white,
+                      ),
+                      label: Text(
+                        lan.productsILiked,
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const ProductsILikeScreen()));
-                    },
-                    icon: const Icon(
-                      Icons.dangerous,
-                      color: Colors.white,
-                    ),
-                    label:  Text(
-                      lan.productsILiked,
-                      style: const TextStyle(
+                            builder: (_) => MyProductsScreen(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.my_library_add,
                         color: Colors.white,
                       ),
-                    ),
-                  ),
-                  TextButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => MyProductsScreen(),
+                      label: Text(
+                        lan.myProducts,
+                        style: const TextStyle(
+                          color: Colors.white,
                         ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.my_library_add,
-                      color: Colors.white,
-                    ),
-                    label:  Text(
-                      lan.myProducts,
-                      style: const TextStyle(
-                        color: Colors.white,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ), 
-            Builder(
-              builder: (ctx) => OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.white),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 8)),
-                  onPressed: () {
-                    //TODO : LOGOUT
-                    SharedHelper.removeData(key: TOKEN).then((value) {
-                      if (value) {
-                        Navigator.pushReplacement(ctx,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
-                      }
-                    });
-                  },
-                  child:  Text(
-                    lan.logout,
-                    style:const TextStyle(color: Colors.white, fontSize: 25),
-                  )),
-            )
-          ],
+              Builder(
+                builder: (ctx) => OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: Colors.white),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 8)),
+                    onPressed: () {
+                      // Provider.of<NetworkProvider>(context, listen: false)
+                      //     .userLogout()
+                      //     .then((value) {
+                      //   if (value) {
+
+                      //       }
+                      //     });
+                      //   }
+                      // });
+                      SharedHelper.removeData(key: TOKEN).then((value) {
+                        if (value) {
+                          Navigator.pushReplacement(ctx,
+                              MaterialPageRoute(builder: (_) => LoginScreen()));
+                        }
+                      });
+                    },
+                    child: Text(
+                      lan.logout,
+                      style: const TextStyle(color: Colors.white, fontSize: 25),
+                    )),
+              )
+            ],
+          ),
         ),
       ),
       borderRadius: 40.0,

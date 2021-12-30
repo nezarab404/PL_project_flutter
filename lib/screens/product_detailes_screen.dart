@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -6,13 +8,19 @@ import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
 import 'package:programming_languages_project/screens/profile_screen.dart';
 import 'package:programming_languages_project/shared/commponents/comments_layout.dart';
+import 'package:programming_languages_project/shared/constants.dart';
+import 'package:programming_languages_project/shared/end_points.dart';
+import 'package:programming_languages_project/shared/network/dio_helper.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
 class ProductDetailesScreen extends StatelessWidget {
-  ProductDetailesScreen({Key? key, required this.model}) : super(key: key);
+  ProductDetailesScreen({Key? key, required this.model}) : super(key: key) {
+    DioHelper.getData(url: VIEW_PRODUCT + "/${model.id}", token: token)
+        .then(print);
+  }
   ProductModel model;
 
   @override
@@ -84,7 +92,7 @@ class ProductDetailesScreen extends StatelessWidget {
                                     .textTheme
                                     .bodyText2!
                                     .copyWith(
-                                        color: Colors.white, fontSize: 24)),
+                                        color: Colors.white, fontSize: 20)),
                             const SizedBox(
                               width: 8,
                             ),
@@ -150,6 +158,7 @@ class ProductDetailesScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
               FloatingActionButton(
                 backgroundColor: mainRed,
                 onPressed: () {
@@ -253,9 +262,8 @@ class ProductDetailesScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               const Text("📂", style: TextStyle(fontSize: 30)),
-                              Text(
-                                "${model.category}",
-                              )
+                              Text("${model.category}",
+                                  style: const TextStyle(fontSize: 14))
                             ],
                           ),
                           Column(
@@ -274,6 +282,12 @@ class ProductDetailesScreen extends StatelessWidget {
                                 ),
                               ),
                               Text("${model.quantity}")
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              const Icon(Icons.visibility),
+                              Text("${model.views}")
                             ],
                           ),
                         ],

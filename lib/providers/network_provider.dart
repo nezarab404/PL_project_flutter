@@ -7,12 +7,9 @@ import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
 import 'package:programming_languages_project/shared/status.dart';
 
-
-
-
 class NetworkProvider with ChangeNotifier {
-  AuthStatus loggedInStatus = AuthStatus.notLoggedIn;
-  AuthStatus registerStatus = AuthStatus.notRegistered;
+  AuthStatus userStatus = AuthStatus.notLoggedIn;
+  // AuthStatus registerStatus = AuthStatus.notRegistered;
 
   String msg = "";
   String Rmsg = "";
@@ -21,7 +18,7 @@ class NetworkProvider with ChangeNotifier {
 
   Future<void> userLogin(
       {required String email, required String password}) async {
-    loggedInStatus = AuthStatus.authenticating;
+    userStatus = AuthStatus.authenticating;
     notifyListeners();
     print("getting data");
     await DioHelper.postData(
@@ -32,21 +29,21 @@ class NetworkProvider with ChangeNotifier {
         loginModel = LoginModel.fromJson(value.data);
 
         if (value.data['status']) {
-          loggedInStatus = AuthStatus.loggedIn;
+          userStatus = AuthStatus.loggedIn;
           if (loginModel!.user != null) {
             print("token : ${loginModel!.user!.token}");
             token = loginModel!.user!.token!;
             me = loginModel!.user;
-          } else {}
+          }
         } else {
-          loggedInStatus = AuthStatus.notLoggedIn;
+          userStatus = AuthStatus.notLoggedIn;
         }
-      }
-      else {
+      } else {
         print(msg = value.data['msg']);
       }
       notifyListeners();
     }).catchError((error) {
+      userStatus = AuthStatus.notLoggedIn;
       print(error);
     });
 
@@ -58,18 +55,18 @@ class NetworkProvider with ChangeNotifier {
       required String email,
       required String password,
       required String confirmPassword}) async {
-    registerStatus = AuthStatus.registering;
+    userStatus = AuthStatus.registering;
     notifyListeners();
-   await DioHelper.postData(url: REGISTER, data: {
-      "name" : name,
-      "email" : email,
-      "password" : password,
-      "c_password" : confirmPassword
-    }).then((value){
-      print(registerStatus);
-      if (value.statusCode == 200){
-        registerStatus=AuthStatus.registered;
-        print(registerStatus);
+    await DioHelper.postData(url: REGISTER, data: {
+      "name": name,
+      "email": email,
+      "password": password,
+      "c_password": confirmPassword
+    }).then((value) {
+      print(userStatus);
+      if (value.statusCode == 200) {
+        userStatus = AuthStatus.registered;
+        print(userStatus);
         registerModel = LoginModel.fromJson(value.data);
         if (registerModel!.user != null) {
           print(registerModel!.user!.token);
@@ -77,13 +74,25 @@ class NetworkProvider with ChangeNotifier {
           me = registerModel!.user;
         }
         notifyListeners();
-      }
-      else{
-        registerStatus = AuthStatus.notRegistered;
+      } else {
+        userStatus = AuthStatus.notRegistered;
         print("${value.data['msg']}");
         Rmsg = value.data['msg'].toString();
       }
       notifyListeners();
     });
+  }
+
+  Future<bool> userLogout() async {
+    DioHelper.getData(url: LOGOUT, token: token).then((value) {
+      if (value.statusCode == 200) {
+        userStatus = AuthStatus.loggedOut;
+        return true;
+      }
+      notifyListeners();
+    }).catchError((e) {
+      print(e);
+    });
+    return false;
   }
 }

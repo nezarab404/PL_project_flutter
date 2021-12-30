@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
+import 'package:programming_languages_project/providers/search_provider.dart';
 import 'package:programming_languages_project/screens/login_screen.dart';
-import 'package:programming_languages_project/screens/new_product_screen.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
@@ -88,9 +88,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<MyProductsProvider>(
           create: (_) => MyProductsProvider()..getMyProducts(),
         ),
+         ChangeNotifierProvider<SearchProvider>(
+          create: (_) => SearchProvider(),
+        ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Dream Shop',
         debugShowCheckedModeBanner: false,
         locale: const Locale('ar'),
         localizationsDelegates: const [
@@ -100,8 +103,8 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [
-          Locale('en', ''), // English, no country code
-          Locale('ar', ''),
+          Locale('en'),
+          Locale('ar'),
         ],
         themeMode: ThemeMode.dark,
         theme: ThemeData(

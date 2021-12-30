@@ -124,7 +124,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ],
                             content: Text(
-                            lan.enterEmailFirst,
+                              lan.enterEmailFirst,
                             ),
                           ),
                         );
@@ -173,52 +173,56 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight / 10,
                 width: screenHeight / 10,
-                child: FloatingActionButton(
-                  onPressed: () async {
-                    //TODO: login
-                    if (_formKey.currentState!.validate()) {
-                      Provider.of<NetworkProvider>(context, listen: false)
-                          .userLogin(
-                              email: _email.text, password: _password.text)
-                          .then((value) {
-                        if (provider.loggedInStatus == AuthStatus.loggedIn) {
-                          SharedHelper.saveData(
-                                  key: TOKEN,
-                                  value: provider.loginModel!.user!.token)
-                              .then((value) {
-                            if (provider
-                                    .loginModel!.user!.accountConfirmation ==
-                                0) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          VerificationCodeScreen()));
-                            } else {
-                              Provider.of<HomeProvider>(context, listen: false)
-                                  .getProducts();
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const MyDrawer()));
-                            }
-                          }).catchError((error) {});
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(provider.msg),
-                            backgroundColor: mainRed,
-                          ));
-                        }
-                      }).catchError((error) {});
-                    }
-                  },
-                  backgroundColor: mainRed,
-                  child: Icon(
-                    Icons.arrow_forward,
-                    color: mainDarkBlue,
-                  ),
-                  elevation: 6,
-                ),
+                child: provider.userStatus == AuthStatus.authenticating
+                    ? CircularProgressIndicator()
+                    : FloatingActionButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            Provider.of<NetworkProvider>(context, listen: false)
+                                .userLogin(
+                                    email: _email.text,
+                                    password: _password.text)
+                                .then((value) {
+                              if (provider.userStatus == AuthStatus.loggedIn) {
+                                SharedHelper.saveData(
+                                        key: TOKEN,
+                                        value: provider.loginModel!.user!.token)
+                                    .then((value) {
+                                  if (provider.loginModel!.user!
+                                          .accountConfirmation ==
+                                      0) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                VerificationCodeScreen()));
+                                  } else {
+                                    Provider.of<HomeProvider>(context,
+                                            listen: false)
+                                        .getProducts();
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => const MyDrawer()));
+                                  }
+                                }).catchError((error) {});
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(provider.msg),
+                                  backgroundColor: mainRed,
+                                ));
+                              }
+                            }).catchError((error) {});
+                          }
+                        },
+                        backgroundColor: mainRed,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: mainDarkBlue,
+                        ),
+                        elevation: 6,
+                      ),
               ),
               SizedBox(
                 height: screenHeight / 10 - 30,

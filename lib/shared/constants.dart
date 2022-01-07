@@ -18,7 +18,7 @@ setCategories(BuildContext context) {
   ];
 }
 
-List<String>? sortngOptions;
+List<String>? sortngOptions, searchBy;
 
 setSortingOptions(BuildContext context) {
   var lan = AppLocalizations.of(context)!;
@@ -30,6 +30,14 @@ setSortingOptions(BuildContext context) {
     lan.expirationDate,
     lan.category,
     lan.quantity,
+  ];
+}
+
+setSearchOptions(BuildContext context) {
+  var lan = AppLocalizations.of(context)!;
+  searchBy = [
+    lan.byName,
+    lan.byDate
   ];
 }
 

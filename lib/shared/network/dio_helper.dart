@@ -28,7 +28,7 @@ class DioHelper {
       'auth-token': "$token"
     };
     //  =Response(requestOptions: RequestOptions(path: ""))
-    Response response;
+    Response response=Response(requestOptions: RequestOptions(path: ""));
     try {
       response = await dio.post(
         url,
@@ -37,7 +37,7 @@ class DioHelper {
       );
     } on DioError catch (e) {
       //return e.response!;
-      return e.response!;
+    //  return e.response!;
     }
     return response;
   }

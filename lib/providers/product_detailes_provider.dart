@@ -107,6 +107,10 @@ class ProductDetailesProvider with ChangeNotifier {
     });
   }
 
+  view(int productID) {
+    DioHelper.getData(url: VIEW_PRODUCT, token: token);
+  }
+
   Future<void> deleteMyComment(int commentId, int productId) async {
     commentStatus = Status.loading;
     DioHelper.deleteData(url: COMMENTS + '/$commentId').then((value) {

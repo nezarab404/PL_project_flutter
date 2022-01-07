@@ -65,6 +65,8 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     //   super.dispose();
     // }
 
+    
+
     var provider = Provider.of<VerifyProvider>(context);
 
     return Scaffold(
@@ -210,14 +212,12 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 child: FloatingActionButton(
                   onPressed: () async {
                     widget._isReset
-                        ? await Provider.of<VerifyProvider>(context,
-                                listen: false)
-                            .resetVerify(
-                                email: widget.email!, code: widget._code.text)
+                        ? await Provider.of<VerifyProvider>(context, listen: false)
+                            .resetVerify(email: widget.email!, code: widget._code.text)
                             .then((value) {
-                            print("koo ${widget.email!}");
-                            print(widget._code.text);
-                            if (provider.s == Status.loading) {
+                              print("koo ${widget.email!}");
+                              print(widget._code.text);
+                            if(provider.s == Status.loading){
                               print(provider.s);
                             }
                             if (provider.s == Status.success) {
@@ -228,6 +228,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                             } else {
                               print("moo ${widget.email!}");
                               print(widget._code.text);
+                            //  print(value);
                               //  print(value);
                               print("error");
                             }

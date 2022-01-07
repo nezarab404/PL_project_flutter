@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
+import 'package:programming_languages_project/screens/search_screen.dart';
 import 'package:programming_languages_project/shared/commponents/my_grid_view.dart';
 import 'package:programming_languages_project/shared/commponents/my_radio_buttons.dart';
 import 'package:programming_languages_project/shared/constants.dart';
@@ -41,7 +42,8 @@ class HomeScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                ZoomDrawer.of(context)!.toggle();
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => SearchScreen()));
               },
               icon: const Icon(Icons.search),
             ),
@@ -74,9 +76,9 @@ class HomeScreen extends StatelessWidget {
                                   Icons.sort_rounded,
                                   size: 16,
                                 ),
-                                 Text(lan.sortBy,
+                                Text(lan.sortBy,
                                     style: const TextStyle(
-                                        fontSize: 14, color: Colors.white)),
+                                        fontSize: 12, color: Colors.white)),
                                 Icon(
                                   provider.desc
                                       ? Icons.arrow_drop_down

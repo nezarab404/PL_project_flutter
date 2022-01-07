@@ -66,5 +66,11 @@
     "edited":"تم التعديل",
     "commentsHint":"اكتب تعليقا حول المنتج...",
     "completeYourProfile":"أكمل ملفك الشخصي",
-    "skip":"تخطي"
+    "skip":"تخطي",
+    "search":"البحث عن منتج",
+    "byName":"حسب الاسم",
+    "byDate":"حسب التاريخ",
+    "noProductsFound":"لا يوجد منتجات"
+
+    
 }

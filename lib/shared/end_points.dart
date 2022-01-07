@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 const LOGIN = "auth/login";
+const LOGOUT = "auth/logout";
 const REGISTER = "auth/register";
 const VERIFY_REGISTER = "auth/checkRegisterCode";
 const SEND_REGISTER_VERIFY_CODE = "auth/sendRegisterCode";
@@ -15,3 +16,6 @@ const LIKED_PRODUCTS = "/products/my/products/like";
 const MY_PRODUCTS = "/products/my/products";
 const UPDATEUSER = "/auth/updateUser";
 const CHANGE_PASSWORD = "/auth/changePassword";
+const SEARCH_BY_NAME = "/products/search/name";
+const SEARCH_BY_DATE = "/products/search/date";
+const VIEW_PRODUCT = "/products/view";

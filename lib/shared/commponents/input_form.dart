@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, must_be_immutable
+// ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 class InputForm extends StatefulWidget {
@@ -13,12 +12,14 @@ class InputForm extends StatefulWidget {
   final TextInputType? inputType;
   final String? Function(String?)? validator;
   final void Function(String?)? saveFunction;
+  final void Function(String)? onChanged;
   // final Function()? dateFunction;
   bool isPassword;
   bool isDescription;
   // bool isDate;
 
   InputForm({
+    Key? key,
     this.screenWidth,
     this.controller,
     this.hintText,
@@ -29,9 +30,10 @@ class InputForm extends StatefulWidget {
     this.isDescription = false,
     this.hintText2,
     this.saveFunction,
+    this.onChanged,
     // this.isDate = false,
     // this.dateFunction,
-  });
+  }) : super(key: key);
 
   @override
   State<InputForm> createState() => _InputFormState();
@@ -41,11 +43,13 @@ class _InputFormState extends State<InputForm> {
   var icon = Icons.visibility;
 
   bool visibility = false;
+
   @override
   void initState() {
     if (widget.isPassword) visibility = true;
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +62,7 @@ class _InputFormState extends State<InputForm> {
         horizontal: widget.screenWidth != null ? widget.screenWidth! / 10 : 0,
       ),
       child: TextFormField(
+        onChanged: widget.onChanged,
         onSaved: widget.saveFunction,
         controller: widget.controller,
         validator: widget.validator,

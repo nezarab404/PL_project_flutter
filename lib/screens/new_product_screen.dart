@@ -314,8 +314,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 SizedBox(
                   height: screenHeight / 40,
                 ),
-<<<<<<< HEAD
-              if (!widget.isEdit)
+                if (!widget.isEdit)
                 Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -324,33 +323,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   margin: EdgeInsets.symmetric(
                     horizontal: screenWidth / 10,
                   ),
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: TextFormField(
-                      onTap: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime.utc(2023),
-                        ).then((value) {
-                          if (value == null) {
-                            return;
-                          }
-                          widget.date.text = DateFormat.yMMMd().format(value);
-                          provider.date = value;
-                        });
-                      },
-                      keyboardType: TextInputType.none,
-                      showCursor: false,
-                      controller: widget.date,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.date_range),
-                        border: InputBorder.none,
-                        labelText: 'Expiration date',
-                        contentPadding: EdgeInsets.all(10),
-                      ),
-=======
                 child: Container(
                   alignment: Alignment.centerLeft,
                   child: TextFormField(
@@ -376,10 +348,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
                       border: InputBorder.none,
                       labelText: lan.expirationDate,
                       contentPadding: const EdgeInsets.all(10),
->>>>>>> 3788ade68ba6dad9c5ef7d74f2e3ec26a981bf78
                     ),
                   ),
-                ),
+                ),),
               SizedBox(
                 height: screenHeight / 30,
               ),
@@ -387,20 +358,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
               SizedBox(
                 height: screenHeight / 100,
               ),
-<<<<<<< HEAD
-
-              //discounts form
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        lan.remainingDays,
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-=======
             SizedBox(
               height: screenHeight / 30,
             ),
@@ -419,8 +376,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                       lan.remainingDays,
                       style: const TextStyle(
                         color: Colors.white,
->>>>>>> 3788ade68ba6dad9c5ef7d74f2e3ec26a981bf78
-                      ),
+                      ),),
                       SizedBox(
                         height: screenHeight / 100,
                       ),
@@ -469,18 +425,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 ],
               ),
 
-<<<<<<< HEAD
-              //user details
-              SizedBox(
-                height: screenHeight / 30,
-              ),
-              TextDivider(
-                text: lan.sellerContactInfo,
-              ),
-              SizedBox(
-                height: screenHeight / 100,
-              ),
-=======
             //user details
             SizedBox(
               height: screenHeight / 30,
@@ -491,7 +435,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 100,
             ),
->>>>>>> 3788ade68ba6dad9c5ef7d74f2e3ec26a981bf78
 
               //phone num
               InputForm(
@@ -620,11 +563,7 @@ void showAddImagesSheet(
     context: context,
     builder: (context) {
       return SizedBox(
-<<<<<<< HEAD
-        height: screenHeight / 3,
-=======
         height: screenHeight / 5,
->>>>>>> 3788ade68ba6dad9c5ef7d74f2e3ec26a981bf78
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

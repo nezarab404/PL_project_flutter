@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<MyProductsProvider>(
           create: (_) => MyProductsProvider()..getMyProducts(),
         ),
-         ChangeNotifierProvider<SearchProvider>(
+        ChangeNotifierProvider<SearchProvider>(
           create: (_) => SearchProvider(),
         ),
       ],

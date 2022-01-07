@@ -53,9 +53,13 @@ class ProductDetailesScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProfileScreen(
-                      user: model.user,
-                    ),
+                    builder: (_) => me!.id == model.userId
+                        ? ProfileScreen.myProfile(
+                            user: me,
+                          )
+                        : ProfileScreen(
+                            user: model.user,
+                          ),
                   ),
                 );
               },
@@ -160,7 +164,6 @@ class ProductDetailesScreen extends StatelessWidget {
                   ],
                 ),
               ),
-
               FloatingActionButton(
                 backgroundColor: mainRed,
                 onPressed: () {

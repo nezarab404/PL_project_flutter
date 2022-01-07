@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
@@ -58,15 +59,33 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //user profile photo
+                      // CircleAvatar(
+                      //   child: provider.comments[index].user!.image == null
+                      //       ? const Icon(Icons.person)
+                      //       : Image.network(
+                      //           provider.comments[index].user!.image!,
+                      //           fit: BoxFit.cover,
+                      //         ),
+                      //   radius: 25,
+                      //   backgroundColor: Colors.white,
+                      // ),
                       CircleAvatar(
-                        child: provider.comments[index].user!.image == null
-                            ? const Icon(Icons.person)
-                            : Image.network(
-                                provider.comments[index].user!.image!,
-                                fit: BoxFit.cover,
-                              ),
-                        radius: 25,
                         backgroundColor: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(1),
+                          child: ClipOval(
+                            child: provider.comments[index].user!.image == null
+                                ? SvgPicture.asset(
+                                    'assets/images/avatar.svg',
+                                  )
+                                : Image.network(
+                                    provider.comments[index].user!.image!,
+                                    fit: BoxFit.cover,
+                                    width: 250,
+                                    height: 250,
+                                  ),
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         width: 5,
@@ -108,11 +127,18 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                             ),
                           ],
                           child: Card(
-                            shape: const RoundedRectangleBorder(
+                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(15),
-                                bottomRight: Radius.circular(15),
-                                topRight: Radius.circular(15),
+                                bottomLeft: const Radius.circular(15),
+                                bottomRight: const Radius.circular(15),
+                                topRight: Localizations.localeOf(context) ==
+                                        const Locale('ar')
+                                    ? Radius.zero
+                                    : const Radius.circular(15),
+                                topLeft: Localizations.localeOf(context) ==
+                                        const Locale('ar')
+                                    ? const Radius.circular(15)
+                                    : Radius.zero,
                               ),
                             ),
                             child: Padding(
@@ -142,6 +168,11 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                                   //user comment
                                   Text(
                                     provider.comments[index].comment!,
+                                    textDirection:
+                                        Localizations.localeOf(context) ==
+                                                const Locale('ar')
+                                            ? TextDirection.rtl
+                                            : TextDirection.ltr,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.normal,
                                     ),

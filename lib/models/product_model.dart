@@ -12,8 +12,6 @@ class ProductModel {
   String? expirationDate;
   int? remainingDays;
   double? quantity;
-  String? phone;
-  String? facebook;
   double? price;
   UserModel? user;
   int? views;
@@ -31,8 +29,6 @@ class ProductModel {
     expirationDate = json['expiration_date'];
     remainingDays = json['remaining_days'];
     quantity = json['quantity'] * 1.0;
-    phone = json['phone'];
-    facebook = json['facebook'];
     price = json['price'] * 1.0;
     user = UserModel.fromJson(json['user']);
     views = json['views_count'];

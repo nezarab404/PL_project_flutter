@@ -1,11 +1,10 @@
 // ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:intl/intl.dart';
+
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
@@ -34,8 +33,6 @@ class NewProductScreen extends StatefulWidget {
   var per1 = TextEditingController();
   var per2 = TextEditingController();
   var per3 = TextEditingController();
-  var number = TextEditingController();
-  var facebook = TextEditingController();
   var date = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
@@ -68,8 +65,6 @@ class NewProductScreen extends StatefulWidget {
     per3 = TextEditingController(
         text:
             isEdit ? model!.priceInfo!.discounts[2].percentage.toString() : "");
-    number = TextEditingController(text: isEdit ? model!.phone : "");
-    facebook = TextEditingController(text: isEdit ? model!.facebook : "");
   }
 
   @override
@@ -83,6 +78,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
     var screenWidth = MediaQuery.of(context).size.width;
     var provider = Provider.of<NewProductProvider>(context);
     var lan = AppLocalizations.of(context)!;
+    
     if (widget.isEdit) {
       provider.setCategory(widget.model!.category!);
     }
@@ -159,10 +155,13 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                               padding: EdgeInsets.zero,
                                               color: mainRed,
                                               onPressed: () {
-                                                setState(() {
-                                                  provider.images!.remove(
-                                                      provider.images![f]);
-                                                });
+                                                setState(
+                                                  () {
+                                                    provider.images!.remove(
+                                                      provider.images![f],
+                                                    );
+                                                  },
+                                                );
                                               },
                                               icon: const Icon(
                                                 Icons.remove_circle,
@@ -213,13 +212,15 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SmallInputField(
-                          label: lan.initialPrice,
-                          icon: Icons.attach_money_outlined,
-                          controller: widget.price),
+                        label: lan.initialPrice,
+                        icon: Icons.attach_money_outlined,
+                        controller: widget.price,
+                      ),
                       SmallInputField(
-                          label: lan.quantity,
-                          icon: Icons.production_quantity_limits,
-                          controller: widget.quantity),
+                        label: lan.quantity,
+                        icon: Icons.production_quantity_limits,
+                        controller: widget.quantity,
+                      ),
                       //category
                       Card(
                         shape: RoundedRectangleBorder(
@@ -415,36 +416,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
               ],
             ),
 
-            //user details
-            SizedBox(
-              height: screenHeight / 30,
-            ),
-            TextDivider(
-              text: lan.sellerContactInfo,
-            ),
-            SizedBox(
-              height: screenHeight / 100,
-            ),
-
-            //phone num
-            InputForm(
-              screenWidth: screenWidth,
-              hintText: lan.phoneNumber,
-              inputType: TextInputType.phone,
-              pIcon: Icons.phone,
-              controller: widget.number,
-            ),
-            SizedBox(
-              height: screenHeight / 40,
-            ),
-            //facebook account
-            InputForm(
-              screenWidth: screenWidth,
-              hintText: lan.facebooko,
-              inputType: TextInputType.url,
-              pIcon: Icons.facebook,
-              controller: widget.facebook,
-            ),
             SizedBox(
               height: screenHeight / 30,
             ),
@@ -469,7 +440,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                             ),
                             name: widget.name.text,
                             description: widget.description.text,
-                            phone: widget.number.text,
                             rDays1: int.parse(widget.rDays1.text),
                             rDays2: int.parse(widget.rDays2.text),
                             rDays3: int.parse(widget.rDays3.text),
@@ -484,9 +454,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                     listen: false)
                                 .getMyProducts();
                             Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const MyDrawer()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const MyDrawer(),
+                              ),
+                            );
                           })
                         : print("momo ${widget.quantity.text}");
                     Provider.of<NewProductProvider>(context, listen: false)
@@ -499,7 +471,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                       ),
                       name: widget.name.text,
                       description: widget.description.text,
-                      phone: widget.number.text,
                       rDays1: int.parse(widget.rDays1.text),
                       rDays2: int.parse(widget.rDays2.text),
                       rDays3: int.parse(widget.rDays3.text),
@@ -512,8 +483,12 @@ class _NewProductScreenState extends State<NewProductScreen> {
                           .getProducts();
                       Provider.of<MyProductsProvider>(context, listen: false)
                           .getMyProducts();
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (_) => const MyDrawer()));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const MyDrawer(),
+                        ),
+                      );
                     }); //1640905200
                   },
                   backgroundColor: mainRed,

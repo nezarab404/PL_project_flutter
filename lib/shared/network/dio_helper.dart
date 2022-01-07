@@ -56,7 +56,7 @@ class DioHelper {
       'lang': lang,
       'auth-token': "$token",
       'sort': sort,
-      'desc': desc
+      'desc': desc,
     };
     try {
       response = await dio.get(url);

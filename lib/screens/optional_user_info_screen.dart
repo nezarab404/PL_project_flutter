@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:programming_languages_project/screens/drawer.dart';
 import 'package:provider/provider.dart';
 
 import 'package:programming_languages_project/providers/profile_provider.dart';
-import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 import 'package:programming_languages_project/shared/commponents/mbs_element.dart';
 import 'package:programming_languages_project/shared/commponents/text_divider.dart';
@@ -16,6 +16,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
   OptionalUserInfoScreen({Key? key}) : super(key: key);
   var bioController = TextEditingController();
   var mobileController = TextEditingController();
+  var fbController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -146,24 +147,35 @@ class OptionalUserInfoScreen extends StatelessWidget {
               screenWidth: screenWidth,
               isDescription: true,
             ),
-            // SizedBox(
-            //   height: screenHeight / 40,
-            // ),
-            // InputForm(
-            //   controller: mobileController,
-            //   hintText: 'Mobile',
-            //   pIcon: Icons.smartphone,
-            //   screenWidth: screenWidth,
-            //   inputType: TextInputType.phone,
-            // ),
+            SizedBox(
+              height: screenHeight / 40,
+            ),
+            InputForm(
+              controller: mobileController,
+              hintText: lan.phoneNumber,
+              pIcon: Icons.smartphone,
+              screenWidth: screenWidth,
+              inputType: TextInputType.phone,
+            ),
+            SizedBox(
+              height: screenHeight / 40,
+            ),
+            InputForm(
+              controller: fbController,
+              hintText: lan.facebooko,
+              pIcon: Icons.facebook,
+              screenWidth: screenWidth,
+              inputType: TextInputType.url,
+            ),
             SizedBox(
               height: screenHeight / 30,
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(
+                Navigator.pushReplacement(
+                  context,
                   MaterialPageRoute(
-                    builder: (context) => const Drawer(),
+                    builder: (_) => const MyDrawer(),
                   ),
                 );
               },
@@ -189,12 +201,22 @@ class OptionalUserInfoScreen extends StatelessWidget {
                     listen: false,
                   )
                       .updateProfile(
-                        bio: bioController.text,
-                        name: me!.name,
-                        email: me!.email,
-                        image: provider.profileImage,
-                      )
-                      .then((value) => null);
+                    bio: bioController.text,
+                    name: me!.name,
+                    email: me!.email,
+                    image: provider.profileImage,
+                    phone: mobileController.text,
+                    facebook: fbController.text,
+                  )
+                      .then((value) {
+                    print(value);
+                  });
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const MyDrawer(),
+                    ),
+                  );
                 },
                 backgroundColor: mainRed,
                 child: Icon(

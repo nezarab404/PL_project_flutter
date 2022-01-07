@@ -135,45 +135,54 @@ class RegisterScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight / 10,
                 width: screenHeight / 10,
-                child: provider.userStatus == AuthStatus.registering ? CircularProgressIndicator():FloatingActionButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await Provider.of<NetworkProvider>(context, listen: false)
-                          .userRegister(
-                        name: _name.text,
-                        email: _email.text,
-                        password: _password.text,
-                        confirmPassword: _confirmPassword.text,
-                      )
-                          .then((value) {
-                        print("koko :${provider.userStatus}");
-                        if (provider.userStatus == AuthStatus.registered) {
-                          print("success");
+                child: provider.userStatus == AuthStatus.registering
+                    ? CircularProgressIndicator()
+                    : FloatingActionButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            await Provider.of<NetworkProvider>(context,
+                                    listen: false)
+                                .userRegister(
+                              name: _name.text,
+                              email: _email.text,
+                              password: _password.text,
+                              confirmPassword: _confirmPassword.text,
+                            )
+                                .then((value) {
+                              print("koko :${provider.userStatus}");
+                              if (provider.userStatus ==
+                                  AuthStatus.registered) {
+                                print("success");
 
-                          SharedHelper.saveData(
-                                  key: TOKEN,
-                                  value: provider.registerModel!.user!.token)
-                              .then((value) {
-                            token = provider.registerModel!.user!.token;
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => VerificationCodeScreen()));
-                          });
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(provider.Rmsg.toString())));
-                        }
-                      });
-                    }
-                  },
-                  backgroundColor: mainRed,
-                  child: Icon(
-                    Icons.arrow_forward,
-                    color: mainDarkBlue,
-                  ),
-                  elevation: 6,
-                ),
+                                SharedHelper.saveData(
+                                        key: TOKEN,
+                                        value:
+                                            provider.registerModel!.user!.token)
+                                    .then((value) {
+                                  token = provider.registerModel!.user!.token;
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => VerificationCodeScreen(),
+                                    ),
+                                  );
+                                });
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content:
+                                            Text(provider.Rmsg.toString())));
+                              }
+                            });
+                          }
+                        },
+                        backgroundColor: mainRed,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: mainDarkBlue,
+                        ),
+                        elevation: 6,
+                      ),
               ),
             ],
           ),

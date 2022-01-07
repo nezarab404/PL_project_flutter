@@ -66,6 +66,8 @@
     "passwordsDnotMatch":"Passwords don't match",
     "edited":"Edited",
     "commentsHint":"Say something about this",
+    "completeYourProfile":"Complete Your Profile",
+    "skip":"Skip",
     "search":"Search for a product",
     "byName":"By Name",
     "byDate":"By Date",

@@ -79,7 +79,7 @@ class MyProductsScreen extends StatelessWidget {
                                 );
                               });
                         },
-                        backgroundColor: Color(0xFFFE4A49),
+                        backgroundColor: const Color(0xFFFE4A49),
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
                         label: lan.delete,

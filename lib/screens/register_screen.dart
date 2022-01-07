@@ -162,7 +162,7 @@ class RegisterScreen extends StatelessWidget {
                           });
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(provider.Rmsg.toString())));
+                              content: Text(provider.Rmsg),backgroundColor: mainRed,));
                         }
                       });
                     }

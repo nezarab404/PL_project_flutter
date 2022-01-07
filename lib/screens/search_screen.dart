@@ -17,7 +17,7 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var lan = AppLocalizations.of(context)!;
-    var provider = Provider.of<SearchProvider>(context);
+    var provider = Provider.of<SearchProvider>(context)..initCategory(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

@@ -44,22 +44,22 @@ class NewProductProvider with ChangeNotifier {
   }
 
   Future pickMultiImage() async {
-    if(Platform.isLinux){
-      FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    if (Platform.isLinux) {
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(allowMultiple: true);
 
-if (result != null) {
-  var imagesList = result.paths.map((path) => File(path!)).toList();
-  List<File>? tempImages = [];
+      if (result != null) {
+        var imagesList = result.paths.map((path) => File(path!)).toList();
+        List<File>? tempImages = [];
         for (var image in imagesList) {
           tempImages.add(File(image.path));
         }
         images!.addAll(tempImages);
         notifyListeners();
-} else {
-  // User canceled the picker
-}
-    }
-    else {
+      } else {
+        // User canceled the picker
+      }
+    } else {
       try {
         final imagesList = await ImagePicker().pickMultiImage();
         if (imagesList!.isEmpty) return;
@@ -130,7 +130,7 @@ if (result != null) {
           await MultipartFile.fromFile(images![i].path,
               filename: images![i].path.split('/').last)));
     }
-
+    print(token);
     await DioHelper.postData(url: PRODUCTS, token: token, data: imageList)
         .then((value) {
       if (value.statusCode == 200) {
@@ -140,9 +140,11 @@ if (result != null) {
       } else {
         addProductStatus = Status.failed;
         print(addProductStatus);
-        //print(value.data['msg']);
+        print(value);
         return false;
       }
+    }).catchError((e) {
+      print(e);
     });
     return false;
   }
@@ -190,7 +192,8 @@ if (result != null) {
               filename: images![i].path.split('/').last)));
     }
 
-    await DioHelper.postData(url: PRODUCTS+'/$productId', token: token, data: imageList)
+    await DioHelper.postData(
+            url: PRODUCTS + '/$productId', token: token, data: imageList)
         .then((value) {
       if (value.statusCode == 200) {
         addProductStatus = Status.success;

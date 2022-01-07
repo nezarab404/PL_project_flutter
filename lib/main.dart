@@ -62,7 +62,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<NetworkProvider>(
@@ -72,7 +71,9 @@ class MyApp extends StatelessWidget {
           create: (_) => ProductDetailesProvider(),
         ),
         ChangeNotifierProvider<HomeProvider>(
-          create: (_) => HomeProvider()..getProducts(),
+          create: (_) => HomeProvider()
+            ..getProducts()
+            ..getCategoryProducts(),
         ),
         ChangeNotifierProvider<NewProductProvider>(
           create: (_) => NewProductProvider(),
@@ -89,14 +90,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<MyProductsProvider>(
           create: (_) => MyProductsProvider()..getMyProducts(),
         ),
-         ChangeNotifierProvider<SearchProvider>(
+        ChangeNotifierProvider<SearchProvider>(
           create: (_) => SearchProvider(),
         ),
       ],
       child: MaterialApp(
         title: 'Dream Shop',
         debugShowCheckedModeBanner: false,
-        locale: const Locale('ar'),
+        locale: const Locale('en'),
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

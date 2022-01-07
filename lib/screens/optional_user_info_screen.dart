@@ -194,7 +194,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
                         image:
                             Provider.of<ProfileProvider>(context).profileImage,
                       )
-                      .then((value) => null);
+                      .then((value) => print);
                 },
                 backgroundColor: mainRed,
                 child: Icon(

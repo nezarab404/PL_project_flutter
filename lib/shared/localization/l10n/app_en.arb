@@ -23,6 +23,7 @@
     "creatingDate": "Creating Date",
     "expirationDate": "Expiration Date",
     "category": "Category",
+    "categories" : "Categories",
     "quantity": "Quantity",
     "food": "Food",
     "medicines": "Medicines",
@@ -68,5 +69,7 @@
     "search":"Search for a product",
     "byName":"By Name",
     "byDate":"By Date",
-    "noProductsFound":"No Products Found"
+    "noProductsFound":"No Products Found",
+    "errorWhileRegister":"Network Error Was Happend",
+    "cart":"Cart"
 }

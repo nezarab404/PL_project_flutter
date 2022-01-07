@@ -4,11 +4,22 @@ import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
 import 'package:programming_languages_project/shared/status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchProvider with ChangeNotifier {
   List<ProductModel> result = [];
   Status searchStatus = Status.init;
   String? searchBy;
+  bool isInit = false;
+
+  initCategory(BuildContext context) {
+    var lan = AppLocalizations.of(context)!;
+    if (!isInit) {
+      searchBy = lan.byName;
+      isInit = true;
+    }
+  }
+
   setCategory(String val) {
     searchBy = val;
     notifyListeners();

@@ -6,11 +6,12 @@ import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
 import 'package:programming_languages_project/shared/status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NetworkProvider with ChangeNotifier {
   AuthStatus userStatus = AuthStatus.notLoggedIn;
   // AuthStatus registerStatus = AuthStatus.notRegistered;
-
+  // var lan = AppLocalizations.of(context)!; //todo:
   String msg = "";
   String Rmsg = "";
   LoginModel? loginModel;
@@ -39,7 +40,11 @@ class NetworkProvider with ChangeNotifier {
           userStatus = AuthStatus.notLoggedIn;
         }
       } else {
-        print(msg = value.data['msg']);
+        userStatus = AuthStatus.notLoggedIn;
+        msg = value.data != null
+            ? value.data['msg'].toString()
+            : "Network error happend";
+        print(msg);
       }
       notifyListeners();
     }).catchError((error) {
@@ -77,14 +82,16 @@ class NetworkProvider with ChangeNotifier {
       } else {
         userStatus = AuthStatus.notRegistered;
         print("${value.data}");
-        Rmsg = value.data['msg'].toString();
+        Rmsg = value.data != null
+            ? value.data['msg'].toString()
+            : "Network error happend";
       }
       notifyListeners();
     });
   }
 
   Future<bool> userLogout() async {
-    DioHelper.getData(url: LOGOUT, token: token).then((value) {
+    await DioHelper.getData(url: LOGOUT, token: token).then((value) {
       if (value.statusCode == 200) {
         userStatus = AuthStatus.loggedOut;
         return true;

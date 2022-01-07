@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/user_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -35,10 +36,7 @@ setSortingOptions(BuildContext context) {
 
 setSearchOptions(BuildContext context) {
   var lan = AppLocalizations.of(context)!;
-  searchBy = [
-    lan.byName,
-    lan.byDate
-  ];
+  searchBy = [lan.byName, lan.byDate];
 }
 
 const sortngHeaders = [
@@ -49,6 +47,15 @@ const sortngHeaders = [
   "expiration_date",
   "category",
   "quantity",
+];
+
+const categoriesHeadres = [
+  "Food",
+  "Medicines",
+  "Cosmetics",
+  "Chemicals",
+  "Detergents",
+  "Other",
 ];
 
 UserModel? me;

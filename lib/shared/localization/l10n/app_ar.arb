@@ -23,6 +23,7 @@
     "creatingDate": "تاريخ الاضافة",
     "expirationDate": "تاريخ انتهاء الصلاحية",
     "category": "التصنيف",
+    "categories" : "التصنيفات",
     "quantity": "الكمية",
     "food": "غذائيات",
     "medicines": "أدوية",
@@ -70,7 +71,9 @@
     "search":"البحث عن منتج",
     "byName":"حسب الاسم",
     "byDate":"حسب التاريخ",
-    "noProductsFound":"لا يوجد منتجات"
+    "noProductsFound":"لا يوجد منتجات",
+    "errorWhileRegister":"حدث خطأ في الشبكة",
+    "cart":"سلة المشتريات"
 
     
 }

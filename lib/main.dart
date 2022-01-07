@@ -71,7 +71,9 @@ class MyApp extends StatelessWidget {
           create: (_) => ProductDetailesProvider(),
         ),
         ChangeNotifierProvider<HomeProvider>(
-          create: (_) => HomeProvider()..getProducts(),
+          create: (_) => HomeProvider()
+            ..getProducts()
+            ..getCategoryProducts(),
         ),
         ChangeNotifierProvider<NewProductProvider>(
           create: (_) => NewProductProvider(),
@@ -95,7 +97,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Dream Shop',
         debugShowCheckedModeBanner: false,
-        locale: const Locale('ar'),
+        locale: const Locale('en'),
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

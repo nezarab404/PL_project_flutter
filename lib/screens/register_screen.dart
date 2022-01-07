@@ -154,35 +154,30 @@ class RegisterScreen extends StatelessWidget {
                                   AuthStatus.registered) {
                                 print("success");
 
-                                SharedHelper.saveData(
-                                        key: TOKEN,
-                                        value:
-                                            provider.registerModel!.user!.token)
-                                    .then((value) {
-                                  token = provider.registerModel!.user!.token;
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => VerificationCodeScreen(),
-                                    ),
-                                  );
-                                });
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content:
-                                            Text(provider.Rmsg.toString())));
-                              }
-                            });
-                          }
-                        },
-                        backgroundColor: mainRed,
-                        child: Icon(
-                          Icons.arrow_forward,
-                          color: mainDarkBlue,
-                        ),
-                        elevation: 6,
-                      ),
+                          SharedHelper.saveData(
+                                  key: TOKEN,
+                                  value: provider.registerModel!.user!.token)
+                              .then((value) {
+                            token = provider.registerModel!.user!.token;
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => VerificationCodeScreen()));
+                          });
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(provider.Rmsg),backgroundColor: mainRed,));
+                        }
+                      });
+                    }
+                  },
+                  backgroundColor: mainRed,
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: mainDarkBlue,
+                  ),
+                  elevation: 6,
+                ),
               ),
             ],
           ),

@@ -127,7 +127,7 @@ class NewProductProvider with ChangeNotifier {
           await MultipartFile.fromFile(images![i].path,
               filename: images![i].path.split('/').last)));
     }
-
+    print(token);
     await DioHelper.postData(url: PRODUCTS, token: token, data: imageList)
         .then((value) {
       if (value.statusCode == 200) {
@@ -137,9 +137,11 @@ class NewProductProvider with ChangeNotifier {
       } else {
         addProductStatus = Status.failed;
         print(addProductStatus);
-        //print(value.data['msg']);
+        print(value);
         return false;
       }
+    }).catchError((e) {
+      print(e);
     });
     return false;
   }

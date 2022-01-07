@@ -3,11 +3,12 @@ import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 class MyRadioButtons extends StatefulWidget {
-  MyRadioButtons(
+  const MyRadioButtons(
       {Key? key,
       required this.titles,
       required this.width,
       required this.onTap,
+      required this.headers,
       this.lastTitle,
       this.height})
       : super(key: key);
@@ -15,6 +16,7 @@ class MyRadioButtons extends StatefulWidget {
   final double? width;
   final double? height;
   final List<String> titles;
+  final List<String> headers;
   final void Function(String?) onTap;
 
   @override
@@ -55,7 +57,7 @@ class _MyRadioButtonsState extends State<MyRadioButtons> {
                 }
                 models[index].isSelected = true;
                 x = index;
-                widget.onTap(sortngHeaders[index]);
+                widget.onTap(widget.headers[index]);
               });
             },
             child: RadioItem(model: models[index]),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
 import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
@@ -8,7 +11,6 @@ import 'package:programming_languages_project/shared/commponents/mbs_element.dar
 import 'package:programming_languages_project/shared/commponents/text_divider.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
-import 'package:provider/provider.dart';
 
 class OptionalUserInfoScreen extends StatelessWidget {
   OptionalUserInfoScreen({Key? key}) : super(key: key);
@@ -17,8 +19,10 @@ class OptionalUserInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lan = AppLocalizations.of(context)!;
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    var provider = Provider.of<ProfileProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
@@ -26,8 +30,8 @@ class OptionalUserInfoScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const TextDivider(
-              text: 'Complete Your Profile',
+            TextDivider(
+              text: lan.completeYourProfile,
             ),
             SizedBox(
               height: screenHeight / 40,
@@ -35,10 +39,22 @@ class OptionalUserInfoScreen extends StatelessWidget {
             Stack(
               children: [
                 CircleAvatar(
-                  radius: 100,
                   backgroundColor: Colors.white,
-                  child: ClipOval(
-                    child: SvgPicture.asset('assets/images/avatar.svg'),
+                  radius: 110,
+                  child: Padding(
+                    padding: const EdgeInsets.all(1),
+                    child: ClipOval(
+                      child: provider.profileImage == null
+                          ? SvgPicture.asset(
+                              'assets/images/avatar.svg',
+                            )
+                          : Image.file(
+                              provider.profileImage!,
+                              fit: BoxFit.cover,
+                              width: 250,
+                              height: 250,
+                            ),
+                    ),
                   ),
                 ),
                 Positioned(
@@ -66,7 +82,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    'Pick Image Form',
+                                    lan.pickImageForm,
                                     style: TextStyle(
                                       color: mainGrey,
                                       fontWeight: FontWeight.bold,
@@ -79,7 +95,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
                                     children: [
                                       MBSElement(
                                         icon: Icons.camera_alt,
-                                        text: 'Camera',
+                                        text: lan.camera,
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                           Provider.of<ProfileProvider>(
@@ -92,30 +108,15 @@ class OptionalUserInfoScreen extends StatelessWidget {
                                       ),
                                       MBSElement(
                                         icon: Icons.photo_library,
-                                        text: 'Gallery',
+                                        text: lan.gallery,
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                           Provider.of<ProfileProvider>(
                                             context,
                                             listen: false,
-                                          )
-                                              .pickImage(
+                                          ).pickImage(
                                             ImageSource.gallery,
-                                          )
-                                              .then((value) {
-                                            Provider.of<ProfileProvider>(
-                                              context,
-                                              listen: false,
-                                            ).updateProfile(
-                                              bio: bioController.text,
-                                              email: me!.email,
-                                              name: me!.name,
-                                              image:
-                                                  Provider.of<ProfileProvider>(
-                                                          context)
-                                                      .profileImage,
-                                            );
-                                          });
+                                          );
                                         },
                                       ),
                                     ],
@@ -140,7 +141,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
             ),
             InputForm(
               controller: bioController,
-              hintText: 'Bio',
+              hintText: lan.bio,
               pIcon: Icons.info,
               screenWidth: screenWidth,
               isDescription: true,
@@ -167,7 +168,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
                 );
               },
               child: Text(
-                'Skip',
+                lan.skip,
                 style: TextStyle(
                   color: mainRed,
                   fontWeight: FontWeight.bold,
@@ -191,8 +192,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
                         bio: bioController.text,
                         name: me!.name,
                         email: me!.email,
-                        image:
-                            Provider.of<ProfileProvider>(context).profileImage,
+                        image: provider.profileImage,
                       )
                       .then((value) => print);
                 },

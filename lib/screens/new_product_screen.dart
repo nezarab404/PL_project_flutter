@@ -91,7 +91,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
       appBar: AppBar(
         backgroundColor: darkBlue2,
         centerTitle: true,
-        title:  Text(
+        title: Text(
           lan.addYourProduct,
         ),
       ),
@@ -105,7 +105,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
               height: screenHeight / 30,
             ),
             //decoration divider
-             TextDivider(
+            TextDivider(
               text: lan.productSpecifications,
             ),
             SizedBox(
@@ -231,11 +231,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
                               borderRadius: BorderRadius.circular(15),
                               value: provider.category,
                               isExpanded: true,
-                              hint:  Padding(
+                              hint: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   lan.selectCategory,
-                                  style:const TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                   ),
                                 ),
@@ -338,11 +338,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     keyboardType: TextInputType.none,
                     showCursor: false,
                     controller: widget.date,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.date_range),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.date_range),
                       border: InputBorder.none,
-                      labelText: 'Expiration date',
-                      contentPadding: EdgeInsets.all(10),
+                      labelText: lan.expirationDate,
+                      contentPadding: const EdgeInsets.all(10),
                     ),
                   ),
                 ),
@@ -350,7 +350,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 30,
             ),
-             TextDivider(text: lan.discounts),
+            TextDivider(text: lan.discounts),
             SizedBox(
               height: screenHeight / 100,
             ),
@@ -361,7 +361,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
               children: [
                 Column(
                   children: [
-                     Text(
+                    Text(
                       lan.remainingDays,
                       style: const TextStyle(
                         color: Colors.white,
@@ -419,7 +419,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             SizedBox(
               height: screenHeight / 30,
             ),
-             TextDivider(
+            TextDivider(
               text: lan.sellerContactInfo,
             ),
             SizedBox(
@@ -542,50 +542,50 @@ void showAddImagesSheet(
   NewProductProvider provider,
 ) {
   var lan = AppLocalizations.of(context)!;
-   showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      backgroundColor: darkBlue,
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          height: screenHeight / 5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                lan.pickImageForm,
-                style: TextStyle(
-                  color: mainGrey,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    backgroundColor: darkBlue,
+    context: context,
+    builder: (context) {
+      return SizedBox(
+        height: screenHeight / 5,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              lan.pickImageForm,
+              style: TextStyle(
+                color: mainGrey,
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                MBSElement(
+                  icon: Icons.camera_alt,
+                  text: lan.camera,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    provider.pickImage();
+                  },
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  MBSElement(
-                    icon: Icons.camera_alt,
-                    text: lan.camera,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      provider.pickImage();
-                    },
-                  ),
-                  MBSElement(
-                    icon: Icons.photo_library,
-                    text: lan.gallery,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      provider.pickMultiImage();
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
+                MBSElement(
+                  icon: Icons.photo_library,
+                  text: lan.gallery,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    provider.pickMultiImage();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }

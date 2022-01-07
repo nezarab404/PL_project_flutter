@@ -32,7 +32,7 @@
     "other": "أُخرى",
     "addYourProduct": "أضف منتجك",
     "productSpecifications": "خصائص المنتج",
-    "initialPrice": "السعر المبدأي",
+    "initialPrice": "السعر المبدئي",
     "selectCategory": "-أختر التصنيف-",
     "productName": "اسم المنتج",
     "description": "الوصف",
@@ -64,6 +64,7 @@
     "currentPassword":"كلمة السر الحالية",
     "passwordsDnotMatch":"كلمتا السر غير متطابقتين",
     "edited":"تم التعديل",
-    "commentsHint":"اكتب تعليقا حول المنتج..."
-    
+    "commentsHint":"اكتب تعليقا حول المنتج...",
+    "completeYourProfile":"أكمل ملفك الشخصي",
+    "skip":"تخطي"
 }

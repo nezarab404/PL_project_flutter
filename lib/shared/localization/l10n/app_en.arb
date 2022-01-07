@@ -64,5 +64,7 @@
     "currentPassword":"Current password",
     "passwordsDnotMatch":"Passwords don't match",
     "edited":"Edited",
-    "commentsHint":"Say something about this"
+    "commentsHint":"Say something about this",
+    "completeYourProfile":"Complete Your Profile",
+    "skip":"Skip"
 }

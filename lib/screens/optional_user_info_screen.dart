@@ -201,10 +201,10 @@ class OptionalUserInfoScreen extends StatelessWidget {
                     listen: false,
                   )
                       .updateProfile(
-                    bio: bioController.text,
                     name: me!.name,
                     email: me!.email,
                     image: provider.profileImage,
+                    bio: bioController.text,
                     phone: mobileController.text,
                     facebook: fbController.text,
                   )

@@ -1,15 +1,11 @@
-import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:programming_languages_project/providers/home_provider.dart';
-import 'package:programming_languages_project/screens/new_product_screen.dart';
-import 'package:programming_languages_project/screens/search_screen.dart';
 import 'package:programming_languages_project/shared/commponents/my_grid_view.dart';
 import 'package:programming_languages_project/shared/commponents/my_radio_buttons.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/status.dart';
-import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 

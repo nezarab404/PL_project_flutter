@@ -73,7 +73,6 @@ class _InputFormState extends State<InputForm> {
           border: InputBorder.none,
           suffixIcon: widget.isPassword
               ? IconButton(
-                autofocus: false,
                   onPressed: () {
                     setState(() {
                       visibility = !visibility;

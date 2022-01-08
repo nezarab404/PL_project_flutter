@@ -78,9 +78,9 @@ class ProfileProvider with ChangeNotifier {
 
   Future<bool> updateProfile({
     required String? name,
-    required String? bio,
     required String? email,
     required File? image,
+    String? bio,
     String? phone,
     String? facebook,
   }) async {
@@ -101,6 +101,7 @@ class ProfileProvider with ChangeNotifier {
 
     await DioHelper.postData(url: UPDATEUSER, token: token, data: info)
         .then((value) {
+      print(value.data);
       if (value.statusCode == 200) {
         profileInfoStatus = Status.success;
         print(profileInfoStatus);

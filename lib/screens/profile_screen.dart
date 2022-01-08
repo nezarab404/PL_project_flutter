@@ -93,8 +93,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: widget.user!.image == null
-                          ? SvgPicture.asset(
-                              'assets/images/avatar.svg',
+                          ? const AssetImage(
+                              'assets/images/avatar.png',
                             ) as ImageProvider
                           : NetworkImage(
                               widget.user!.image!,

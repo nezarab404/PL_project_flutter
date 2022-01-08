@@ -4,9 +4,9 @@ class UserModel {
   int? id;
   String? name;
   String? image;
-  String? bio;
   String? email;
   String? token;
+  String? bio;
   String? phone;
   String? facebook;
   var accountConfirmation;

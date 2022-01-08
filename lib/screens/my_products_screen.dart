@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
+import 'package:programming_languages_project/screens/landing_page.dart';
 import 'package:programming_languages_project/shared/commponents/product_item.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class MyProductsScreen extends StatelessWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (_) => const HomeScreen(),
+              builder: (_) => const LandingPage(),
             ),
           );
         });
@@ -33,7 +34,7 @@ class MyProductsScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title:  Text(lan.myProducts),
+          title: Text(lan.myProducts),
           centerTitle: true,
         ),
         body: Padding(
@@ -51,17 +52,17 @@ class MyProductsScreen extends StatelessWidget {
                               context: context,
                               builder: (ctx) {
                                 return AlertDialog(
-                                  title:  Text(lan.confirmDelete),
-                                  content:  Text(
-                                  lan.confirmDeleteMessage,
+                                  title: Text(lan.confirmDelete),
+                                  content: Text(
+                                    lan.confirmDeleteMessage,
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
                                         Navigator.pop(ctx);
                                       },
-                                      child:  Text(
-                                      lan.cancle,
+                                      child: Text(
+                                        lan.cancle,
                                       ),
                                     ),
                                     TextButton(
@@ -71,7 +72,7 @@ class MyProductsScreen extends StatelessWidget {
                                             .deleteMyProduct(
                                                 provider.products[index].id!);
                                       },
-                                      child:  Text(
+                                      child: Text(
                                         lan.confirm,
                                       ),
                                     ),
@@ -86,7 +87,6 @@ class MyProductsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   child: ProductItem.tile(
                     model: provider.products[index],
                     isMyProduct: true,

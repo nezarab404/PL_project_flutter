@@ -4,6 +4,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/screens/search_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -12,14 +13,14 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var lan = AppLocalizations.of(context)!;
     var provider = Provider.of<HomeProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mainDarkBlue,
         elevation: 0.0,
         title: Text(
-          provider.appBarTitles[provider.bottomNavBarIndex],
+          appBarTitles[provider.bottomNavBarIndex],
           style: Theme.of(context)
               .textTheme
               .headline5!

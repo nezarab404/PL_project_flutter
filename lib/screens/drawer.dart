@@ -29,7 +29,8 @@ class _MyDrawerState extends State<MyDrawer> {
     setCategories(context);
     setSortingOptions(context);
     setSearchOptions(context);
-    Provider.of<HomeProvider>(context).setAppBarTitles(context);
+    setAppBarTitles(context);
+
     return ZoomDrawer(
       style: DrawerStyle.Style1,
       isRtl: Localizations.localeOf(context) == const Locale('ar'),

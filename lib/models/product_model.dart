@@ -38,6 +38,7 @@ class ProductModel {
     views = json['views_count'];
     likes = json['likes_count'];
     isLike = json['me_likes'];
-    priceInfo = DiscountsModel.fromJson(json['discounts']);
+    if(json['discounts'] != null){
+    priceInfo = DiscountsModel.fromJson(json['discounts']);}
   }
 }

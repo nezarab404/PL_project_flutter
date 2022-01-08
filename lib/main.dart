@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Dream Shop',
         debugShowCheckedModeBanner: false,
-        locale: const Locale('en'),
+        locale: const Locale('ar'),
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

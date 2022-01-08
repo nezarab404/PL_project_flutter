@@ -286,20 +286,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 height: screenHeight / 40,
               ),
 
-              //TODO
-              // InputForm(
-              //   screenWidth: screenWidth,
-              //   hintText2: 'Expiration date',
-              //   pIcon: Icons.date_range,
-              //   controller: widget.date,
-              //   inputType: TextInputType.none,
-              //   isDate: true,
-              //   dateFunction: () {
-              //     provider.pickDate(context);
-
-              //   },
-              // ),
-
+          
               //add description
               InputForm(
                 screenWidth: screenWidth,
@@ -314,7 +301,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 SizedBox(
                   height: screenHeight / 40,
                 ),
-                if (!widget.isEdit)
+              if (!widget.isEdit)
                 Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -323,34 +310,36 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   margin: EdgeInsets.symmetric(
                     horizontal: screenWidth / 10,
                   ),
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: TextFormField(
-                    onTap: () {
-                      showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.utc(2023),
-                      ).then((value) {
-                        if (value == null) {
-                          return;
-                        }
-                        widget.date.text = DateFormat.yMMMd().format(value);
-                        provider.date = value;
-                      });
-                    },
-                    keyboardType: TextInputType.none,
-                    showCursor: false,
-                    controller: widget.date,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.date_range),
-                      border: InputBorder.none,
-                      labelText: lan.expirationDate,
-                      contentPadding: const EdgeInsets.all(10),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: TextFormField(
+                      onTap: () {
+                        showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.utc(2023),
+                        ).then((value) {
+                          if (value == null) {
+                            return;
+                          }
+                          widget.date.text = DateFormat.yMMMd().format(value);
+                          provider.date = value;
+                        });
+                      },
+                      keyboardType: TextInputType.none,
+                      showCursor: false,
+                      controller: widget.date,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.date_range),
+                        border: InputBorder.none,
+                        labelText: lan.expirationDate,
+                        contentPadding: const EdgeInsets.all(10),
+                      ),
                     ),
                   ),
-                ),),
+                ),
+             
               SizedBox(
                 height: screenHeight / 30,
               ),
@@ -358,25 +347,19 @@ class _NewProductScreenState extends State<NewProductScreen> {
               SizedBox(
                 height: screenHeight / 100,
               ),
-            SizedBox(
-              height: screenHeight / 30,
-            ),
-            TextDivider(text: lan.discounts),
-            SizedBox(
-              height: screenHeight / 100,
-            ),
 
-            //discounts form
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      lan.remainingDays,
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),),
+              //discounts form
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        lan.remainingDays,
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                       SizedBox(
                         height: screenHeight / 100,
                       ),
@@ -425,16 +408,16 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 ],
               ),
 
-            //user details
-            SizedBox(
-              height: screenHeight / 30,
-            ),
-            TextDivider(
-              text: lan.sellerContactInfo,
-            ),
-            SizedBox(
-              height: screenHeight / 100,
-            ),
+              //user details
+              SizedBox(
+                height: screenHeight / 30,
+              ),
+              TextDivider(
+                text: lan.sellerContactInfo,
+              ),
+              SizedBox(
+                height: screenHeight / 100,
+              ),
 
               //phone num
               InputForm(
@@ -522,10 +505,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                             .getProducts();
                         Provider.of<MyProductsProvider>(context, listen: false)
                             .getMyProducts();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const MyDrawer()));
+                        Provider.of<HomeProvider>(context,listen:false).changeIndex(0);
                       }); //1640905200
                     },
                     backgroundColor: mainRed,

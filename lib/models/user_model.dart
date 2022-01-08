@@ -7,6 +7,8 @@ class UserModel {
   String? bio;
   String? email;
   String? token;
+  String? phone;
+  String? facebook;
   var accountConfirmation;
   var resetPassword;
 
@@ -17,6 +19,8 @@ class UserModel {
     bio = json['bio'];
     email = json['email'];
     token = json['token'];
+    phone = json['phone'];
+    facebook = json['facebook'];
     accountConfirmation = json['account_confirmation'];
     resetPassword = json['reset_password'];
   }

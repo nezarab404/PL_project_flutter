@@ -30,10 +30,7 @@ class ProfileScreen extends StatefulWidget {
     this.myProfile = false,
     required this.user,
   }) : super(key: key) {
-    //initializing controllers
-    nameController.text = user!.name!;
-    bioController.text = user!.bio!;
-    emailController.text = user!.email!;
+    initControllers();
   }
 
   ProfileScreen.myProfile({
@@ -41,10 +38,16 @@ class ProfileScreen extends StatefulWidget {
     this.myProfile = true,
     required this.user,
   }) : super(key: key) {
+    initControllers();
+  }
+
+  void initControllers() {
     //initializing controllers
     nameController.text = user!.name!;
-    bioController.text = user!.bio!;
     emailController.text = user!.email!;
+    bioController.text = user!.bio!;
+    mobileNumberController.text = user!.phone!;
+    facebookAccountController.text = user!.facebook!;
   }
 
   @override
@@ -198,6 +201,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         .nameController.text,
                                                     image:
                                                         provider.profileImage,
+                                                    phone: widget
+                                                        .mobileNumberController
+                                                        .text,
+                                                    facebook: widget
+                                                        .facebookAccountController
+                                                        .text,
                                                   );
                                                 });
                                               },
@@ -279,7 +288,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (widget.myProfile)
               ProfileInfoField(
                 icon: Icons.password,
-                title:lan.password,
+                title: lan.password,
                 function: () {},
                 onEdit: widget.onEdit,
                 isPassword: true,
@@ -303,6 +312,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       email: widget.emailController.text,
                       name: widget.nameController.text,
                       image: provider.profileImage,
+                      phone: widget.mobileNumberController.text,
+                      facebook: widget.facebookAccountController.text,
                     );
                   }
                   widget.onEdit = !widget.onEdit;
@@ -310,15 +321,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
               backgroundColor: mainRed,
               label: widget.onEdit
-                  ?  Text(
+                  ? Text(
                       lan.done,
                       style: const TextStyle(
                         fontSize: 22,
                       ),
                     )
-                  :  Text(
+                  : Text(
                       lan.edit,
-                      style:const TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                       ),
                     ),
@@ -337,9 +348,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           FloatingActionButton.extended(
               onPressed: () {},
               backgroundColor: mainRed,
-              label:  Text(
+              label: Text(
                 lan.products,
-                style:const TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                 ),
               ),

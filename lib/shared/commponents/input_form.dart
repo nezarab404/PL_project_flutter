@@ -13,10 +13,9 @@ class InputForm extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(String?)? saveFunction;
   final void Function(String)? onChanged;
-  // final Function()? dateFunction;
+  
   bool isPassword;
   bool isDescription;
-  // bool isDate;
 
   InputForm({
     Key? key,
@@ -74,6 +73,7 @@ class _InputFormState extends State<InputForm> {
           border: InputBorder.none,
           suffixIcon: widget.isPassword
               ? IconButton(
+                autofocus: false,
                   onPressed: () {
                     setState(() {
                       visibility = !visibility;
@@ -114,6 +114,7 @@ class SmallInputField extends StatelessWidget {
       ),
       elevation: 6,
       child: TextFormField(
+        textInputAction: TextInputAction.next,
         controller: controller,
         // textInputAction: TextInputAction.next,
         //onSaved: (value) => controller!.text = value!,

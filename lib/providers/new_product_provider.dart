@@ -99,7 +99,6 @@ class NewProductProvider with ChangeNotifier {
     required double quantity,
     required String name,
     required String description,
-    required String phone,
     required int rDays1,
     required int rDays2,
     required int rDays3,
@@ -107,7 +106,6 @@ class NewProductProvider with ChangeNotifier {
     required double discount2,
     required double discount3,
     //required int date,
-    String? facebook,
   }) async {
     addProductStatus = Status.loading;
     print(addProductStatus);
@@ -117,7 +115,6 @@ class NewProductProvider with ChangeNotifier {
       "description": description,
       "category": categoryHeader,
       "quantity": quantity,
-      "phone": phone,
       "price": price,
       "expiration_date": date!,
       "discounts": jsonEncode(
@@ -161,7 +158,6 @@ class NewProductProvider with ChangeNotifier {
     required double quantity,
     required String name,
     required String description,
-    required String phone,
     required int rDays1,
     required int rDays2,
     required int rDays3,
@@ -169,7 +165,6 @@ class NewProductProvider with ChangeNotifier {
     required double discount2,
     required double discount3,
     //required int date,
-    String? facebook,
   }) async {
     addProductStatus = Status.loading;
     print(addProductStatus);
@@ -179,8 +174,6 @@ class NewProductProvider with ChangeNotifier {
       "description": description,
       "category": categoryHeader,
       "quantity": quantity,
-      "phone": phone,
-      "price": price,
       "discounts": jsonEncode(
         [
           {"remaining_days": rDays1, "discount": discount1},
@@ -192,10 +185,13 @@ class NewProductProvider with ChangeNotifier {
           filename: images![0].path.split('/').last)
     });
     for (var i = 1; i < images!.length; i++) {
-      imageList.files.add(MapEntry(
+      imageList.files.add(
+        MapEntry(
           "image${i + 1}",
           await MultipartFile.fromFile(images![i].path,
-              filename: images![i].path.split('/').last)));
+              filename: images![i].path.split('/').last),
+        ),
+      );
     }
 
     await DioHelper.postData(

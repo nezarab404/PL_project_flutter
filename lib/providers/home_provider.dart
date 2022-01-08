@@ -47,7 +47,12 @@ class HomeProvider with ChangeNotifier {
 
   setAppBarTitles(BuildContext context) {
     var lan = AppLocalizations.of(context)!;
-    appBarTitles = [lan.home, lan.categories, lan.addYourProduct, lan.cart,];
+    appBarTitles = [
+      lan.home,
+      lan.categories,
+      lan.addYourProduct,
+      lan.cart,
+    ];
     notifyListeners();
   }
 

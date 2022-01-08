@@ -81,6 +81,8 @@ class ProfileProvider with ChangeNotifier {
     required String? bio,
     required String? email,
     required File? image,
+    String? phone,
+    String? facebook,
   }) async {
     profileImage = image;
     profileInfoStatus = Status.loading;
@@ -89,6 +91,8 @@ class ProfileProvider with ChangeNotifier {
       "name": name,
       "bio": bio,
       "email": email,
+      "phone": phone,
+      "facebook": facebook,
       "image": await MultipartFile.fromFile(
         profileImage!.path,
         filename: profileImage!.path.split('/').last,

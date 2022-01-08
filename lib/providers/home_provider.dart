@@ -65,6 +65,7 @@ class HomeProvider with ChangeNotifier {
     return DioHelper.getData(
             url: PRODUCTS, token: token, sort: title, desc: desc)
         .then((value) {
+      print(value.data);
       if (value.statusCode == 200) {
         value.data["products"].forEach((product) {
           products.add(ProductModel.fromJson(product));

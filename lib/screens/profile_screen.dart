@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -59,7 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var noListenProvider = Provider.of<ProfileProvider>(context, listen: false);
-    noListenProvider.getProfile();
     var provider = Provider.of<ProfileProvider>(context);
     var lan = AppLocalizations.of(context)!;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -112,7 +113,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   padding: const EdgeInsets.all(15),
                   height: 70,
-                  alignment: Alignment.centerLeft,
+                  alignment:
+                      Localizations.localeOf(context) == const Locale('ar')
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
                   decoration: const BoxDecoration(
                     color: Colors.black26,
                     borderRadius: BorderRadius.only(
@@ -136,8 +140,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 //icon button position and function
                 Positioned(
-                  right: 40,
+                  right: Localizations.localeOf(context) == const Locale('ar')
+                      ? null
+                      : 40,
                   bottom: -20,
+                  left: Localizations.localeOf(context) == const Locale('ar')
+                      ? 40
+                      : null,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -177,9 +186,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               text: lan.camera,
                                               onPressed: () {
                                                 Navigator.of(context).pop();
-                                                noListenProvider.pickImage(
+                                                noListenProvider
+                                                    .pickImage(
                                                   ImageSource.camera,
-                                                );
+                                                )
+                                                    .then((value) {
+                                                  noListenProvider
+                                                      .updateProfile(
+                                                    bio: widget
+                                                        .bioController.text,
+                                                    email: widget
+                                                        .emailController.text,
+                                                    name: widget
+                                                        .nameController.text,
+                                                    image:
+                                                        provider.profileImage,
+                                                    phone: widget
+                                                        .mobileNumberController
+                                                        .text,
+                                                    facebook: widget
+                                                        .facebookAccountController
+                                                        .text,
+                                                  );
+                                                  noListenProvider.getProfile();
+                                                });
                                               },
                                             ),
                                             MBSElement(
@@ -209,6 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         .facebookAccountController
                                                         .text,
                                                   );
+                                                  noListenProvider.getProfile();
                                                 });
                                               },
                                             ),
@@ -258,6 +289,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               function: () {},
               onEdit: widget.onEdit,
               controller: widget.mobileNumberController,
+              isPhone: true,
             ),
             const SizedBox(
               height: 15,
@@ -306,17 +338,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       floatingActionButton: widget.myProfile
           ? FloatingActionButton.extended(
               onPressed: () {
+                if (widget.onEdit) {
+                  noListenProvider.updateProfile(
+                    email: widget.emailController.text,
+                    name: widget.nameController.text,
+                    image: provider.profileImage,
+                    bio: widget.bioController.text,
+                    phone: widget.mobileNumberController.text,
+                    facebook: widget.facebookAccountController.text,
+                  );
+                }
                 setState(() {
-                  if (widget.onEdit) {
-                    noListenProvider.updateProfile(
-                      bio: widget.bioController.text,
-                      email: widget.emailController.text,
-                      name: widget.nameController.text,
-                      image: provider.profileImage,
-                      phone: widget.mobileNumberController.text,
-                      facebook: widget.facebookAccountController.text,
-                    );
-                  }
                   widget.onEdit = !widget.onEdit;
                 });
               },

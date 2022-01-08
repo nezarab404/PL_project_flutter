@@ -2,6 +2,7 @@ import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
+import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/screens/search_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:programming_languages_project/shared/constants.dart';
@@ -14,7 +15,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<HomeProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mainDarkBlue,
@@ -27,8 +28,12 @@ class LandingPage extends StatelessWidget {
               .copyWith(color: Colors.white, fontSize: 28),
         ),
         leading: IconButton(
-            onPressed: () => ZoomDrawer.of(context)!.toggle(),
-            icon: const Icon(Icons.menu)),
+          onPressed: () {
+            ZoomDrawer.of(context)!.toggle();
+            Provider.of<ProfileProvider>(context, listen: false).getProfile();
+          },
+          icon: const Icon(Icons.menu),
+        ),
         actions: [
           IconButton(
             onPressed: () {

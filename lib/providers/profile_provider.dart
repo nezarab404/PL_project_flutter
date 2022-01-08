@@ -25,7 +25,8 @@ class ProfileProvider with ChangeNotifier {
     profileGetStatus = Status.loading;
     await DioHelper.getData(url: ME, token: token).then((value) {
       if (value.statusCode == 200) {
-        me = user = UserModel.fromJson(value.data["user"]);
+        user = UserModel.fromJson(value.data["user"]);
+        me = UserModel.fromJson(value.data["user"]);
         profileImage = File(user!.image!);
         notifyListeners();
         profileGetStatus = Status.success;
@@ -42,11 +43,19 @@ class ProfileProvider with ChangeNotifier {
   Future pickImage(ImageSource source) async {
     try {
       var image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
+      if (image == null) {
+        print(
+            '////////////////////////////image null////////////////////////////');
+        return;
+      }
       final tempImage = File(image.path);
       profileImage = tempImage;
+      print(
+          '/////////////////////////////image ok////////////////////////////');
       notifyListeners();
     } on PlatformException catch (exception) {
+      print(
+          '////////////////////////////image exception////////////////////////////');
       print(exception.message);
     }
   }
@@ -84,7 +93,7 @@ class ProfileProvider with ChangeNotifier {
     String? phone,
     String? facebook,
   }) async {
-    profileImage = image;
+    if (image != null) profileImage = image;
     profileInfoStatus = Status.loading;
     print(profileInfoStatus);
     FormData info = FormData.fromMap({
@@ -104,6 +113,13 @@ class ProfileProvider with ChangeNotifier {
       print(value.data);
       if (value.statusCode == 200) {
         profileInfoStatus = Status.success;
+        DioHelper.getData(url: ME, token: token).then(
+          (value) {
+            if (value.statusCode == 200) {
+              me = UserModel.fromJson(value.data['user']);
+            }
+          },
+        );
         print(profileInfoStatus);
         return true;
       } else {

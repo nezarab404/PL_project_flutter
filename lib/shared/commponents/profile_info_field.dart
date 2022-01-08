@@ -18,6 +18,7 @@ class ProfileInfoField extends StatefulWidget {
     this.text,
     this.function,
     this.isPassword = false,
+    this.isPhone = false,
   }) : super(key: key);
 
   final String? title;
@@ -25,6 +26,7 @@ class ProfileInfoField extends StatefulWidget {
   final IconData? icon;
   final bool onEdit;
   final bool? isPassword;
+  final bool? isPhone;
   final TextEditingController controller;
   // final IconData? suffix;
   final Function()? function;
@@ -93,8 +95,11 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                             fontSize: 18,
                           ),
                           obscureText: widget.isPassword!,
-                          keyboardType:
-                              widget.isPassword! ? TextInputType.none : null,
+                          keyboardType: widget.isPassword!
+                              ? TextInputType.none
+                              : widget.isPhone!
+                                  ? TextInputType.phone
+                                  : null,
                           onTap: widget.isPassword!
                               ? () => showChangePasswordDialog()
                               : null //TODO,
@@ -178,12 +183,12 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                               size: 50,
                             )
                           : Row(
-                              children:  [
-                              const  Icon(
+                              children: [
+                                const Icon(
                                   Icons.info_outline,
                                   color: Colors.red,
                                 ),
-                               const SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
@@ -203,7 +208,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child:  Text(lan.cancle),
+              child: Text(lan.cancle),
             ),
             TextButton(
               onPressed: () {
@@ -215,7 +220,7 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                   confirmPassword: confirmController.text,
                 );
               },
-              child:  Text(lan.confirm),
+              child: Text(lan.confirm),
             ),
           ],
         );

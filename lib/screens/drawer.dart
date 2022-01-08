@@ -65,14 +65,19 @@ class _MyDrawerState extends State<MyDrawer> {
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage:
-                          me!.image != null ? NetworkImage(me!.image!) : null,
+                      backgroundImage: me!.image != null
+                          ? NetworkImage(me!.image!)
+                          : const AssetImage(
+                              'assets/images/avatar.png',
+                            ) as ImageProvider,
                     ),
-                    Text(me!.name!.split(" ").first,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4!
-                            .copyWith(color: Colors.white, fontSize: 24)),
+                    Text(
+                      me!.name!.split(" ").first,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .copyWith(color: Colors.white, fontSize: 24),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -131,7 +136,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
                         if (value) {
                           SharedHelper.removeData(key: TOKEN).then((value) {
-                        print('////////momo/////////// $value');
+                            print('////////momo/////////// $value');
                             if (value) {
                               Navigator.pushReplacement(
                                 ctx,

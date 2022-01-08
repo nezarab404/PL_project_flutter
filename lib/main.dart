@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProfileProvider>(
           create: (_) => ProfileProvider()..getProfile(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<ProductILikeProvider>(
           create: (_) => ProductILikeProvider()..getLikedProducts(),
         ),
         ChangeNotifierProvider<MyProductsProvider>(

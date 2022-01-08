@@ -6,6 +6,7 @@ import 'package:programming_languages_project/screens/cart_screen.dart';
 import 'package:programming_languages_project/screens/categories_screen.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
+import 'package:programming_languages_project/shared/commponents/restart_widget.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeProvider with ChangeNotifier {
   int bottomNavBarIndex = 0;
+  bool language = false;
   List<Widget> screens = [
     const HomeScreen(),
     const CategoriesScreen(),
@@ -42,6 +44,14 @@ class HomeProvider with ChangeNotifier {
   void changeSort() {
     desc = !desc;
     getProducts(title: lastTitle);
+
+    notifyListeners();
+  }
+
+  void changeLang(bool value, BuildContext context) {
+    language = value;
+    getProducts();
+    //RestartWidget.restartApp(context);
     notifyListeners();
   }
 

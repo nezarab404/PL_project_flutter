@@ -17,10 +17,16 @@ import 'package:file_picker/file_picker.dart';
 class NewProductProvider with ChangeNotifier {
   List<File>? images = [];
   String? category;
+  String? categoryHeader;
   DateTime? date;
   Status? addProductStatus = Status.init;
   void setCategory(String value) {
     category = value;
+    int index = categories!.indexOf(value);
+
+    categoryHeader = categoriesHeadres[index];
+    print("kk $value ii $index cc $categoryHeader");
+
     notifyListeners();
   }
 
@@ -107,7 +113,7 @@ class NewProductProvider with ChangeNotifier {
     FormData imageList = FormData.fromMap({
       "name": name,
       "description": description,
-      "category": category,
+      "category": categoryHeader,
       "quantity": quantity,
       "price": price,
       "expiration_date": date!,
@@ -162,11 +168,11 @@ class NewProductProvider with ChangeNotifier {
   }) async {
     addProductStatus = Status.loading;
     print(addProductStatus);
-    print("koko $quantity");
+
     FormData imageList = FormData.fromMap({
       "name": name,
       "description": description,
-      "category": category,
+      "category": categoryHeader,
       "quantity": quantity,
       "discounts": jsonEncode(
         [

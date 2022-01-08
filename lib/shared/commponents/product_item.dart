@@ -33,13 +33,12 @@ class ProductItem extends StatelessWidget {
                   SizedBox(
                     width: 120,
                     child: FadeInImage.assetNetwork(
-                                placeholder: "assets/images/loading.gif",
-                                image: model.images[0],
-                                fit: BoxFit.fill,
-                                height: double.infinity,
-                              ),
+                      placeholder: "assets/images/loading.gif",
+                      image: model.images[0],
+                      fit: BoxFit.fill,
+                      height: double.infinity,
+                    ),
                   ),
-               
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -112,7 +111,7 @@ class ProductItem extends StatelessWidget {
                             color: Colors.white,
                             size: 18,
                           ),
-                          heroTag: "like",
+                          heroTag: "like${model.id}",
                         ),
                       ],
                     ),
@@ -169,13 +168,18 @@ class ProductItem extends StatelessWidget {
                                     child: Container(
                                       color: red.withOpacity(0.7),
                                       alignment: Alignment.center,
-                                      child: Text(
-                                        "${model.remainingDays}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .copyWith(fontSize: 18),
-                                      ),
+                                      child: RichText(
+                                          text: TextSpan(children: [
+                                        TextSpan(
+                                            text: "${model.remainingDays} "),
+                                        TextSpan(
+                                          text: AppLocalizations.of(context)!
+                                              .days,
+                                          style: const TextStyle(
+                                            fontSize: 9,
+                                          ),
+                                        ),
+                                      ])),
                                     ),
                                   )
                                 ],
@@ -185,12 +189,12 @@ class ProductItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Expanded(
-                        child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 5),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +216,7 @@ class ProductItem extends StatelessWidget {
                                   .copyWith(color: mainRed, fontSize: 20))
                         ],
                       ),
-                    )),
+                    ),
                   ],
                 ),
               ),

@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
+import 'package:programming_languages_project/screens/landing_page.dart';
 import 'package:programming_languages_project/shared/commponents/product_item.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class MyProductsScreen extends StatelessWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (_) => const HomeScreen(),
+              builder: (_) => const LandingPage(),
             ),
           );
         });

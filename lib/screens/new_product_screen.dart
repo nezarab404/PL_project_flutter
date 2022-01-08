@@ -282,28 +282,15 @@ class _NewProductScreenState extends State<NewProductScreen> {
               height: screenHeight / 40,
             ),
 
-            //TODO
-            // InputForm(
-            //   screenWidth: screenWidth,
-            //   hintText2: 'Expiration date',
-            //   pIcon: Icons.date_range,
-            //   controller: widget.date,
-            //   inputType: TextInputType.none,
-            //   isDate: true,
-            //   dateFunction: () {
-            //     provider.pickDate(context);
-
-            //   },
-            // ),
-
-            //add description
-            InputForm(
-              screenWidth: screenWidth,
-              hintText: lan.description,
-              pIcon: Icons.description,
-              isDescription: true,
-              controller: widget.description,
-            ),
+          
+              //add description
+              InputForm(
+                screenWidth: screenWidth,
+                hintText: lan.description,
+                pIcon: Icons.description,
+                isDescription: true,
+                controller: widget.description,
+              ),
 
             // add date
             if (!widget.isEdit)
@@ -348,13 +335,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   ),
                 ),
               ),
-            SizedBox(
-              height: screenHeight / 30,
-            ),
-            TextDivider(text: lan.discounts),
-            SizedBox(
-              height: screenHeight / 100,
-            ),
 
             //discounts form
             Row(
@@ -423,7 +403,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             //done button
             SizedBox(
               height: screenHeight / 10,
-              width: screenHeight / 10,
+             width: screenHeight / 10,
               child: Builder(builder: (ctx) {
                 return FloatingActionButton(
                   onPressed: () {

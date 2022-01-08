@@ -39,6 +39,18 @@ setSearchOptions(BuildContext context) {
   searchBy = [lan.byName, lan.byDate];
 }
 
+List<String> appBarTitles = [];
+setAppBarTitles(BuildContext context) {
+  var lan = AppLocalizations.of(context)!;
+  appBarTitles = [
+    lan.home,
+    lan.categories,
+    lan.addYourProduct,
+    lan.cart,
+  ];
+  
+}
+
 const sortngHeaders = [
   "remaining_days",
   "price",

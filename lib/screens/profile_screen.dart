@@ -45,9 +45,10 @@ class ProfileScreen extends StatefulWidget {
     //initializing controllers
     nameController.text = user!.name!;
     emailController.text = user!.email!;
-    bioController.text = user!.bio!;
-    mobileNumberController.text = user!.phone!;
-    facebookAccountController.text = user!.facebook!;
+    bioController.text = user!.bio == null ? "" : user!.bio!;
+    mobileNumberController.text = user!.phone == null ? "" : user!.phone!;
+    facebookAccountController.text =
+        user!.facebook == null ? "" : user!.facebook!;
   }
 
   @override

@@ -13,7 +13,6 @@ import 'package:programming_languages_project/shared/storage/shared_helper.dart'
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 
-import 'home_screen.dart';
 import 'login_screen.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -65,14 +64,10 @@ class _MyDrawerState extends State<MyDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                        radius: 40,
-                        // backgroundImage:
-                        //     me!.image != null ? NetworkImage(me!.image!) : null,
-                        child: me!.image != null
-                            ? Image.network(
-                                me!.image!,
-                              )
-                            : Container()),
+                      radius: 40,
+                      backgroundImage:
+                          me!.image != null ? NetworkImage(me!.image!) : null,
+                    ),
                     Text(me!.name!.split(" ").first,
                         style: Theme.of(context)
                             .textTheme
@@ -132,13 +127,18 @@ class _MyDrawerState extends State<MyDrawer> {
                       Provider.of<NetworkProvider>(context, listen: false)
                           .userLogout()
                           .then((value) {
+                        print('////////koko/////////// $value');
+
                         if (value) {
                           SharedHelper.removeData(key: TOKEN).then((value) {
+                        print('////////momo/////////// $value');
                             if (value) {
                               Navigator.pushReplacement(
-                                  ctx,
-                                  MaterialPageRoute(
-                                      builder: (_) => LoginScreen()));
+                                ctx,
+                                MaterialPageRoute(
+                                  builder: (_) => LoginScreen(),
+                                ),
+                              );
                             }
                           });
                         }

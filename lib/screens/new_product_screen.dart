@@ -78,28 +78,16 @@ class _NewProductScreenState extends State<NewProductScreen> {
     var screenWidth = MediaQuery.of(context).size.width;
     var provider = Provider.of<NewProductProvider>(context);
     var lan = AppLocalizations.of(context)!;
-    
+
     if (widget.isEdit) {
       provider.setCategory(widget.model!.category!);
     }
     return Scaffold(
-      //screen appbar
-      appBar: AppBar(
-        backgroundColor: darkBlue2,
-        centerTitle: true,
-        title: Text(
-          lan.addYourProduct,
-        ),
-      ),
-
       //body
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              height: screenHeight / 30,
-            ),
             //decoration divider
             TextDivider(
               text: lan.productSpecifications,
@@ -282,15 +270,14 @@ class _NewProductScreenState extends State<NewProductScreen> {
               height: screenHeight / 40,
             ),
 
-          
-              //add description
-              InputForm(
-                screenWidth: screenWidth,
-                hintText: lan.description,
-                pIcon: Icons.description,
-                isDescription: true,
-                controller: widget.description,
-              ),
+            //add description
+            InputForm(
+              screenWidth: screenWidth,
+              hintText: lan.description,
+              pIcon: Icons.description,
+              isDescription: true,
+              controller: widget.description,
+            ),
 
             // add date
             if (!widget.isEdit)
@@ -335,7 +322,13 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   ),
                 ),
               ),
-
+            SizedBox(
+              height: screenHeight / 30,
+            ),
+            TextDivider(text: lan.discounts),
+            SizedBox(
+              height: screenHeight / 100,
+            ),
             //discounts form
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -403,7 +396,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
             //done button
             SizedBox(
               height: screenHeight / 10,
-             width: screenHeight / 10,
+              width: screenHeight / 10,
               child: Builder(builder: (ctx) {
                 return FloatingActionButton(
                   onPressed: () {

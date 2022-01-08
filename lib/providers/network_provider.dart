@@ -92,14 +92,16 @@ class NetworkProvider with ChangeNotifier {
 
   Future<bool> userLogout() async {
     await DioHelper.getData(url: LOGOUT, token: token).then((value) {
-      if (value.statusCode == 200) {
+      print(value.data);
+      if (value.data['status']) {
         userStatus = AuthStatus.loggedOut;
+        notifyListeners();
         return true;
       }
       notifyListeners();
     }).catchError((e) {
       print(e);
     });
-    return false;
+    return true;
   }
 }

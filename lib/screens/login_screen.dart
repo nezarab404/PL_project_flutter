@@ -197,13 +197,19 @@ class LoginScreen extends StatelessWidget {
                                             builder: (_) =>
                                                 VerificationCodeScreen()));
                                   } else {
-                                    Provider.of<HomeProvider>(context,
-                                            listen: false)
-                                        .getProducts();
                                     Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => const MyDrawer()));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const MyDrawer(),
+                                      ),
+                                    );
+                                    if (Provider.of<HomeProvider>(context)
+                                        .products
+                                        .isEmpty) {
+                                      Provider.of<HomeProvider>(context,
+                                              listen: false)
+                                          .getProducts();
+                                    }
                                   }
                                 }).catchError((error) {});
                               } else {

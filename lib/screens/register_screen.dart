@@ -2,6 +2,7 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:programming_languages_project/shared/constants.dart';
@@ -90,7 +91,7 @@ class RegisterScreen extends StatelessWidget {
               InputForm(
                 screenWidth: screenWidth,
                 hintText: lan.username,
-                pIcon: Icons.person,
+                pIcon: LineIcons.user,
                 controller: _name,
                 inputType: TextInputType.name,
                 validator: (val) => Validator.nameValidator(val),
@@ -101,7 +102,7 @@ class RegisterScreen extends StatelessWidget {
               InputForm(
                 screenWidth: screenWidth,
                 hintText: lan.email,
-                pIcon: Icons.email,
+                pIcon: LineIcons.envelope,
                 controller: _email,
                 inputType: TextInputType.emailAddress,
                 validator: (val) => Validator.emailValidator(val),
@@ -112,7 +113,7 @@ class RegisterScreen extends StatelessWidget {
               InputForm(
                 screenWidth: screenWidth,
                 hintText: lan.password,
-                pIcon: Icons.password,
+                pIcon: LineIcons.lock,
                 controller: _password,
                 isPassword: true,
                 validator: (val) => Validator.passwordValidator(val),
@@ -123,7 +124,7 @@ class RegisterScreen extends StatelessWidget {
               InputForm(
                 screenWidth: screenWidth,
                 hintText: lan.confirmPassowrd,
-                pIcon: Icons.check_circle,
+                pIcon: LineIcons.checkCircle,
                 controller: _confirmPassword,
                 isPassword: true,
                 validator: (val) => Validator.passwordValidator(val),

@@ -8,6 +8,7 @@ import 'package:programming_languages_project/providers/search_provider.dart';
 import 'package:programming_languages_project/screens/login_screen.dart';
 import 'package:programming_languages_project/screens/optional_user_info_screen.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
+import 'package:programming_languages_project/shared/commponents/restart_widget.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/keys.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
@@ -53,13 +54,13 @@ void main() async {
   } else {
     widget = LoginScreen();
   }
-  runApp(MyApp(mainWidget: widget));
+  runApp(RestartWidget(child: MyApp(mainWidget: widget)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.mainWidget}) : super(key: key);
+  MyApp({Key? key, required this.mainWidget}) : super(key: key);
   final Widget mainWidget;
-
+  bool? language;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -94,41 +95,55 @@ class MyApp extends StatelessWidget {
           create: (_) => SearchProvider(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Dream Shop',
-        debugShowCheckedModeBanner: false,
-        locale: const Locale('ar'),
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('ar'),
-        ],
-        themeMode: ThemeMode.dark,
-        theme: ThemeData(
-          primarySwatch: mainRed,
-        ),
-        darkTheme: ThemeData(
-          primarySwatch: mainRed,
-          backgroundColor: mainDarkBlue,
-          fontFamily: "Baloo2",
-          textTheme: const TextTheme(
-            bodyText1: TextStyle(color: Colors.white),
-            bodyText2: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          scaffoldBackgroundColor: mainDarkBlue,
-          iconTheme: const IconThemeData(color: Colors.white),
-        ),
-        home: mainWidget,
+      child: MainMaterialApp(mainWidget: mainWidget),
+    );
+  }
+}
+
+class MainMaterialApp extends StatelessWidget {
+  const MainMaterialApp({
+    Key? key,
+    required this.mainWidget,
+  }) : super(key: key);
+
+  final Widget mainWidget;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Dream Shop',
+      debugShowCheckedModeBanner: false,
+      locale: Provider.of<HomeProvider>(context).language ? const Locale('en') : const Locale('ar'),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+      ],
+      themeMode: ThemeMode.dark,
+      theme: ThemeData(
+        primarySwatch: mainRed,
       ),
+      darkTheme: ThemeData(
+        primarySwatch: mainRed,
+        backgroundColor: mainDarkBlue,
+        fontFamily: "Baloo2",
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(color: Colors.white),
+          bodyText2: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        scaffoldBackgroundColor: mainDarkBlue,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      home: mainWidget,
     );
   }
 }

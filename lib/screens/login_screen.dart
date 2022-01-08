@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/screens/register_screen.dart';
@@ -82,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                 controller: _email,
                 screenWidth: screenWidth,
                 hintText: lan.email,
-                pIcon: Icons.email,
+                pIcon: LineIcons.envelope,
                 validator: (val) => Validator.emailValidator(val),
                 inputType: TextInputType.emailAddress,
               ),
@@ -93,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                 controller: _password,
                 screenWidth: screenWidth,
                 hintText: lan.password,
-                pIcon: Icons.password,
+                pIcon: LineIcons.lock,
                 validator: (val) => Validator.passwordValidator(val),
                 isPassword: true,
               ),

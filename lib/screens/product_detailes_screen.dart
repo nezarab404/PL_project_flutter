@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:line_icons/line_icon.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
@@ -341,32 +342,35 @@ class ProductDetailesScreen extends StatelessWidget {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Text("📂", style: TextStyle(fontSize: 30)),
+                              const Icon(LineIcons.folder),
+                              // const Text("📂", style: TextStyle(fontSize: 30)),
                               Text("${model.category}",
                                   style: const TextStyle(fontSize: 14))
                             ],
                           ),
                           Column(
                             children: [
-                              const Text("⏳", style: TextStyle(fontSize: 30)),
+                              const Icon(LineIcons.clock),
+                              // const Text("⏳", style: TextStyle(fontSize: 30)),
                               Text("${model.remainingDays} ${lan.days}")
                             ],
                           ),
                           Column(
                             children: [
-                              const Text(
-                                "#",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                ),
-                              ),
+                              const Icon(LineIcons.hashtag),
+                              // const Text(
+                              //   "#",
+                              //   style: TextStyle(
+                              //     fontSize: 30,
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
                               Text("${model.quantity}")
                             ],
                           ),
                           Column(
                             children: [
-                              const Icon(Icons.visibility),
+                              const Icon(LineIcons.eye),
                               Text("${model.views}")
                             ],
                           ),

@@ -16,17 +16,30 @@ import 'package:file_picker/file_picker.dart';
 
 class NewProductProvider with ChangeNotifier {
   List<File>? images = [];
+  List? editImages = [];
+  List<File>? willSendImages = [];
   String? category;
+  int? i;
   String? categoryHeader;
   DateTime? date;
   Status? addProductStatus = Status.init;
+
   void setCategory(String value) {
-    category = value;
-    int index = categories!.indexOf(value);
+    int index = categoriesHeadres.indexOf(value);
+    i = categories!.indexOf(value);
+    categoryHeader = categoriesHeadres[i! == -1 ? index : i!];
+    category = i! == -1 ? categories![index] : categories![i!];
+    print("kk $value ii $i cc $categoryHeader");
 
-    categoryHeader = categoriesHeadres[index];
-    print("kk $value ii $index cc $categoryHeader");
+    notifyListeners();
+  }
 
+  void setEditImages(List<String> images) {
+    editImages = images;
+  }
+
+  void deleteImage(List list, image) {
+    list.removeAt(image);
     notifyListeners();
   }
 
@@ -49,7 +62,7 @@ class NewProductProvider with ChangeNotifier {
     });
   }
 
-  Future pickMultiImage() async {
+  Future pickMultiImage(bool isEdit) async {
     if (Platform.isLinux) {
       FilePickerResult? result =
           await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -73,7 +86,11 @@ class NewProductProvider with ChangeNotifier {
         for (var image in imagesList) {
           tempImages.add(File(image.path));
         }
-        images!.addAll(tempImages);
+        if (isEdit) {
+          willSendImages!.addAll(tempImages);
+        } else {
+          images!.addAll(tempImages);
+        }
         notifyListeners();
       } on PlatformException catch (exception) {
         print(exception.message);
@@ -81,13 +98,17 @@ class NewProductProvider with ChangeNotifier {
     }
   }
 
-  Future pickImage() async {
+  Future pickImage(bool isEdit) async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
       final tempImage = File(image.path);
 
-      images!.add(tempImage);
+      if (isEdit) {
+        willSendImages!.add(tempImage);
+      } else {
+        images!.add(tempImage);
+      }
       notifyListeners();
     } on PlatformException catch (exception) {
       print(exception.message);
@@ -116,7 +137,7 @@ class NewProductProvider with ChangeNotifier {
       "category": categoryHeader,
       "quantity": quantity,
       "price": price,
-      "expiration_date": date!,
+      "expiration_date": date,
       "discounts": jsonEncode(
         [
           {"remaining_days": rDays1, "discount": discount1},
@@ -136,6 +157,7 @@ class NewProductProvider with ChangeNotifier {
     print(token);
     await DioHelper.postData(url: PRODUCTS, token: token, data: imageList)
         .then((value) {
+      print("kokokokoko ${value.data}");
       if (value.statusCode == 200) {
         addProductStatus = Status.success;
         print(addProductStatus);
@@ -147,7 +169,7 @@ class NewProductProvider with ChangeNotifier {
         return false;
       }
     }).catchError((e) {
-      print(e);
+      print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     });
     return false;
   }
@@ -168,7 +190,9 @@ class NewProductProvider with ChangeNotifier {
   }) async {
     addProductStatus = Status.loading;
     print(addProductStatus);
-
+    print("images : $images");
+    print("images2 : $editImages");
+    print("images3 : $willSendImages");
     FormData imageList = FormData.fromMap({
       "name": name,
       "description": description,
@@ -181,22 +205,24 @@ class NewProductProvider with ChangeNotifier {
           {"remaining_days": rDays3, "discount": discount3},
         ],
       ),
-      "image1": await MultipartFile.fromFile(images![0].path,
-          filename: images![0].path.split('/').last)
+      // "image1": await MultipartFile.fromFile(willSendImages![0].path,
+      //     filename: willSendImages![0].path.split('/').last)
     });
-    for (var i = 1; i < images!.length; i++) {
-      imageList.files.add(
-        MapEntry(
-          "image${i + 1}",
-          await MultipartFile.fromFile(images![i].path,
-              filename: images![i].path.split('/').last),
-        ),
-      );
-    }
+    // for (var i = 1; i < willSendImages!.length; i++) {
+    //   imageList.files.add(
+    //     MapEntry(
+    //       "image${i+1}",
+    //       await MultipartFile.fromFile(willSendImages![i].path,
+    //           filename: willSendImages![i].path.split('/').last),
+    //     ),
+    //   );
+    // }
 
     await DioHelper.postData(
             url: PRODUCTS + '/$productId', token: token, data: imageList)
         .then((value) {
+      print("kokokokoko ${value.toString()}");
+
       if (value.statusCode == 200) {
         addProductStatus = Status.success;
         print(addProductStatus);

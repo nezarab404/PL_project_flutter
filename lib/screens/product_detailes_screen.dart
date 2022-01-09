@@ -219,6 +219,8 @@ class ProductDetailesScreen extends StatelessWidget {
                       options: CarouselOptions(
                           autoPlay: true,
                           enlargeCenterPage: true,
+                          enableInfiniteScroll:
+                              model.images.length == 1 ? false : true,
                           height: 200,
                           viewportFraction: 0.8,
                           reverse: false,

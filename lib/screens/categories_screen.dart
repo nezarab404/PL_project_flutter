@@ -5,7 +5,6 @@ import 'package:programming_languages_project/shared/commponents/my_radio_button
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -15,7 +14,6 @@ class CategoriesScreen extends StatelessWidget {
     var provider = Provider.of<HomeProvider>(context);
 
     var size = MediaQuery.of(context).size;
-    var lan = AppLocalizations.of(context)!;
     return provider.getCategoryStatus == Status.loading
         ? const Center(
             child: CircularProgressIndicator(),

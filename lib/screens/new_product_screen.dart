@@ -1,4 +1,6 @@
 // ignore_for_file: avoid_print
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -77,12 +79,15 @@ class _NewProductScreenState extends State<NewProductScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     var provider = Provider.of<NewProductProvider>(context);
+    var noListenProvider = Provider.of<NewProductProvider>(context);
     var lan = AppLocalizations.of(context)!;
-
     if (widget.isEdit) {
-      provider.setCategory(widget.model!.category!);
+      provider.setEditImages(widget.model!.images);
+
+      noListenProvider.setCategory(widget.model!.category!);
     }
     return Scaffold(
+      appBar: widget.isEdit ? AppBar() : null,
       //body
       body: SingleChildScrollView(
         child: Column(
@@ -128,14 +133,26 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                       mainAxisSpacing: 5,
                                     ),
                                     children: List.generate(
-                                      provider.images!.length,
+                                      widget.isEdit
+                                          ? provider.editImages!.length
+                                          : provider.images!.length,
                                       (f) => Stack(
                                         fit: StackFit.expand,
                                         children: [
-                                          Image.file(
-                                            provider.images![f],
-                                            fit: BoxFit.cover,
-                                          ),
+                                          widget.isEdit
+                                              ? provider.editImages![f] is File
+                                                  ? Image.file(
+                                                      provider.images![f],
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : Image.network(
+                                                      provider.editImages![f],
+                                                      fit: BoxFit.cover,
+                                                    )
+                                              : Image.file(
+                                                  provider.images![f],
+                                                  fit: BoxFit.cover,
+                                                ),
                                           Positioned(
                                             right: -7,
                                             bottom: -7,
@@ -143,13 +160,16 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                               padding: EdgeInsets.zero,
                                               color: mainRed,
                                               onPressed: () {
-                                                setState(
-                                                  () {
-                                                    provider.images!.remove(
-                                                      provider.images![f],
-                                                    );
-                                                  },
-                                                );
+                                                widget.isEdit
+                                                    ? noListenProvider
+                                                        .deleteImage(
+                                                            provider
+                                                                .editImages!,
+                                                            f)
+                                                    : noListenProvider
+                                                        .deleteImage(
+                                                            provider.images!,
+                                                            f);
                                               },
                                               icon: const Icon(
                                                 Icons.remove_circle,
@@ -167,6 +187,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                   context,
                                   screenHeight,
                                   provider,
+                                  widget.isEdit,
                                 ),
                                 icon: Icon(
                                   Icons.add_a_photo,
@@ -184,6 +205,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                             context,
                             screenHeight,
                             provider,
+                            widget.isEdit,
                           ),
                           iconSize: 50,
                           icon: const Icon(
@@ -405,20 +427,31 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                 listen: false)
                             .updateMyProduct(
                             productId: widget.model!.id!,
-                            price: double.parse(widget.price.text + ".0"),
-                            quantity: double.parse(
-                              widget.quantity.text.isEmpty
-                                  ? "1.0"
-                                  : widget.quantity.text + ".0",
-                            ),
+                            price: double.parse(widget.price.text.contains('.0')
+                                ? widget.price.text
+                                : widget.price.text + ".0"),
+                            quantity: double.parse(widget.quantity.text.isEmpty
+                                ? "1.0"
+                                : widget.quantity.text.contains('.0')
+                                    ? widget.quantity.text
+                                    : widget.quantity.text + ".0"),
                             name: widget.name.text,
                             description: widget.description.text,
                             rDays1: int.parse(widget.rDays1.text),
                             rDays2: int.parse(widget.rDays2.text),
                             rDays3: int.parse(widget.rDays3.text),
-                            discount1: double.parse(widget.per1.text + ".0"),
-                            discount2: double.parse(widget.per2.text + ".0"),
-                            discount3: double.parse(widget.per3.text + ".0"),
+                            discount1: double.parse(
+                                widget.per1.text.contains('.0')
+                                    ? widget.per1.text
+                                    : widget.per1.text + ".0"),
+                            discount2: double.parse(
+                                widget.per2.text.contains('.0')
+                                    ? widget.per2.text
+                                    : widget.per2.text + ".0"),
+                            discount3: double.parse(
+                                widget.per3.text.contains('.0')
+                                    ? widget.per3.text
+                                    : widget.per3.text + ".0"),
                           )
                             .then((value) {
                             Provider.of<HomeProvider>(context, listen: false)
@@ -436,32 +469,38 @@ class _NewProductScreenState extends State<NewProductScreen> {
                         : print("momo ${widget.quantity.text}");
                     Provider.of<NewProductProvider>(context, listen: false)
                         .addProduct(
-                      price: double.parse(widget.price.text + ".0"),
+                      price: double.parse(widget.price.text.contains('.0')
+                          ? widget.price.text
+                          : widget.price.text + ".0"),
                       quantity: double.parse(
                         widget.quantity.text.isEmpty
                             ? "1.0"
-                            : widget.quantity.text + ".0",
+                            : widget.quantity.text.contains('.0')
+                                ? widget.quantity.text
+                                : widget.quantity.text + ".0",
                       ),
                       name: widget.name.text,
                       description: widget.description.text,
                       rDays1: int.parse(widget.rDays1.text),
                       rDays2: int.parse(widget.rDays2.text),
                       rDays3: int.parse(widget.rDays3.text),
-                      discount1: double.parse(widget.per1.text + ".0"),
-                      discount2: double.parse(widget.per2.text + ".0"),
-                      discount3: double.parse(widget.per3.text + ".0"),
+                      discount1: double.parse(widget.per1.text.contains('.0')
+                          ? widget.per1.text
+                          : widget.per1.text + ".0"),
+                      discount2: double.parse(widget.per2.text.contains('.0')
+                          ? widget.per2.text
+                          : widget.per2.text + ".0"),
+                      discount3: double.parse(widget.per3.text.contains('.0')
+                          ? widget.per3.text
+                          : widget.per3.text + ".0"),
                     )
                         .then((value) {
                       Provider.of<HomeProvider>(context, listen: false)
                           .getProducts();
                       Provider.of<MyProductsProvider>(context, listen: false)
                           .getMyProducts();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const MyDrawer(),
-                        ),
-                      );
+                      Provider.of<HomeProvider>(context, listen: false)
+                          .changeIndex(0);
                     }); //1640905200
                   },
                   backgroundColor: mainRed,
@@ -475,7 +514,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
               }),
             ),
             SizedBox(
-              height: screenHeight / 30,
+              height: screenHeight / 5,
             ),
           ],
         ),
@@ -484,11 +523,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
   }
 }
 
-void showAddImagesSheet(
-  BuildContext context,
-  double screenHeight,
-  NewProductProvider provider,
-) {
+void showAddImagesSheet(BuildContext context, double screenHeight,
+    NewProductProvider provider, bool isEdit) {
   var lan = AppLocalizations.of(context)!;
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
@@ -518,7 +554,7 @@ void showAddImagesSheet(
                   text: lan.camera,
                   onPressed: () {
                     Navigator.of(context).pop();
-                    provider.pickImage();
+                    provider.pickImage(isEdit);
                   },
                 ),
                 MBSElement(
@@ -526,7 +562,7 @@ void showAddImagesSheet(
                   text: lan.gallery,
                   onPressed: () {
                     Navigator.of(context).pop();
-                    provider.pickMultiImage();
+                    provider.pickMultiImage(isEdit);
                   },
                 ),
               ],

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -147,7 +149,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           width: double.infinity,
                           height: 65,
                           child: DefaultTextStyle(
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

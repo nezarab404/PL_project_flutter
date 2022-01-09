@@ -67,7 +67,7 @@ class ProductDetailesProvider with ChangeNotifier {
   Future<void> getComments(int productId) async {
     comments = [];
     commentStatus = Status.loading;
-    await DioHelper.getData(url: COMMENTS + "/$productId", token: token, lang: "en")
+    await DioHelper.getData(url: COMMENTS + "/$productId", token: token, lang: "ar")
         .then((value) {
       if (value.statusCode == 200) {
         value.data['comments'].forEach((cmnt) {

@@ -37,6 +37,36 @@ class VerificationCodeScreen extends StatefulWidget {
 }
 
 class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
+
+
+  Timer? timer;
+  int _start = 60;
+  bool isStart = false;
+  void startTimer() {
+     _start = 60;
+    isStart = true;
+    const oneSec =  Duration(seconds: 1);
+    timer = Timer.periodic(
+      oneSec,
+          (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+isStart = false;
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+  @override
+  void dispose() {
+    timer!.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -64,7 +94,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     //   super.dispose();
     // }
 
-    
+
 
     var provider = Provider.of<VerifyProvider>(context);
 
@@ -191,14 +221,17 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
               ),
 
               TextButton(
-                onPressed: () {
+                onPressed: isStart? null:() {
                   Provider.of<VerifyProvider>(context, listen: false)
                       .resendCode();
+                  startTimer();
                 },
                 child: Text(
+                  isStart? "$_start":
                   lan.resendCode,
                   style: TextStyle(
                     color: mainRed,
+                    fontSize: 22
                   ),
                 ),
               ),

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/product_model.dart';
-import 'package:programming_languages_project/screens/cart_screen.dart';
 import 'package:programming_languages_project/screens/categories_screen.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
@@ -21,13 +20,11 @@ class HomeProvider with ChangeNotifier {
     const HomeScreen(),
     const CategoriesScreen(),
     NewProductScreen(),
-    const CartScreen()
   ];
   List<String> appBarTitles = [
     "Home",
     "Categories",
     "Add your product",
-    "Cart"
   ];
   bool desc = true;
   List<ProductModel> products = [];

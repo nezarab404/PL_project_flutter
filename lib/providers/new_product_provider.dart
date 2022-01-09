@@ -31,7 +31,7 @@ class NewProductProvider with ChangeNotifier {
     category = i! == -1 ? categories![index] : categories![i!];
     print("kk $value ii $i cc $categoryHeader");
 
-    notifyListeners();
+    //notifyListeners();
   }
 
   void setEditImages(List<String> images) {
@@ -145,14 +145,17 @@ class NewProductProvider with ChangeNotifier {
           {"remaining_days": rDays3, "discount": discount3},
         ],
       ),
-      "image1": await MultipartFile.fromFile(images![0].path,
+      "image1": images!.isEmpty ? null:await MultipartFile.fromFile(images![0].path,
           filename: images![0].path.split('/').last)
     });
     for (var i = 1; i < images!.length; i++) {
-      imageList.files.add(MapEntry(
+      imageList.files.add(
+        MapEntry(
           "image${i + 1}",
           await MultipartFile.fromFile(images![i].path,
-              filename: images![i].path.split('/').last)));
+              filename: images![i].path.split('/').last),
+        ),
+      );
     }
     print(token);
     await DioHelper.postData(url: PRODUCTS, token: token, data: imageList)
@@ -169,7 +172,7 @@ class NewProductProvider with ChangeNotifier {
         return false;
       }
     }).catchError((e) {
-      print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee $e");
     });
     return false;
   }
@@ -195,6 +198,7 @@ class NewProductProvider with ChangeNotifier {
     print("images3 : $willSendImages");
     FormData imageList = FormData.fromMap({
       "name": name,
+      "price" : price,
       "description": description,
       "category": categoryHeader,
       "quantity": quantity,
@@ -217,8 +221,9 @@ class NewProductProvider with ChangeNotifier {
     //     ),
     //   );
     // }
+print(productId);
 
-    await DioHelper.postData(
+   return await DioHelper.postData(
             url: PRODUCTS + '/$productId', token: token, data: imageList)
         .then((value) {
       print("kokokokoko ${value.toString()}");
@@ -226,7 +231,7 @@ class NewProductProvider with ChangeNotifier {
       if (value.statusCode == 200) {
         addProductStatus = Status.success;
         print(addProductStatus);
-        return true;
+       return true;
       } else {
         addProductStatus = Status.failed;
         print(addProductStatus);
@@ -234,6 +239,6 @@ class NewProductProvider with ChangeNotifier {
         return false;
       }
     });
-    return false;
+
   }
 }

@@ -76,5 +76,6 @@
     "cart":"Cart",
     "language": "Language",
     "arabic": "Arabic",
-    "english": "English"
+    "english": "English",
+    "userProduct" : "User Products"
 }

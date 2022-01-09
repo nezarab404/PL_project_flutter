@@ -20,6 +20,7 @@ import 'login_screen.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
+
   @override
   State<MyDrawer> createState() => _MyDrawerState();
 }
@@ -76,6 +77,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   children: [
                     CircleAvatar(
                       radius: 40,
+                      backgroundColor: Colors.white,
                       backgroundImage: me!.image != null
                           ? NetworkImage(me!.image!)
                           : const AssetImage(

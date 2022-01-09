@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:programming_languages_project/models/user_model.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
+import 'package:programming_languages_project/screens/list_products_screen.dart';
+import 'package:programming_languages_project/screens/my_products_screen.dart';
 import 'package:programming_languages_project/shared/commponents/mbs_element.dart';
 import 'package:provider/provider.dart';
 import '../shared/commponents/profile_info_field.dart';
@@ -48,7 +49,7 @@ class ProfileScreen extends StatefulWidget {
     bioController.text = user!.bio == null ? "" : user!.bio!;
     mobileNumberController.text = user!.phone == null ? "" : user!.phone!;
     facebookAccountController.text =
-        user!.facebook == null ? "" : user!.facebook!;
+    user!.facebook == null ? "" : user!.facebook!;
   }
 
   @override
@@ -61,7 +62,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var noListenProvider = Provider.of<ProfileProvider>(context, listen: false);
     var provider = Provider.of<ProfileProvider>(context);
     var lan = AppLocalizations.of(context)!;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
     // final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -94,11 +98,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     image: DecorationImage(
                       image: widget.user!.image == null
                           ? const AssetImage(
-                              'assets/images/avatar.png',
-                            ) as ImageProvider
+                        'assets/images/avatar.png',
+                      ) as ImageProvider
                           : NetworkImage(
-                              widget.user!.image!,
-                            ),
+                        widget.user!.image!,
+                      ),
                       fit: BoxFit.cover,
                     ),
                     color: Colors.white,
@@ -112,9 +116,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.all(15),
                   height: 70,
                   alignment:
-                      Localizations.localeOf(context) == const Locale('ar')
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
+                  Localizations.localeOf(context) == const Locale('ar')
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
                   decoration: const BoxDecoration(
                     color: Colors.black26,
                     borderRadius: BorderRadius.only(
@@ -125,16 +129,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   //username field
                   child: widget.onEdit
                       ? TextFormField(
-                          controller: widget.nameController,
-                        )
+                    controller: widget.nameController,
+                  )
                       : Text(
-                          widget.nameController.text,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
-                        ),
+                    widget.nameController.text,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
+                  ),
                 ),
                 //icon button position and function
                 Positioned(
@@ -152,116 +156,116 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     child: widget.myProfile
                         ? IconButton(
-                            onPressed: () {
-                              //to change photo
-                              showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                backgroundColor: darkBlue,
-                                context: context,
-                                builder: (context) {
-                                  return SizedBox(
-                                    height: screenHeight / 5,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          lan.pickImageForm,
-                                          style: TextStyle(
-                                            color: mainGrey,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22,
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            MBSElement(
-                                              icon: Icons.camera_alt,
-                                              text: lan.camera,
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                noListenProvider
-                                                    .pickImage(
-                                                  ImageSource.camera,
-                                                )
-                                                    .then((value) {
-                                                  noListenProvider
-                                                      .updateProfile(
-                                                    bio: widget
-                                                        .bioController.text,
-                                                    email: widget
-                                                        .emailController.text,
-                                                    name: widget
-                                                        .nameController.text,
-                                                    image:
-                                                        provider.profileImage,
-                                                    phone: widget
-                                                        .mobileNumberController
-                                                        .text,
-                                                    facebook: widget
-                                                        .facebookAccountController
-                                                        .text,
-                                                  );
-                                                  noListenProvider.getProfile();
-                                                });
-                                              },
-                                            ),
-                                            MBSElement(
-                                              icon: Icons.photo_library,
-                                              text: lan.gallery,
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                noListenProvider
-                                                    .pickImage(
-                                                  ImageSource.gallery,
-                                                )
-                                                    .then((value) {
-                                                  noListenProvider
-                                                      .updateProfile(
-                                                    bio: widget
-                                                        .bioController.text,
-                                                    email: widget
-                                                        .emailController.text,
-                                                    name: widget
-                                                        .nameController.text,
-                                                    image:
-                                                        provider.profileImage,
-                                                    phone: widget
-                                                        .mobileNumberController
-                                                        .text,
-                                                    facebook: widget
-                                                        .facebookAccountController
-                                                        .text,
-                                                  );
-                                                  noListenProvider.getProfile();
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            color: mainRed,
-                            icon: const Icon(
-                              Icons.camera_alt,
-                            ),
-                          )
-                        : //to call
-                        IconButton(
-                            onPressed: () {},
-                            color: Colors.green,
-                            icon: const Icon(
-                              Icons.call,
-                            ),
+                      onPressed: () {
+                        //to change photo
+                        showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
+                          backgroundColor: darkBlue,
+                          context: context,
+                          builder: (context) {
+                            return SizedBox(
+                              height: screenHeight / 5,
+                              child: Column(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    lan.pickImageForm,
+                                    style: TextStyle(
+                                      color: mainGrey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                    children: [
+                                      MBSElement(
+                                        icon: Icons.camera_alt,
+                                        text: lan.camera,
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          noListenProvider
+                                              .pickImage(
+                                            ImageSource.camera,
+                                          )
+                                              .then((value) {
+                                            noListenProvider
+                                                .updateProfile(
+                                              bio: widget
+                                                  .bioController.text,
+                                              email: widget
+                                                  .emailController.text,
+                                              name: widget
+                                                  .nameController.text,
+                                              image:
+                                              provider.profileImage,
+                                              phone: widget
+                                                  .mobileNumberController
+                                                  .text,
+                                              facebook: widget
+                                                  .facebookAccountController
+                                                  .text,
+                                            );
+                                            noListenProvider.getProfile();
+                                          });
+                                        },
+                                      ),
+                                      MBSElement(
+                                        icon: Icons.photo_library,
+                                        text: lan.gallery,
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          noListenProvider
+                                              .pickImage(
+                                            ImageSource.gallery,
+                                          )
+                                              .then((value) {
+                                            noListenProvider
+                                                .updateProfile(
+                                              bio: widget
+                                                  .bioController.text,
+                                              email: widget
+                                                  .emailController.text,
+                                              name: widget
+                                                  .nameController.text,
+                                              image:
+                                              provider.profileImage,
+                                              phone: widget
+                                                  .mobileNumberController
+                                                  .text,
+                                              facebook: widget
+                                                  .facebookAccountController
+                                                  .text,
+                                            );
+                                            noListenProvider.getProfile();
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      color: mainRed,
+                      icon: const Icon(
+                        Icons.camera_alt,
+                      ),
+                    )
+                        : //to call
+                    IconButton(
+                      onPressed: () {},
+                      color: Colors.green,
+                      icon: const Icon(
+                        Icons.call,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -283,7 +287,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //mobile phone number field
             ProfileInfoField(
               icon: Icons.smartphone,
-              title: lan.phoneNumber.split(' ').first,
+              title: lan.phoneNumber
+                  .split(' ')
+                  .first,
               function: () {},
               onEdit: widget.onEdit,
               controller: widget.mobileNumberController,
@@ -335,62 +341,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: widget.myProfile
           ? FloatingActionButton.extended(
-              onPressed: () {
-                if (widget.onEdit) {
-                  noListenProvider.updateProfile(
-                    email: widget.emailController.text,
-                    name: widget.nameController.text,
-                    image: provider.profileImage,
-                    bio: widget.bioController.text,
-                    phone: widget.mobileNumberController.text,
-                    facebook: widget.facebookAccountController.text,
-                  );
-                }
-                setState(() {
-                  widget.onEdit = !widget.onEdit;
-                });
-              },
-              backgroundColor: mainRed,
-              label: widget.onEdit
-                  ? Text(
-                      lan.done,
-                      style: const TextStyle(
-                        fontSize: 22,
-                      ),
-                    )
-                  : Text(
-                      lan.edit,
-                      style: const TextStyle(
-                        fontSize: 22,
-                      ),
-                    ),
-              icon: widget.onEdit
-                  ? const Icon(
-                      Icons.check,
-                      size: 30,
-                    )
-                  : const Icon(
-                      Icons.edit,
-                      size: 30,
-                    ),
-              extendedPadding: const EdgeInsets.all(30),
-            )
+        onPressed: () {
+          if (widget.onEdit) {
+            noListenProvider.updateProfile(
+              email: widget.emailController.text,
+              name: widget.nameController.text,
+              image: provider.profileImage,
+              bio: widget.bioController.text,
+              phone: widget.mobileNumberController.text,
+              facebook: widget.facebookAccountController.text,
+            );
+          }
+          setState(() {
+            widget.onEdit = !widget.onEdit;
+          });
+        },
+        backgroundColor: mainRed,
+        label: widget.onEdit
+            ? Text(
+          lan.done,
+          style: const TextStyle(
+            fontSize: 22,
+          ),
+        )
+            : Text(
+          lan.edit,
+          style: const TextStyle(
+            fontSize: 22,
+          ),
+        ),
+        icon: widget.onEdit
+            ? const Icon(
+          Icons.check,
+          size: 30,
+        )
+            : const Icon(
+          Icons.edit,
+          size: 30,
+        ),
+        extendedPadding: const EdgeInsets.all(30),
+      )
           : //see products FAB
-          FloatingActionButton.extended(
-              onPressed: () {},
-              backgroundColor: mainRed,
-              label: Text(
-                lan.products,
-                style: const TextStyle(
-                  fontSize: 22,
-                ),
-              ),
-              icon: const Icon(
-                Icons.subdirectory_arrow_right,
-                size: 30,
-              ),
-              extendedPadding: const EdgeInsets.all(30),
-            ),
+      FloatingActionButton.extended(
+        onPressed: () {
+          Provider.of<ProfileProvider>(context, listen: false).getUserProduct(
+              widget.user!.id!).then((value) {
+            if (value) {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return const ListProductsScreen();
+              }),);
+            }
+          },);
+        },
+        backgroundColor: mainRed,
+        label: Text(
+          lan.products,
+          style: const TextStyle(
+            fontSize: 22,
+          ),
+        ),
+        icon: const Icon(
+          Icons.subdirectory_arrow_right,
+          size: 30,
+        ),
+        extendedPadding: const EdgeInsets.all(30),
+      ),
     );
   }
 }

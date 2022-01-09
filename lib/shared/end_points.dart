@@ -20,3 +20,4 @@ const SEARCH_BY_NAME = "/products/search/name";
 const SEARCH_BY_DATE = "/products/search/date";
 const VIEW_PRODUCT = "/products/view";
 const CATEGORIES = "/products/category";
+const USER_PRODUCTS = "/products/user";

@@ -157,9 +157,10 @@ class ProductItem extends StatelessWidget {
                               child: Column(
                                 children: [
                                   CircleAvatar(
+                                    backgroundColor: Colors.white,
                                     backgroundImage: model.user!.image != null
                                         ? NetworkImage(model.user!.image!)
-                                        : null,
+                                        :const AssetImage("assets/images/avatar.png") as ImageProvider,
                                   ),
                                   const SizedBox(
                                     height: 20,

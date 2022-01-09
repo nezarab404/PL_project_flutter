@@ -52,6 +52,7 @@ class LandingPage extends StatelessWidget {
         bottomNavigationBar: DotNavigationBar(
           currentIndex: provider.bottomNavBarIndex,
           unselectedItemColor: mainDarkBlue,
+
           backgroundColor: const Color(0xffd3d3d3).withOpacity(0.8),
           margin: EdgeInsets.zero,
           borderRadius: 90,
@@ -59,7 +60,6 @@ class LandingPage extends StatelessWidget {
             DotNavigationBarItem(icon: const Icon(LineIcons.home)),
             DotNavigationBarItem(icon: const Icon(LineIcons.folder)),
             DotNavigationBarItem(icon: const Icon(LineIcons.plusCircle)),
-            DotNavigationBarItem(icon: const Icon(LineIcons.shoppingBag)),
           ],
           onTap: (index) {
             Provider.of<HomeProvider>(context, listen: false)

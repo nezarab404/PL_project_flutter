@@ -39,9 +39,10 @@ class NewProductScreen extends StatefulWidget {
   var formKey = GlobalKey<FormState>();
 
   NewProductScreen({Key? key}) : super(key: key);
+
   NewProductScreen.edit({Key? key, required this.model}) : super(key: key) {
     isEdit = true;
-    price = TextEditingController(text: isEdit ? model!.price.toString() : "");
+    price = TextEditingController(text: isEdit ? model!.priceInfo!.mainPrice.toString() : "");
     quantity =
         TextEditingController(text: isEdit ? model!.quantity.toString() : "");
     name = TextEditingController(text: isEdit ? model!.name : "");
@@ -422,17 +423,18 @@ class _NewProductScreenState extends State<NewProductScreen> {
               child: Builder(builder: (ctx) {
                 return FloatingActionButton(
                   onPressed: () {
+                    print("kokokokokokookokoko ${widget.isEdit}");
                     widget.isEdit
                         ? Provider.of<NewProductProvider>(context,
                                 listen: false)
                             .updateMyProduct(
                             productId: widget.model!.id!,
-                            price: double.parse(widget.price.text.contains('.0')
+                            price: double.parse(widget.price.text.contains('.')
                                 ? widget.price.text
                                 : widget.price.text + ".0"),
                             quantity: double.parse(widget.quantity.text.isEmpty
                                 ? "1.0"
-                                : widget.quantity.text.contains('.0')
+                                : widget.quantity.text.contains('.')
                                     ? widget.quantity.text
                                     : widget.quantity.text + ".0"),
                             name: widget.name.text,
@@ -441,15 +443,15 @@ class _NewProductScreenState extends State<NewProductScreen> {
                             rDays2: int.parse(widget.rDays2.text),
                             rDays3: int.parse(widget.rDays3.text),
                             discount1: double.parse(
-                                widget.per1.text.contains('.0')
+                                widget.per1.text.contains('.')
                                     ? widget.per1.text
                                     : widget.per1.text + ".0"),
                             discount2: double.parse(
-                                widget.per2.text.contains('.0')
+                                widget.per2.text.contains('.')
                                     ? widget.per2.text
                                     : widget.per2.text + ".0"),
                             discount3: double.parse(
-                                widget.per3.text.contains('.0')
+                                widget.per3.text.contains('.')
                                     ? widget.per3.text
                                     : widget.per3.text + ".0"),
                           )
@@ -459,23 +461,26 @@ class _NewProductScreenState extends State<NewProductScreen> {
                             Provider.of<MyProductsProvider>(context,
                                     listen: false)
                                 .getMyProducts();
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const MyDrawer(),
-                              ),
-                            );
+                            print("بولياني يا حبيبي $value");
+                            if (value) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const MyDrawer(),
+                                ),
+                              );
+                            }
                           })
-                        : print("momo ${widget.quantity.text}");
+                        :
                     Provider.of<NewProductProvider>(context, listen: false)
                         .addProduct(
-                      price: double.parse(widget.price.text.contains('.0')
+                      price: double.parse(widget.price.text.contains('.')
                           ? widget.price.text
                           : widget.price.text + ".0"),
                       quantity: double.parse(
                         widget.quantity.text.isEmpty
                             ? "1.0"
-                            : widget.quantity.text.contains('.0')
+                            : widget.quantity.text.contains('.')
                                 ? widget.quantity.text
                                 : widget.quantity.text + ".0",
                       ),
@@ -484,13 +489,13 @@ class _NewProductScreenState extends State<NewProductScreen> {
                       rDays1: int.parse(widget.rDays1.text),
                       rDays2: int.parse(widget.rDays2.text),
                       rDays3: int.parse(widget.rDays3.text),
-                      discount1: double.parse(widget.per1.text.contains('.0')
+                      discount1: double.parse(widget.per1.text.contains('.')
                           ? widget.per1.text
                           : widget.per1.text + ".0"),
-                      discount2: double.parse(widget.per2.text.contains('.0')
+                      discount2: double.parse(widget.per2.text.contains('.')
                           ? widget.per2.text
                           : widget.per2.text + ".0"),
-                      discount3: double.parse(widget.per3.text.contains('.0')
+                      discount3: double.parse(widget.per3.text.contains('.')
                           ? widget.per3.text
                           : widget.per3.text + ".0"),
                     )

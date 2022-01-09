@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/models/user_model.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
@@ -14,7 +15,7 @@ import 'package:programming_languages_project/shared/status.dart';
 class ProfileProvider with ChangeNotifier {
   UserModel? user;
   File? profileImage;
-
+  List<ProductModel> userProducts = [];
   Status? profileInfoStatus = Status.init;
   Status? profileGetStatus = Status.init;
   Status? passStatus = Status.init;
@@ -129,5 +130,24 @@ class ProfileProvider with ChangeNotifier {
       }
     });
     return false;
+  }
+
+  Future<bool> getUserProduct(int userID) async {
+    userProducts = [];
+    bool b = false;
+    await DioHelper.getData(
+            url: USER_PRODUCTS + "/$userID", token: token)
+        .then((value) {
+      if (value.statusCode == 200) {
+        print(value.data);
+        value.data['products'].forEach((e) {
+          userProducts.add(ProductModel.fromJson(e));
+          b= true;
+        });
+      } else {
+        b= false;
+      }
+    });
+    return b;
   }
 }

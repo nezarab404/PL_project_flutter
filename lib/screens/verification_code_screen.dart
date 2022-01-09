@@ -13,7 +13,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../shared/themes/main_theme.dart';
 import '../shared/commponents/header.dart';
-import 'drawer.dart';
 import 'forgot_password_screen.dart';
 
 // ignore: must_be_immutable

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:programming_languages_project/providers/search_provider.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
@@ -96,7 +97,7 @@ class SearchScreen extends StatelessWidget {
                                 hint: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    lan.byName, 
+                                    lan.byName,
                                     style: const TextStyle(
                                       fontSize: 12,
                                     ),
@@ -160,8 +161,32 @@ class SearchScreen extends StatelessWidget {
       );
     } else {
       return Center(
-        child: Text(lan.noProductsFound,
-            style:const TextStyle(color: Colors.white)),
+        // child: Text(lan.noProductsFound,
+        //     style:const TextStyle(color: Colors.white)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              width: 250,
+              height: 250,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20)),
+              child: SvgPicture.asset(
+                'assets/images/empty.svg',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Text(
+              lan.noProductsFound,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
       );
     }
   }

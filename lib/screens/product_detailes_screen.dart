@@ -3,6 +3,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:line_icons/line_icon.dart';
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
@@ -14,6 +15,7 @@ import 'package:programming_languages_project/shared/network/dio_helper.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class ProductDetailesScreen extends StatelessWidget {
@@ -80,53 +82,120 @@ class ProductDetailesScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                height: 60,
-                child: FloatingActionButton.extended(
-                  backgroundColor: mainRed,
-                  heroTag: "buy",
-                  label: SizedBox(
-                    width: size.width / 2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Text(lan.buy,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(
-                                        color: Colors.white, fontSize: 20)),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            const Icon(Icons.add_shopping_cart, size: 28),
-                          ],
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          width: size.width / 4,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              color: mainGrey,
-                              borderRadius: BorderRadius.circular(90)),
-                          child: Text(
-                            "${model.price!.roundToDouble()}\$",
-                            style:
-                                Theme.of(context).textTheme.bodyText2!.copyWith(
-                                      color: mainRed,
-                                      fontSize: 20,
-                                    ),
+              if (model.userId != me!.id)
+                SizedBox(
+                  height: 60,
+                  child: FloatingActionButton.extended(
+                    backgroundColor: mainRed,
+                    heroTag: "buy",
+                    label: SizedBox(
+                      width: size.width / 2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Text(lan.buy,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(
+                                          color: Colors.white, fontSize: 20)),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              const Icon(Icons.add_shopping_cart, size: 28),
+                            ],
                           ),
-                        ),
-                      ],
+                          Container(
+                            alignment: Alignment.center,
+                            width: size.width / 4,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: mainGrey,
+                                borderRadius: BorderRadius.circular(90)),
+                            child: Text(
+                              "${model.price!.roundToDouble()}\$",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(
+                                    color: mainRed,
+                                    fontSize: 20,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                                title: const Text("Contact with seller"), //todo
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Uri url = Uri(
+                                            scheme: 'tel',
+                                            path: model.user!.phone);
+                                        launch(url.toString());
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text("make a call"),
+                                          LineIcon.phone()
+                                        ],
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Uri url = Uri(
+                                            scheme: 'mailto',
+                                            path: model.user!.email,
+                                            query: <String, String>{
+                                              'subject': 'i want to buy'
+                                            }
+                                                .entries
+                                                .map((e) =>
+                                                    '${Uri.encodeComponent(e.key)} = ${Uri.encodeComponent(e.value)}')
+                                                .join('&'));
+                                        launch(url.toString());
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text("send a email"),
+                                          LineIcon.envelope()
+                                        ],
+                                      ),
+                                    ),
+                                    if (model.user!.facebook != null)
+                                      TextButton(
+                                        onPressed: () {
+                                          launch(model.user!.facebook!);
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text("go to facebook page"),
+                                            LineIcon.facebook()
+                                          ],
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ));
+                    },
                   ),
-                  onPressed: () {},
                 ),
-              ),
               FloatingActionButton(
                 backgroundColor: mainRed,
                 onPressed: () {
@@ -166,11 +235,13 @@ class ProductDetailesScreen extends StatelessWidget {
               ),
               FloatingActionButton(
                 backgroundColor: mainRed,
-                onPressed: () {
-                  context
-                      .read<ProductDetailesProvider>()
-                      .like(model.id!, context);
-                },
+                onPressed: model.userId != me!.id
+                    ? () {
+                        context
+                            .read<ProductDetailesProvider>()
+                            .like(model.id!, context);
+                      }
+                    : null,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

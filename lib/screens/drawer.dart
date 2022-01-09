@@ -147,25 +147,26 @@ class _MyDrawerState extends State<MyDrawer> {
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
                           width: double.infinity,
-                          height: 65,
+                          height: 75,
                           child: DefaultTextStyle(
                             style: const TextStyle(color: Colors.white),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("Language"),
+                                Text(lan.language),
                                 Row(
                                   children: [
-                                    const Text("Arabic"),
+                                    Text(lan.arabic),
                                     Switch(
-                                        value: provider.language,
-                                        //activeTrackColor: Colors.grey,
-                                        inactiveThumbColor: mainRed,
-                                        activeColor: mainRed,
-                                        inactiveTrackColor: mainRed!.shade900,
-                                        onChanged: (val) => noListenProvider
-                                            .changeLang(val, context)),
-                                    const Text("English"),
+                                      value: provider.language,
+                                      //activeTrackColor: Colors.grey,
+                                      inactiveThumbColor: mainRed,
+                                      activeColor: mainRed,
+                                      inactiveTrackColor: mainRed!.shade900,
+                                      onChanged: (val) => noListenProvider
+                                          .changeLang(val, context),
+                                    ),
+                                    Text(lan.english),
                                   ],
                                 )
                               ],

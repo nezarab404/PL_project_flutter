@@ -73,5 +73,8 @@
     "byDate":"By Date",
     "noProductsFound":"No Products Found",
     "errorWhileRegister":"Network Error Was Happend",
-    "cart":"Cart"
+    "cart":"Cart",
+    "language": "Language",
+    "arabic": "Arabic",
+    "english": "English"
 }

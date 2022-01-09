@@ -73,7 +73,10 @@
     "byDate":"حسب التاريخ",
     "noProductsFound":"لا يوجد منتجات",
     "errorWhileRegister":"حدث خطأ في الشبكة",
-    "cart":"سلة المشتريات"
+    "cart":"سلة المشتريات",
+    "language": "اللغة",
+    "arabic": "العربية",
+    "english": "الإنجليزية"
 
     
 }

@@ -57,7 +57,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({Key? key, required this.mainWidget}) : super(key: key);
+  MyApp({Key? key, required this.mainWidget}) : super(key: key);
   final Widget mainWidget;
   bool? language;
   @override
@@ -112,7 +112,9 @@ class MainMaterialApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dream Shop',
       debugShowCheckedModeBanner: false,
-      locale: Provider.of<HomeProvider>(context).language ? const Locale('en') : const Locale('ar'),
+      locale: SharedHelper.getData(key: 'lang') == null
+          ? null
+          : Locale(SharedHelper.getData(key: 'lang')),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

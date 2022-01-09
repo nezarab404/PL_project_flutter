@@ -7,7 +7,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: "http://192.168.1.108:8000/api/", //TODO
+        baseUrl: "http://192.168.1.106:8000/api/", //TODO
         receiveDataWhenStatusError: true,
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ class DioHelper {
       'auth-token': "$token"
     };
     //  =Response(requestOptions: RequestOptions(path: ""))
-    Response response=Response(requestOptions: RequestOptions(path: ""));
+    Response response = Response(requestOptions: RequestOptions(path: ""));
     try {
       response = await dio.post(
         url,
@@ -37,7 +37,7 @@ class DioHelper {
       );
     } on DioError catch (e) {
       //return e.response!;
-    //  return e.response!;
+      //  return e.response!;
     }
     return response;
   }

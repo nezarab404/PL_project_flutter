@@ -70,6 +70,7 @@ class ProductDetailesProvider with ChangeNotifier {
     await DioHelper.getData(
             url: COMMENTS + "/$productId", token: token, lang: lang!)
         .then((value) {
+          print(value.data);
       if (value.statusCode == 200) {
         value.data['comments'].forEach((cmnt) {
           comments.add(CommentModel.fromJson(cmnt));

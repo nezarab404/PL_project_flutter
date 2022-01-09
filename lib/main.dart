@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -156,27 +157,38 @@ class MainMaterialApp extends StatelessWidget {
       ),
       home: AnimatedSplashScreen(
         nextScreen: mainWidget,
-        splash: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image.asset(
-              'assets/images/cart_red2.png',
-            ),
-            SizedBox(height:20,),
-            const Text(
-              'Dream Shop',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+        splash: SizedBox(
+          height: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                flex:3,
+                child: Image.asset(
+                  'assets/images/cart_red2.png',
+                  fit: BoxFit.fill,
+                ),
               ),
-            ),
-          ],
+             const SizedBox(height:10,),
+               Expanded(
+                 flex: 1,
+                 child: Text(
+                  'Dream Shop',
+                  style: TextStyle(
+                    color: mainRed,
+                    fontSize: 36  ,
+                    fontWeight: FontWeight.bold,
+                  ),
+              ),
+               ),
+            ],
+          ),
         ),
-        splashIconSize: 151,
+        splashIconSize: 300,
         splashTransition: SplashTransition.sizeTransition,
-        backgroundColor: darkBlue2,
+        backgroundColor: lightDarkBlue,
       ),
     );
   }

@@ -506,6 +506,18 @@ class _NewProductScreenState extends State<NewProductScreen> {
                           .getMyProducts();
                       Provider.of<HomeProvider>(context, listen: false)
                           .changeIndex(0);
+                      widget.price.clear();
+                      widget.per1.clear();
+                      widget.per2.clear();
+                      widget.per3.clear();
+                      widget.quantity.clear();
+                      widget.rDays1.clear();
+                      widget.rDays2.clear();
+                      widget.rDays3.clear();
+                      widget.name.clear();
+                      widget.date.clear();
+                      widget.description.clear();
+                      provider.images = [];
                     }); //1640905200
                   },
                   backgroundColor: mainRed,

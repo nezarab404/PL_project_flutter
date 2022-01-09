@@ -227,10 +227,7 @@ class ProductDetailesScreen extends StatelessWidget {
                   children: [
                     const Icon(Icons.comment),
                     Text(
-                      Provider.of<ProductDetailesProvider>(context)
-                          .comments
-                          .length
-                          .toString(),
+                     model.comments.toString()
                     )
                   ],
                 ),

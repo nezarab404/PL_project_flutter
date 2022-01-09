@@ -210,13 +210,16 @@ class OptionalUserInfoScreen extends StatelessWidget {
                   )
                       .then((value) {
                     print(value);
+                    if(value){
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const MyDrawer(),
+                        ),
+                      );
+                    }
                   });
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const MyDrawer(),
-                    ),
-                  );
+
                 },
                 backgroundColor: mainRed,
                 child: Icon(

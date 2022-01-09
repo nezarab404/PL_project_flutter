@@ -16,6 +16,7 @@ class ProductModel {
   UserModel? user;
   int? views;
   int? likes;
+  int? comments;
   bool? isLike;
   DiscountsModel? priceInfo;
 
@@ -33,6 +34,7 @@ class ProductModel {
     user = UserModel.fromJson(json['user']);
     views = json['views_count'];
     likes = json['likes_count'];
+    comments = json['comments_count'];
     isLike = json['me_likes'];
     if(json['discounts'] != null){
     priceInfo = DiscountsModel.fromJson(json['discounts']);}

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
@@ -8,13 +10,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore: must_be_immutable
 class ProductItem extends StatelessWidget {
   ProductItem({Key? key, required this.model}) : super(key: key);
+
   ProductItem.tile({Key? key, required this.model, this.isMyProduct = false})
       : super(key: key) {
     _isTile = true;
   }
+
   ProductModel model;
   bool _isTile = false;
   bool? isMyProduct = false;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -56,10 +61,11 @@ class ProductItem extends StatelessWidget {
                                     "${model.name}",
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline5!
-                                        .copyWith(fontWeight: FontWeight.bold),
+                                    style:const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
                                 Text(
@@ -160,7 +166,9 @@ class ProductItem extends StatelessWidget {
                                     backgroundColor: Colors.white,
                                     backgroundImage: model.user!.image != null
                                         ? NetworkImage(model.user!.image!)
-                                        :const AssetImage("assets/images/avatar.png") as ImageProvider,
+                                        : const AssetImage(
+                                                "assets/images/avatar.png")
+                                            as ImageProvider,
                                   ),
                                   const SizedBox(
                                     height: 20,

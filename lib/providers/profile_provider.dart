@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -89,10 +88,10 @@ class ProfileProvider with ChangeNotifier {
   Future<bool> updateProfile({
     required String? name,
     required String? email,
-    required File? image,
+    required File? image ,
     String? bio,
     String? phone,
-    String? facebook,
+    String? facebook ,
   }) async {
     if (image != null) profileImage = image;
     profileInfoStatus = Status.loading;
@@ -102,13 +101,13 @@ class ProfileProvider with ChangeNotifier {
       "bio": bio,
       "email": email,
       "phone": phone,
-      "facebook": facebook,
-      "image": await MultipartFile.fromFile(
+      "facebook": facebook == '' ? null : facebook,
+      "image": image == null? null :await MultipartFile.fromFile(
         profileImage!.path,
         filename: profileImage!.path.split('/').last,
       ),
     });
-
+    bool b = false;
     await DioHelper.postData(url: UPDATEUSER, token: token, data: info)
         .then((value) {
       print(value.data);
@@ -122,14 +121,14 @@ class ProfileProvider with ChangeNotifier {
           },
         );
         print(profileInfoStatus);
-        return true;
+        b= true;
       } else {
         profileInfoStatus = Status.failed;
         print(profileInfoStatus);
-        return false;
+        b= false;
       }
     });
-    return false;
+    return b;
   }
 
   Future<bool> getUserProduct(int userID) async {

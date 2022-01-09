@@ -100,7 +100,7 @@ class _MyDrawerState extends State<MyDrawer> {
                                 builder: (_) => const ProductsILikeScreen()));
                       },
                       icon: const Icon(
-                        Icons.dangerous,
+                        LineIcons.heart,
                         color: Colors.white,
                       ),
                       label: Text(
@@ -120,7 +120,7 @@ class _MyDrawerState extends State<MyDrawer> {
                         );
                       },
                       icon: const Icon(
-                        Icons.my_library_add,
+                        LineIcons.shoppingBasket,
                         color: Colors.white,
                       ),
                       label: Text(

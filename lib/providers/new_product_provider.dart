@@ -195,6 +195,7 @@ class NewProductProvider with ChangeNotifier {
     print("images3 : $willSendImages");
     FormData imageList = FormData.fromMap({
       "name": name,
+      "price": price,
       "description": description,
       "category": categoryHeader,
       "quantity": quantity,

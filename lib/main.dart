@@ -1,6 +1,8 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
@@ -32,6 +34,8 @@ void main() async {
 
   token = SharedHelper.getData(key: TOKEN);
 
+  SharedHelper.saveData(key: 'lang', value: 'en');
+
   if (token != null) {
     await DioHelper.getData(url: ME, token: token).then((value) {
       if (value.statusCode == 200) {
@@ -60,6 +64,7 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key, required this.mainWidget}) : super(key: key);
   final Widget mainWidget;
   bool? language;
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -109,12 +114,17 @@ class MainMaterialApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(lang);
     return MaterialApp(
       title: 'Dream Shop',
       debugShowCheckedModeBanner: false,
-      locale: SharedHelper.getData(key: 'lang') == null
-          ? null
-          : Locale(SharedHelper.getData(key: 'lang')),
+      locale:
+          // Locale(lang!)
+          Provider.of<HomeProvider>(context).language
+              ? const Locale('en')
+              : const Locale('ar')
+      // lang != null ? Locale(lang!) : null
+      ,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -144,7 +154,30 @@ class MainMaterialApp extends StatelessWidget {
         scaffoldBackgroundColor: mainDarkBlue,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      home: mainWidget,
+      home: AnimatedSplashScreen(
+        nextScreen: mainWidget,
+        splash: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset(
+              'assets/images/cart_red2.png',
+            ),
+            SizedBox(height:20,),
+            const Text(
+              'Dream Shop',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        splashIconSize: 151,
+        splashTransition: SplashTransition.sizeTransition,
+        backgroundColor: darkBlue2,
+      ),
     );
   }
 }

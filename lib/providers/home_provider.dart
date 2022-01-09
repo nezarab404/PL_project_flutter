@@ -16,7 +16,7 @@ import 'package:programming_languages_project/shared/storage/shared_helper.dart'
 
 class HomeProvider with ChangeNotifier {
   int bottomNavBarIndex = 0;
-  bool language = false;
+  bool language = true;
   List<Widget> screens = [
     const HomeScreen(),
     const CategoriesScreen(),
@@ -50,12 +50,20 @@ class HomeProvider with ChangeNotifier {
   }
 
   void changeLang(bool value, BuildContext context) {
+    print('///////////////Value: $value , Lang: $language//////////////');
     language = value;
+    print('///////////////Value: $value , Lang: $language//////////////');
+    SharedHelper.removeData(key: 'lang');
     language
         ? SharedHelper.saveData(key: 'lang', value: 'en')
-        : SharedHelper.saveData(key: 'lang', value: 'ar');
+            .then((value) => print('////////////////$value'))
+        : SharedHelper.saveData(key: 'lang', value: 'ar')
+            .then((value) => print('////////////////$value'));
+    lang = SharedHelper.getData(key: 'lang');
+    print(
+        '/////////////////////////////////////////////////////Provider $lang');
     getProducts();
-    RestartWidget.restartApp(context);
+    // RestartWidget.restartApp(context);
     notifyListeners();
   }
 

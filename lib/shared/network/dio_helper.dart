@@ -27,7 +27,6 @@ class DioHelper {
       "Content-Type": "application/json",
       'auth-token': "$token"
     };
-    //  =Response(requestOptions: RequestOptions(path: ""))
     Response response = Response(requestOptions: RequestOptions(path: ""));
     try {
       response = await dio.post(

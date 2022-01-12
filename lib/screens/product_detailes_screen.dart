@@ -72,7 +72,8 @@ class ProductDetailesScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   backgroundImage: model.user!.image != null
                       ? NetworkImage(model.user!.image!)
-                      :const  AssetImage("assets/images/avatar.png") as ImageProvider,
+                      : const AssetImage("assets/images/avatar.png")
+                          as ImageProvider,
                 ),
               ),
             )
@@ -150,7 +151,7 @@ class ProductDetailesScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const Text("make a call"),
+                                          const Text("Make a call"),
                                           LineIcon.phone()
                                         ],
                                       ),
@@ -173,7 +174,7 @@ class ProductDetailesScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const Text("send a email"),
+                                          const Text("Send an email"),
                                           LineIcon.envelope()
                                         ],
                                       ),
@@ -187,7 +188,7 @@ class ProductDetailesScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text("go to facebook page"),
+                                            const Text("Go to facebook page"),
                                             LineIcon.facebook()
                                           ],
                                         ),
@@ -226,9 +227,7 @@ class ProductDetailesScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Icons.comment),
-                    Text(
-                     model.comments.toString()
-                    )
+                    Text(model.comments.toString())
                   ],
                 ),
               ),

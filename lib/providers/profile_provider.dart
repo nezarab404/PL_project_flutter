@@ -105,9 +105,9 @@ class ProfileProvider with ChangeNotifier {
     print(profileInfoStatus);
     FormData info = FormData.fromMap({
       "name": name,
-      "bio": bio,
       "email": email,
-      "phone": phone,
+      "bio": bio == '' ? null : bio,
+      "phone": phone == '' ? null : phone,
       "facebook": facebook == '' ? null : facebook,
       "image": image == null
           ? null

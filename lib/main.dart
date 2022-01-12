@@ -1,9 +1,9 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
@@ -58,6 +58,7 @@ void main() async {
   } else {
     widget = LoginScreen();
   }
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   runApp(RestartWidget(child: MyApp(mainWidget: widget)));
 }
 
@@ -165,24 +166,26 @@ class MainMaterialApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
-                flex:3,
+                flex: 3,
                 child: Image.asset(
                   'assets/images/cart_red2.png',
                   fit: BoxFit.fill,
                 ),
               ),
-             const SizedBox(height:10,),
-               Expanded(
-                 flex: 1,
-                 child: Text(
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                flex: 1,
+                child: Text(
                   'Dream Shop',
                   style: TextStyle(
                     color: mainRed,
-                    fontSize: 36  ,
+                    fontSize: 36,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
               ),
-               ),
             ],
           ),
         ),

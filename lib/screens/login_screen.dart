@@ -155,13 +155,15 @@ class LoginScreen extends StatelessWidget {
                             data: {"email": _email.text}).then((value) {
                           if (value.statusCode == 200) {
                             return Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        VerificationCodeScreen.reset(
-                                            email: _email.text)));
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => VerificationCodeScreen.reset(
+                                  email: _email.text,
+                                ),
+                              ),
+                            );
                           } else {
-                            print("value.data['msg']");
+                            print(value);
                           }
                         });
                       }

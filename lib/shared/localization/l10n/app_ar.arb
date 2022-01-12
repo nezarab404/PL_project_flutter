@@ -77,7 +77,12 @@
     "language": "اللغة",
     "arabic": "العربية",
     "english": "الإنجليزية",
-    "userProduct" : "منتجات المستخدم"
+    "userProduct" : "منتجات المستخدم",
+    "sendingAnEmail": "ارسال بريد الكتروني",
+    "makingAPhoneCall":"اجراء مكالمة هاتفية",
+    "contactWithSeller" : "التواصل مع البائع",
+    "goToFacebookPage" : "الذهاب الى صفحة الفيسبوك"
+    
 
     
 }

@@ -5,7 +5,6 @@ import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/screens/categories_screen.dart';
 import 'package:programming_languages_project/screens/home_screen.dart';
 import 'package:programming_languages_project/screens/new_product_screen.dart';
-import 'package:programming_languages_project/shared/commponents/restart_widget.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/end_points.dart';
 import 'package:programming_languages_project/shared/network/dio_helper.dart';
@@ -47,9 +46,9 @@ class HomeProvider with ChangeNotifier {
   }
 
   void changeLang(bool value, BuildContext context) {
-    print('///////////////Value: $value , Lang: $language//////////////');
+    print('Value: $value , Lang: $language');
     language = value;
-    print('///////////////Value: $value , Lang: $language//////////////');
+    print('Value: $value , Lang: $language');
     SharedHelper.removeData(key: 'lang');
     language
         ? SharedHelper.saveData(key: 'lang', value: 'en')

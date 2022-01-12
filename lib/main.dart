@@ -144,11 +144,11 @@ class MainMaterialApp extends StatelessWidget {
         primarySwatch: mainRed,
         backgroundColor: mainDarkBlue,
         fontFamily: "Baloo2",
-        textTheme: const TextTheme(
-          bodyText1: TextStyle(color: Colors.white),
+        textTheme:const TextTheme(
+          bodyText1:  TextStyle(color: Colors.white),
           bodyText2: TextStyle(
             color: Colors.black,
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -165,24 +165,26 @@ class MainMaterialApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
-                flex:3,
+                flex: 3,
                 child: Image.asset(
                   'assets/images/cart_red2.png',
                   fit: BoxFit.fill,
                 ),
               ),
-             const SizedBox(height:10,),
-               Expanded(
-                 flex: 1,
-                 child: Text(
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                flex: 1,
+                child: Text(
                   'Dream Shop',
                   style: TextStyle(
                     color: mainRed,
-                    fontSize: 36  ,
+                    fontSize: 36,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
               ),
-               ),
             ],
           ),
         ),

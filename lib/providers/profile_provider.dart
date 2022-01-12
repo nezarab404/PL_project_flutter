@@ -102,7 +102,7 @@ class ProfileProvider with ChangeNotifier {
       "email": email,
       "phone": phone,
       "facebook": facebook == '' ? null : facebook,
-      "image": image == null? null :await MultipartFile.fromFile(
+      "image": image == null? null : image.path.contains('http://') ? null : await MultipartFile.fromFile(
         profileImage!.path,
         filename: profileImage!.path.split('/').last,
       ),

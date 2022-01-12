@@ -72,7 +72,8 @@ class ProductDetailesScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   backgroundImage: model.user!.image != null
                       ? NetworkImage(model.user!.image!)
-                      :const  AssetImage("assets/images/avatar.png") as ImageProvider,
+                      : const AssetImage("assets/images/avatar.png")
+                          as ImageProvider,
                 ),
               ),
             )
@@ -135,7 +136,13 @@ class ProductDetailesScreen extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (ctx) => AlertDialog(
-                                title: const Text("Contact with seller"), //todo
+                                backgroundColor: darkBlue,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                title: Text(
+                                  lan.contactWithSeller,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -150,8 +157,12 @@ class ProductDetailesScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const Text("make a call"),
-                                          LineIcon.phone()
+                                          Text(
+                                            lan.makingAPhoneCall,
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                          const Icon(Icons.call)
                                         ],
                                       ),
                                     ),
@@ -173,8 +184,12 @@ class ProductDetailesScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const Text("send a email"),
-                                          LineIcon.envelope()
+                                          Text(
+                                            lan.sendingAnEmail,
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                          const Icon(Icons.mail)
                                         ],
                                       ),
                                     ),
@@ -187,8 +202,12 @@ class ProductDetailesScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text("go to facebook page"),
-                                            LineIcon.facebook()
+                                            Text(
+                                              lan.goToFacebookPage,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                            const Icon(Icons.facebook)
                                           ],
                                         ),
                                       ),
@@ -226,9 +245,7 @@ class ProductDetailesScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Icons.comment),
-                    Text(
-                     model.comments.toString()
-                    )
+                    Text(model.comments.toString())
                   ],
                 ),
               ),

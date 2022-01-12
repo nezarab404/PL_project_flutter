@@ -58,7 +58,6 @@ void main() async {
   } else {
     widget = LoginScreen();
   }
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   runApp(RestartWidget(child: MyApp(mainWidget: widget)));
 }
 

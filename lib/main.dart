@@ -190,7 +190,7 @@ class MainMaterialApp extends StatelessWidget {
         ),
         splashIconSize: 300,
         splashTransition: SplashTransition.sizeTransition,
-        backgroundColor: lightDarkBlue,
+        backgroundColor: darkBlue2,
       ),
     );
   }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
 import 'package:programming_languages_project/screens/drawer.dart';
 import 'package:programming_languages_project/shared/status.dart';
@@ -122,7 +123,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 maxLines: 1,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  prefixIcon: IconButton(
+                  prefixIcon: const Icon(LineIcons.lock),
+                  suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
                         widget.passwordState = !widget.passwordState;

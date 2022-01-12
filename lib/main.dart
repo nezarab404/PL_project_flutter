@@ -1,9 +1,9 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
@@ -190,7 +190,7 @@ class MainMaterialApp extends StatelessWidget {
         ),
         splashIconSize: 300,
         splashTransition: SplashTransition.sizeTransition,
-        backgroundColor: lightDarkBlue,
+        backgroundColor: darkBlue2,
       ),
     );
   }

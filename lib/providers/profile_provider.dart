@@ -88,29 +88,41 @@ class ProfileProvider with ChangeNotifier {
   Future<bool> updateProfile({
     required String? name,
     required String? email,
-    required File? image ,
+    required File? image,
     String? bio,
     String? phone,
-    String? facebook ,
+    String? facebook,
   }) async {
+    print(name);
+    print(email);
+    print(image);
+    print(bio);
+    print(phone);
+    print(facebook);
+
     if (image != null) profileImage = image;
     profileInfoStatus = Status.loading;
     print(profileInfoStatus);
     FormData info = FormData.fromMap({
       "name": name,
-      "bio": bio,
       "email": email,
-      "phone": phone,
+      "bio": bio == '' ? null : bio,
+      "phone": phone == '' ? null : phone,
       "facebook": facebook == '' ? null : facebook,
-      "image": image == null? null : image.path.contains('http://') ? null : await MultipartFile.fromFile(
-        profileImage!.path,
-        filename: profileImage!.path.split('/').last,
-      ),
+      "image": image == null
+          ? null
+          : image.path.contains("http://")
+              ? null
+              : await MultipartFile.fromFile(
+                  profileImage!.path,
+                  filename: profileImage!.path.split('/').last,
+                ),
     });
+    image = null;
     bool b = false;
     await DioHelper.postData(url: UPDATEUSER, token: token, data: info)
         .then((value) {
-      print(value.data);
+      print("koko ${value.data}");
       if (value.statusCode == 200) {
         profileInfoStatus = Status.success;
         DioHelper.getData(url: ME, token: token).then(
@@ -121,11 +133,11 @@ class ProfileProvider with ChangeNotifier {
           },
         );
         print(profileInfoStatus);
-        b= true;
+        b = true;
       } else {
         profileInfoStatus = Status.failed;
         print(profileInfoStatus);
-        b= false;
+        b = false;
       }
     });
     return b;
@@ -134,17 +146,16 @@ class ProfileProvider with ChangeNotifier {
   Future<bool> getUserProduct(int userID) async {
     userProducts = [];
     bool b = false;
-    await DioHelper.getData(
-            url: USER_PRODUCTS + "/$userID", token: token)
+    await DioHelper.getData(url: USER_PRODUCTS + "/$userID", token: token)
         .then((value) {
       if (value.statusCode == 200) {
         print(value.data);
         value.data['products'].forEach((e) {
           userProducts.add(ProductModel.fromJson(e));
-          b= true;
+          b = true;
         });
       } else {
-        b= false;
+        b = false;
       }
     });
     return b;

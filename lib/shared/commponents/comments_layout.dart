@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:programming_languages_project/providers/product_detailes_provider.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class _CommentsLayoutState extends State<CommentsLayout> {
     return Container(
       height: 600,
       decoration: BoxDecoration(
-        color: darkBlue,
+        color: theme == darkTheme ? mainDarkBlue : mainGrey,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(15),
           topRight: Radius.circular(15),
@@ -265,7 +266,10 @@ class _CommentsLayoutState extends State<CommentsLayout> {
                       onEditCommentIndex = -1;
                     }
                   },
-                  icon: const Icon(Icons.send),
+                  icon: Icon(
+                    Icons.send,
+                    color: theme.backgroundColor,
+                  ),
                 ),
               ),
             ],

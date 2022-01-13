@@ -21,7 +21,6 @@ class LandingPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: mainDarkBlue,
           elevation: 0.0,
           title: Text(
             appBarTitles[provider.bottomNavBarIndex],
@@ -31,8 +30,12 @@ class LandingPage extends StatelessWidget {
                 .copyWith(color: Colors.white, fontSize: 28),
           ),
           leading: IconButton(
-              onPressed: () => ZoomDrawer.of(context)!.toggle(),
-              icon: const Icon(Icons.menu)),
+            onPressed: () => ZoomDrawer.of(context)!.toggle(),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+          ),
           actions: [
             IconButton(
               onPressed: () {
@@ -44,15 +47,15 @@ class LandingPage extends StatelessWidget {
           ],
         ),
         body: GestureDetector(
-            onHorizontalDragStart: (details) {
-              ZoomDrawer.of(context)!.toggle();
-            },
-            child: provider.screens[provider.bottomNavBarIndex]),
+          onHorizontalDragStart: (details) {
+            ZoomDrawer.of(context)!.toggle();
+          },
+          child: provider.screens[provider.bottomNavBarIndex],
+        ),
         extendBody: true,
         bottomNavigationBar: DotNavigationBar(
           currentIndex: provider.bottomNavBarIndex,
           unselectedItemColor: mainDarkBlue,
-
           backgroundColor: const Color(0xffd3d3d3).withOpacity(0.8),
           margin: EdgeInsets.zero,
           borderRadius: 90,

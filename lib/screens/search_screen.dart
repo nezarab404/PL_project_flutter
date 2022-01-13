@@ -22,7 +22,7 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: mainDarkBlue,
+        backgroundColor: theme.appBarTheme.backgroundColor,
         title: Text(lan.search),
       ),
       body: SingleChildScrollView(
@@ -171,8 +171,9 @@ class SearchScreen extends StatelessWidget {
               height: 250,
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(20)),
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: SvgPicture.asset(
                 'assets/images/empty.svg',
                 fit: BoxFit.cover,
@@ -180,8 +181,8 @@ class SearchScreen extends StatelessWidget {
             ),
             Text(
               lan.noProductsFound,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: theme.textTheme.bodyText1!.color,
                 fontSize: 20,
               ),
             ),

@@ -81,8 +81,8 @@
     "sendingAnEmail": "ارسال بريد الكتروني",
     "makingAPhoneCall":"اجراء مكالمة هاتفية",
     "contactWithSeller" : "التواصل مع البائع",
-    "goToFacebookPage" : "الذهاب الى صفحة الفيسبوك"
-    
-
-    
+    "goToFacebookPage" : "الذهاب الى صفحة الفيسبوك",
+    "themeType": "المظهر", 
+    "dark": "داكن",
+    "light":"فاتح"
 }

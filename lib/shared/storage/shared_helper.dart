@@ -5,6 +5,7 @@ class SharedHelper {
 
   static init() async {
     sharedPreferences = await SharedPreferences.getInstance();
+    saveData(key: 'theme', value: 'dark');
   }
 
   static Future<bool> saveData({required String key, required dynamic value}) {

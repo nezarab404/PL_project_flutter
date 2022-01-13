@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
 import 'package:programming_languages_project/screens/optional_user_info_screen.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -37,21 +38,19 @@ class VerificationCodeScreen extends StatefulWidget {
 }
 
 class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
-
-
   Timer? timer;
   int _start = 60;
   bool isStart = false;
   void startTimer() {
-     _start = 60;
+    _start = 60;
     isStart = true;
-    const oneSec =  Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     timer = Timer.periodic(
       oneSec,
-          (Timer timer) {
+      (Timer timer) {
         if (_start == 0) {
           setState(() {
-isStart = false;
+            isStart = false;
             timer.cancel();
           });
         } else {
@@ -62,11 +61,13 @@ isStart = false;
       },
     );
   }
+
   @override
   void dispose() {
     timer!.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -93,8 +94,6 @@ isStart = false;
 
     //   super.dispose();
     // }
-
-
 
     var provider = Provider.of<VerifyProvider>(context);
 
@@ -142,11 +141,11 @@ isStart = false;
                   Container(
                     height: screenHeight / 2.4,
                     alignment: Alignment.bottomCenter,
-                    child:  Text(
+                    child: Text(
                       lan.verify,
-                      style:const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: theme.textTheme.bodyText1!.color,
                         fontSize: 42,
                       ),
                     ),
@@ -161,11 +160,11 @@ isStart = false;
                 margin: const EdgeInsets.symmetric(
                   horizontal: 30,
                 ),
-                child:  Text(
+                child: Text(
                   lan.verifyMsg,
-                  style:const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white,
+                    color: theme.textTheme.bodyText1!.color,
                   ),
                   textAlign: TextAlign.start,
                 ),
@@ -190,12 +189,15 @@ isStart = false;
                   borderRadius: BorderRadius.circular(15),
                   fieldHeight: 50,
                   fieldWidth: 50,
-                  inactiveColor: Colors.white,
-                  inactiveFillColor: Colors.white,
-                  activeColor: Colors.white,
-                  activeFillColor: Colors.white,
-                  selectedColor: Colors.white,
-                  selectedFillColor: Colors.white,
+                  inactiveColor: theme == darkTheme ? Colors.white : mainGrey,
+                  inactiveFillColor:
+                      theme == darkTheme ? Colors.white : mainGrey,
+                  activeColor: theme == darkTheme ? Colors.white : mainGrey,
+                  activeFillColor:
+                      theme == darkTheme ? Colors.white : mainGrey,
+                  selectedColor: theme == darkTheme ? Colors.white : mainGrey,
+                  selectedFillColor:
+                      theme == darkTheme ? Colors.white : mainGrey,
                 ),
                 enableActiveFill: true,
                 errorAnimationController: errorController,
@@ -221,17 +223,18 @@ isStart = false;
               ),
 
               TextButton(
-                onPressed: isStart? null:() {
-                  Provider.of<VerifyProvider>(context, listen: false)
-                      .resendCode();
-                  startTimer();
-                },
+                onPressed: isStart
+                    ? null
+                    : () {
+                        Provider.of<VerifyProvider>(context, listen: false)
+                            .resendCode();
+                        startTimer();
+                      },
                 child: Text(
-                  isStart? "$_start":
-                  lan.resendCode,
+                  isStart ? "$_start" : lan.resendCode,
                   style: TextStyle(
                     color: mainRed,
-                    fontSize: 22
+                    fontSize: 22,
                   ),
                 ),
               ),
@@ -244,23 +247,26 @@ isStart = false;
                 child: FloatingActionButton(
                   onPressed: () async {
                     widget._isReset
-                        ? await Provider.of<VerifyProvider>(context, listen: false)
-                            .resetVerify(email: widget.email!, code: widget._code.text)
+                        ? await Provider.of<VerifyProvider>(context,
+                                listen: false)
+                            .resetVerify(
+                                email: widget.email!, code: widget._code.text)
                             .then((value) {
-                              print("koo ${widget.email!}");
-                              print(widget._code.text);
-                            if(provider.s == Status.loading){
+                            print("koo ${widget.email!}");
+                            print(widget._code.text);
+                            if (provider.s == Status.loading) {
                               print(provider.s);
                             }
                             if (provider.s == Status.success) {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => ForgotPasswordScreen()));
+                                      builder: (_) =>
+                                          ForgotPasswordScreen()));
                             } else {
                               print("moo ${widget.email!}");
                               print(widget._code.text);
-                            //  print(value);
+                              //  print(value);
                               //  print(value);
                               print("error");
                             }
@@ -283,7 +289,7 @@ isStart = false;
                   backgroundColor: mainRed,
                   child: Icon(
                     Icons.check,
-                    color: mainDarkBlue,
+                    color: theme.backgroundColor,
                     size: 40,
                   ),
                   elevation: 6,

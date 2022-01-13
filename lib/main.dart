@@ -1,14 +1,15 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/providers/search_provider.dart';
+import 'package:programming_languages_project/providers/theme_provider.dart';
 import 'package:programming_languages_project/screens/login_screen.dart';
+import 'package:programming_languages_project/screens/optional_user_info_screen.dart';
 import 'package:programming_languages_project/screens/verification_code_screen.dart';
 import 'package:programming_languages_project/shared/commponents/restart_widget.dart';
 import 'package:programming_languages_project/shared/constants.dart';
@@ -99,6 +100,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SearchProvider>(
           create: (_) => SearchProvider(),
         ),
+        ChangeNotifierProvider<ThemeChanger>(
+          create: (_) => ThemeChanger(),
+        ),
       ],
       child: MainMaterialApp(mainWidget: mainWidget),
     );
@@ -116,6 +120,7 @@ class MainMaterialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(lang);
+    theme = Provider.of<ThemeChanger>(context, listen: false).getTheme();
     return MaterialApp(
       title: 'Dream Shop',
       debugShowCheckedModeBanner: false,
@@ -136,25 +141,7 @@ class MainMaterialApp extends StatelessWidget {
         Locale('en'),
         Locale('ar'),
       ],
-      themeMode: ThemeMode.dark,
-      theme: ThemeData(
-        primarySwatch: mainRed,
-      ),
-      darkTheme: ThemeData(
-        primarySwatch: mainRed,
-        backgroundColor: mainDarkBlue,
-        fontFamily: "Baloo2",
-        textTheme:const TextTheme(
-          bodyText1:  TextStyle(color: Colors.white),
-          bodyText2: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        scaffoldBackgroundColor: mainDarkBlue,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
+      theme: theme,
       home: AnimatedSplashScreen(
         nextScreen: mainWidget,
         splash: SizedBox(
@@ -190,7 +177,7 @@ class MainMaterialApp extends StatelessWidget {
         ),
         splashIconSize: 300,
         splashTransition: SplashTransition.sizeTransition,
-        backgroundColor: darkBlue2,
+        backgroundColor: theme.splashColor,
       ),
     );
   }

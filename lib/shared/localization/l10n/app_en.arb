@@ -5,7 +5,7 @@
     "forgetPassword": "Forget Password?",
     "reset": "Reset",
     "dontHaveAnAccount": "Don't have an account?",
-    "createOnNow": "Create on now!",
+    "createOnNow": "Create one now!",
     "close": "Close",
     "enterEmailFirst": "Enter your email first!",
     "enterValidEmailAddress": "Enter valid email address",
@@ -81,5 +81,8 @@
     "sendingAnEmail": "Sending an E-mail",
     "makingAPhoneCall":"Making a Phone Call",
     "contactWithSeller" : "Contact With Seller",
-    "goToFacebookPage" : "Open Facebook Page"
+    "goToFacebookPage" : "Open Facebook Page",
+    "themeType": "Theme", 
+    "dark": "Dark",
+    "light":"Light"
 }

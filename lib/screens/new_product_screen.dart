@@ -11,7 +11,7 @@ import 'package:programming_languages_project/models/product_model.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/my_products_provider.dart';
 import 'package:programming_languages_project/providers/new_product_provider.dart';
-import 'package:programming_languages_project/screens/drawer.dart';
+import 'package:programming_languages_project/screens/my_products_screen.dart';
 import 'package:programming_languages_project/shared/commponents/discounts_input_field.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
 import 'package:programming_languages_project/shared/commponents/mbs_element.dart';
@@ -42,7 +42,8 @@ class NewProductScreen extends StatefulWidget {
 
   NewProductScreen.edit({Key? key, required this.model}) : super(key: key) {
     isEdit = true;
-    price = TextEditingController(text: isEdit ? model!.priceInfo!.mainPrice.toString() : "");
+    price = TextEditingController(
+        text: isEdit ? model!.priceInfo!.mainPrice.toString() : "");
     quantity =
         TextEditingController(text: isEdit ? model!.quantity.toString() : "");
     name = TextEditingController(text: isEdit ? model!.name : "");
@@ -111,7 +112,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     provider.images!.isEmpty
                         ? SvgPicture.asset(
                             'assets/images/image_placeholder.svg',
-                            color: darkBlue2,
+                            color: theme == darkTheme ? darkBlue2 : mainGrey,
                           )
                         : Stack(
                             children: [
@@ -121,7 +122,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white,
+                                  color: theme == darkTheme
+                                      ? Colors.white
+                                      : mainGrey,
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
@@ -192,7 +195,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                 ),
                                 icon: Icon(
                                   Icons.add_a_photo,
-                                  color: darkBlue,
+                                  color: mainDarkBlue,
                                 ),
                               ),
                             ],
@@ -209,8 +212,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
                             widget.isEdit,
                           ),
                           iconSize: 50,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.add_a_photo,
+                            color: theme == darkTheme ? mainDarkBlue : mainRed,
                           ),
                         ),
                       ),
@@ -360,8 +364,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   children: [
                     Text(
                       lan.remainingDays,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: theme.textTheme.bodyText1!.color,
                       ),
                     ),
                     SizedBox(
@@ -383,10 +387,10 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 ),
                 Column(
                   children: [
-                    const Text(
+                    Text(
                       '%',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: theme.textTheme.bodyText1!.color,
                       ),
                     ),
                     SizedBox(
@@ -462,68 +466,71 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                     listen: false)
                                 .getMyProducts();
                             print("بولياني يا حبيبي $value");
-                            if (value) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const MyDrawer(),
-                                ),
-                              );
-                            }
+
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => MyProductsScreen(),
+                              ),
+                            );
                           })
-                        :
-                    Provider.of<NewProductProvider>(context, listen: false)
-                        .addProduct(
-                      price: double.parse(widget.price.text.contains('.')
-                          ? widget.price.text
-                          : widget.price.text + ".0"),
-                      quantity: double.parse(
-                        widget.quantity.text.isEmpty
-                            ? "1.0"
-                            : widget.quantity.text.contains('.')
-                                ? widget.quantity.text
-                                : widget.quantity.text + ".0",
-                      ),
-                      name: widget.name.text,
-                      description: widget.description.text,
-                      rDays1: int.parse(widget.rDays1.text),
-                      rDays2: int.parse(widget.rDays2.text),
-                      rDays3: int.parse(widget.rDays3.text),
-                      discount1: double.parse(widget.per1.text.contains('.')
-                          ? widget.per1.text
-                          : widget.per1.text + ".0"),
-                      discount2: double.parse(widget.per2.text.contains('.')
-                          ? widget.per2.text
-                          : widget.per2.text + ".0"),
-                      discount3: double.parse(widget.per3.text.contains('.')
-                          ? widget.per3.text
-                          : widget.per3.text + ".0"),
-                    )
-                        .then((value) {
-                      Provider.of<HomeProvider>(context, listen: false)
-                          .getProducts();
-                      Provider.of<MyProductsProvider>(context, listen: false)
-                          .getMyProducts();
-                      Provider.of<HomeProvider>(context, listen: false)
-                          .changeIndex(0);
-                      widget.price.clear();
-                      widget.per1.clear();
-                      widget.per2.clear();
-                      widget.per3.clear();
-                      widget.quantity.clear();
-                      widget.rDays1.clear();
-                      widget.rDays2.clear();
-                      widget.rDays3.clear();
-                      widget.name.clear();
-                      widget.date.clear();
-                      widget.description.clear();
-                      provider.images = [];
-                    }); //1640905200
+                        : Provider.of<NewProductProvider>(context,
+                                listen: false)
+                            .addProduct(
+                            price: double.parse(widget.price.text.contains('.')
+                                ? widget.price.text
+                                : widget.price.text + ".0"),
+                            quantity: double.parse(
+                              widget.quantity.text.isEmpty
+                                  ? "1.0"
+                                  : widget.quantity.text.contains('.')
+                                      ? widget.quantity.text
+                                      : widget.quantity.text + ".0",
+                            ),
+                            name: widget.name.text,
+                            description: widget.description.text,
+                            rDays1: int.parse(widget.rDays1.text),
+                            rDays2: int.parse(widget.rDays2.text),
+                            rDays3: int.parse(widget.rDays3.text),
+                            discount1: double.parse(
+                                widget.per1.text.contains('.')
+                                    ? widget.per1.text
+                                    : widget.per1.text + ".0"),
+                            discount2: double.parse(
+                                widget.per2.text.contains('.')
+                                    ? widget.per2.text
+                                    : widget.per2.text + ".0"),
+                            discount3: double.parse(
+                                widget.per3.text.contains('.')
+                                    ? widget.per3.text
+                                    : widget.per3.text + ".0"),
+                          )
+                            .then((value) {
+                            Provider.of<HomeProvider>(context, listen: false)
+                                .getProducts();
+                            Provider.of<MyProductsProvider>(context,
+                                    listen: false)
+                                .getMyProducts();
+                            Provider.of<HomeProvider>(context, listen: false)
+                                .changeIndex(0);
+                            widget.price.clear();
+                            widget.per1.clear();
+                            widget.per2.clear();
+                            widget.per3.clear();
+                            widget.quantity.clear();
+                            widget.rDays1.clear();
+                            widget.rDays2.clear();
+                            widget.rDays3.clear();
+                            widget.name.clear();
+                            widget.date.clear();
+                            widget.description.clear();
+                            provider.images = [];
+                          }); //1640905200
                   },
                   backgroundColor: mainRed,
                   child: Icon(
                     Icons.check,
-                    color: mainDarkBlue,
+                    color: theme.backgroundColor,
                     size: 40,
                   ),
                   elevation: 6,
@@ -547,7 +554,7 @@ void showAddImagesSheet(BuildContext context, double screenHeight,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
     ),
-    backgroundColor: darkBlue,
+    backgroundColor: theme == darkTheme ? mainDarkBlue : mainGrey,
     context: context,
     builder: (context) {
       return SizedBox(
@@ -558,7 +565,7 @@ void showAddImagesSheet(BuildContext context, double screenHeight,
             Text(
               lan.pickImageForm,
               style: TextStyle(
-                color: mainGrey,
+                color: theme.canvasColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 class TextDivider extends StatelessWidget {
@@ -15,13 +16,13 @@ class TextDivider extends StatelessWidget {
         Text(
           text,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: theme.textTheme.bodyText1!.color,
           ),
         ),
         Divider(
           thickness: 3,
-          color: darkBlue2,
+          color: theme == darkTheme ? darkBlue2 : Colors.black,
           indent: 40,
           endIndent: 40,
         ),

@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:programming_languages_project/providers/home_provider.dart';
 import 'package:programming_languages_project/providers/network_provider.dart';
+import 'package:programming_languages_project/providers/theme_provider.dart';
 import 'package:programming_languages_project/screens/landing_page.dart';
 import 'package:programming_languages_project/screens/my_products_screen.dart';
 import 'package:programming_languages_project/screens/products_i_like_screen.dart';
@@ -41,7 +42,7 @@ class _MyDrawerState extends State<MyDrawer> {
       borderRadius: 40.0,
       showShadow: true,
       angle: -12.0,
-      backgroundColor: mainGrey,
+      backgroundColor: theme.canvasColor,
       slideWidth: 250,
       openCurve: Curves.easeIn,
       closeCurve: Curves.easeInOut,
@@ -52,7 +53,7 @@ class _MyDrawerState extends State<MyDrawer> {
             : TextDirection.ltr,
         child: Container(
           padding: const EdgeInsets.all(10),
-          color: darkBlue2,
+          color: theme.splashColor,
           width: double.infinity,
           alignment: Localizations.localeOf(context) == const Locale('ar')
               ? Alignment.centerRight
@@ -75,21 +76,39 @@ class _MyDrawerState extends State<MyDrawer> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.white,
-                      backgroundImage: me!.image != null
-                          ? NetworkImage(me!.image!)
-                          : const AssetImage(
-                              'assets/images/avatar.png',
-                            ) as ImageProvider,
-                    ),
+                    theme == darkTheme
+                        ? CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.white,
+                            backgroundImage: me!.image != null
+                                ? NetworkImage(me!.image!)
+                                : const AssetImage(
+                                    'assets/images/avatar.png',
+                                  ) as ImageProvider,
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40),
+                              border: Border.all(
+                                color: const Color(0xffDC1A45),
+                              ),
+                            ),
+                            child: CircleAvatar(
+                              radius: 40,
+                              backgroundColor: theme.splashColor,
+                              backgroundImage: me!.image != null
+                                  ? NetworkImage(me!.image!)
+                                  : const AssetImage(
+                                      'assets/images/avatar.png',
+                                    ) as ImageProvider,
+                            ),
+                          ),
                     Text(
                       me!.name!.split(" ").first,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: Colors.white, fontSize: 24),
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                          color: theme.textTheme.bodyText1!.color,
+                          fontSize: 24),
                     ),
                     const SizedBox(
                       height: 20,
@@ -101,14 +120,14 @@ class _MyDrawerState extends State<MyDrawer> {
                             MaterialPageRoute(
                                 builder: (_) => const ProductsILikeScreen()));
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         LineIcons.heart,
-                        color: Colors.white,
+                        color: theme.iconTheme.color,
                       ),
                       label: Text(
                         lan.productsILiked,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: theme.textTheme.bodyText1!.color,
                         ),
                       ),
                     ),
@@ -121,21 +140,21 @@ class _MyDrawerState extends State<MyDrawer> {
                           ),
                         );
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         LineIcons.shoppingBasket,
-                        color: Colors.white,
+                        color: theme.iconTheme.color,
                       ),
                       label: Text(
                         lan.myProducts,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: theme.textTheme.bodyText1!.color,
                         ),
                       ),
                     ),
                     TextButton.icon(
-                      icon: const Icon(
+                      icon: Icon(
                         LineIcons.language,
-                        color: Colors.white,
+                        color: theme.iconTheme.color,
                       ),
                       onPressed: () {
                         noListenProvider.changeLang(
@@ -149,9 +168,9 @@ class _MyDrawerState extends State<MyDrawer> {
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
                           width: double.infinity,
-                          height: 75,
                           child: DefaultTextStyle(
-                            style: const TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: theme.textTheme.bodyText1!.color),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -170,7 +189,54 @@ class _MyDrawerState extends State<MyDrawer> {
                                     ),
                                     Text(lan.english),
                                   ],
-                                )
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextButton.icon(
+                      icon: Icon(
+                        LineIcons.penFancy,
+                        color: theme.iconTheme.color,
+                      ),
+                      onPressed: () {
+                        noListenProvider.changeLang(
+                            !provider.language, context);
+                      },
+                      label: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          alignment: Localizations.localeOf(context) ==
+                                  const Locale('ar')
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          width: double.infinity,
+                          child: DefaultTextStyle(
+                            style: TextStyle(
+                                color: theme.textTheme.bodyText1!.color),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(lan.themeType),
+                                Row(
+                                  children: [
+                                    Text(lan.dark),
+                                    Switch(
+                                      value: Provider.of<ThemeChanger>(context)
+                                          .themeBool,
+                                      inactiveThumbColor: mainRed,
+                                      activeColor: mainRed,
+                                      inactiveTrackColor: mainRed!.shade900,
+                                      onChanged: (val) =>
+                                          Provider.of<ThemeChanger>(context,
+                                                  listen: false)
+                                              .setTheme(context, val),
+                                    ),
+                                    Text(lan.light),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
@@ -183,9 +249,14 @@ class _MyDrawerState extends State<MyDrawer> {
               Builder(
                 builder: (ctx) => OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.white),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 8)),
+                      side: BorderSide(
+                        color: theme.textTheme.bodyText1!.color!,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 8,
+                      ),
+                    ),
                     onPressed: () {
                       Provider.of<NetworkProvider>(context, listen: false)
                           .userLogout()
@@ -209,7 +280,10 @@ class _MyDrawerState extends State<MyDrawer> {
                     },
                     child: Text(
                       lan.logout,
-                      style: const TextStyle(color: Colors.white, fontSize: 25),
+                      style: TextStyle(
+                        color: theme.textTheme.bodyText1!.color,
+                        fontSize: 25,
+                      ),
                     )),
               )
             ],

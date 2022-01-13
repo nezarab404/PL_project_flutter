@@ -39,25 +39,54 @@ class OptionalUserInfoScreen extends StatelessWidget {
             ),
             Stack(
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 110,
-                  child: Padding(
-                    padding: const EdgeInsets.all(1),
-                    child: ClipOval(
-                      child: provider.profileImage == null
-                          ? SvgPicture.asset(
-                              'assets/images/avatar.svg',
-                            )
-                          : Image.file(
-                              provider.profileImage!,
-                              fit: BoxFit.cover,
-                              width: 250,
-                              height: 250,
+                theme == darkTheme
+                    ? CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 110,
+                        child: Padding(
+                          padding: const EdgeInsets.all(1),
+                          child: ClipOval(
+                            child: provider.profileImage == null
+                                ? SvgPicture.asset(
+                                    'assets/images/avatar.svg',
+                                  )
+                                : Image.file(
+                                    provider.profileImage!,
+                                    fit: BoxFit.cover,
+                                    width: 250,
+                                    height: 250,
+                                  ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(110),
+                          border: Border.all(
+                            color: const Color(0xffDC1A45),
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 110,
+                          child: Padding(
+                            padding: const EdgeInsets.all(1),
+                            child: ClipOval(
+                              child: provider.profileImage == null
+                                  ? SvgPicture.asset(
+                                      'assets/images/avatar.svg',
+                                    )
+                                  : Image.file(
+                                      provider.profileImage!,
+                                      fit: BoxFit.cover,
+                                      width: 250,
+                                      height: 250,
+                                    ),
                             ),
-                    ),
-                  ),
-                ),
+                          ),
+                        ),
+                      ),
                 Positioned(
                   bottom: 5,
                   right: 10,
@@ -65,6 +94,11 @@ class OptionalUserInfoScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(40),
+                      border: theme == darkTheme
+                          ? null
+                          : Border.all(
+                              color: const Color(0xffDC1A45),
+                            ),
                     ),
                     child: IconButton(
                       onPressed: () {
@@ -73,7 +107,8 @@ class OptionalUserInfoScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          backgroundColor: darkBlue,
+                          backgroundColor:
+                              theme == darkTheme ? mainDarkBlue : mainGrey,
                           context: context,
                           builder: (context) {
                             return SizedBox(
@@ -85,7 +120,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
                                   Text(
                                     lan.pickImageForm,
                                     style: TextStyle(
-                                      color: mainGrey,
+                                      color: theme.canvasColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22,
                                     ),
@@ -210,7 +245,7 @@ class OptionalUserInfoScreen extends StatelessWidget {
                   )
                       .then((value) {
                     print(value);
-                    if(value){
+                    if (value) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -219,12 +254,11 @@ class OptionalUserInfoScreen extends StatelessWidget {
                       );
                     }
                   });
-
                 },
                 backgroundColor: mainRed,
                 child: Icon(
                   Icons.arrow_forward,
-                  color: mainDarkBlue,
+                  color: theme.backgroundColor,
                 ),
                 elevation: 6,
               ),

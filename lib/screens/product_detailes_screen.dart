@@ -40,7 +40,7 @@ class ProductDetailesScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: lightDarkBlue,
+          backgroundColor: theme == darkTheme ? lightDarkBlue : mainRed,
           elevation: 0.0,
           centerTitle: true,
           title: Text(
@@ -99,12 +99,16 @@ class ProductDetailesScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(lan.buy,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(
-                                          color: Colors.white, fontSize: 20)),
+                              Text(
+                                lan.buy,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                              ),
                               const SizedBox(
                                 width: 8,
                               ),
@@ -136,12 +140,13 @@ class ProductDetailesScreen extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (ctx) => AlertDialog(
-                                backgroundColor: darkBlue,
+                                backgroundColor: theme.backgroundColor,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
                                 title: Text(
                                   lan.contactWithSeller,
-                                  style: const TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      color: theme.textTheme.bodyText1!.color),
                                 ),
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
@@ -159,8 +164,10 @@ class ProductDetailesScreen extends StatelessWidget {
                                         children: [
                                           Text(
                                             lan.makingAPhoneCall,
-                                            style: const TextStyle(
-                                                color: Colors.white),
+                                            style: TextStyle(
+                                              color: theme
+                                                  .textTheme.bodyText1!.color,
+                                            ),
                                           ),
                                           const Icon(Icons.call)
                                         ],
@@ -186,8 +193,10 @@ class ProductDetailesScreen extends StatelessWidget {
                                         children: [
                                           Text(
                                             lan.sendingAnEmail,
-                                            style: const TextStyle(
-                                                color: Colors.white),
+                                            style: TextStyle(
+                                              color: theme
+                                                  .textTheme.bodyText1!.color,
+                                            ),
                                           ),
                                           const Icon(Icons.mail)
                                         ],
@@ -204,8 +213,10 @@ class ProductDetailesScreen extends StatelessWidget {
                                           children: [
                                             Text(
                                               lan.goToFacebookPage,
-                                              style: const TextStyle(
-                                                  color: Colors.white),
+                                              style: TextStyle(
+                                                color: theme
+                                                    .textTheme.bodyText1!.color,
+                                              ),
                                             ),
                                             const Icon(Icons.facebook)
                                           ],
@@ -284,7 +295,7 @@ class ProductDetailesScreen extends StatelessWidget {
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
                   ),
-                  color: lightDarkBlue,
+                  color: theme == darkTheme ? lightDarkBlue : mainRed,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -329,7 +340,7 @@ class ProductDetailesScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(90),
                           ),
                           activeDotDecoration: DotDecoration(
-                            color: red,
+                            color: theme.iconTheme.color!,
                             height: 25,
                             width: 7,
                             borderRadius: BorderRadius.circular(90),
@@ -347,9 +358,7 @@ class ProductDetailesScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DefaultTextStyle(
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: Colors.white,
-                          ),
+                      style: theme.textTheme.bodyText2!,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -398,11 +407,11 @@ class ProductDetailesScreen extends StatelessWidget {
                       height: size.height / 2.5 - 95,
                       child: SingleChildScrollView(
                         child: Text(
-                          "${lan.description}: ${model.description}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption!
-                              .copyWith(color: Colors.white, fontSize: 16),
+                          "${lan.description}: \n ${model.description}",
+                          style: Theme.of(context).textTheme.caption!.copyWith(
+                                color: theme.textTheme.bodyText1!.color,
+                                fontSize: 16,
+                              ),
                         ),
                       ),
                     ),

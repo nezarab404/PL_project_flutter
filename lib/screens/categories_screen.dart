@@ -51,16 +51,17 @@ class CategoriesScreen extends StatelessWidget {
                               height: 250,
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(20)),
+                                color: Colors.white.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               child: SvgPicture.asset(
                                 "assets/images/empty_cart.svg",
                               ),
                             ),
                             Text(
                               lan.noProductsFound,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: theme.textTheme.bodyText1!.color,
                                 fontSize: 20,
                               ),
                             ),

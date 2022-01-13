@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:programming_languages_project/providers/verify_provider.dart';
 import 'package:programming_languages_project/screens/drawer.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/status.dart';
 import 'package:programming_languages_project/shared/validator.dart';
 import 'package:provider/provider.dart';
@@ -78,9 +79,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   alignment: Alignment.bottomCenter,
                   child: Text(
                     lan.reset,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: theme.textTheme.bodyText1!.color,
                       fontSize: 42,
                     ),
                   ),
@@ -97,9 +98,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
               child: Text(
                 lan.enterYourNewPasswordBelow,
-                style: const TextStyle(
+                style:  TextStyle(
                   fontSize: 16,
-                  color: Colors.white,
+                  color: theme.textTheme.bodyText1!.color,
                 ),
                 textAlign: TextAlign.start,
               ),
@@ -233,7 +234,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 backgroundColor: mainRed,
                 child: Icon(
                   Icons.check,
-                  color: mainDarkBlue,
+                  color: theme.backgroundColor,
                   size: 40,
                 ),
                 elevation: 6,

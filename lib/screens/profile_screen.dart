@@ -3,8 +3,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:programming_languages_project/models/user_model.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/screens/list_products_screen.dart';
-import 'package:programming_languages_project/screens/my_products_screen.dart';
 import 'package:programming_languages_project/shared/commponents/mbs_element.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:provider/provider.dart';
 import '../shared/commponents/profile_info_field.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
@@ -149,6 +149,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
+                      border: theme == darkTheme
+                          ? null
+                          : Border.all(
+                              color: const Color(0xffDC1A45),
+                            ),
                       borderRadius: BorderRadius.circular(40),
                     ),
                     child: widget.myProfile
@@ -159,7 +164,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                backgroundColor: darkBlue,
+                                backgroundColor: theme == darkTheme
+                                    ? mainDarkBlue
+                                    : mainGrey,
                                 context: context,
                                 builder: (context) {
                                   return SizedBox(
@@ -171,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Text(
                                           lan.pickImageForm,
                                           style: TextStyle(
-                                            color: mainGrey,
+                                            color: theme.canvasColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 22,
                                           ),
@@ -257,7 +264,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           )
                         : //to call
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              //TODO call function 
+                            },
                             color: Colors.green,
                             icon: const Icon(
                               Icons.call,

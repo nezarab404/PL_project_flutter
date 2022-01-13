@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 
 // ignore: must_be_immutable
@@ -7,7 +8,12 @@ class MBSElement extends StatelessWidget {
   String? text;
   Function()? onPressed;
 
-  MBSElement({Key? key, required this.icon, required this.text, required this.onPressed}) : super(key: key);
+  MBSElement(
+      {Key? key,
+      required this.icon,
+      required this.text,
+      required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +25,13 @@ class MBSElement extends StatelessWidget {
           onPressed: onPressed,
           icon: Icon(
             icon,
+            color: Colors.white,
           ),
         ),
         Text(
           text!,
           style: TextStyle(
-            color: mainGrey,
+            color: theme.canvasColor,
           ),
         ),
       ],

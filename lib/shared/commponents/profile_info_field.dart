@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:programming_languages_project/providers/profile_provider.dart';
 import 'package:programming_languages_project/shared/commponents/input_form.dart';
+import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -61,7 +62,8 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color:
+                    theme == darkTheme ? Colors.white : mainGrey.withAlpha(95),
                 borderRadius: BorderRadius.circular(40),
               ),
               child: Icon(
@@ -77,8 +79,8 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
               children: [
                 Text(
                   widget.title!,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: theme.textTheme.bodyText1!.color,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
@@ -89,8 +91,8 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                       ? TextFormField(
                           maxLines: widget.isPassword! ? 1 : null,
                           controller: widget.controller,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: theme.textTheme.bodyText1!.color,
                             fontWeight: FontWeight.normal,
                             fontSize: 18,
                           ),
@@ -108,8 +110,8 @@ class _ProfileInfoFieldState extends State<ProfileInfoField> {
                           widget.isPassword!
                               ? onPasswordObscureText
                               : widget.controller.text,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: theme.textTheme.bodyText1!.color,
                             fontWeight: FontWeight.normal,
                             fontSize: 18,
                           ),

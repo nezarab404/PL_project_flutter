@@ -6,6 +6,7 @@ import 'package:programming_languages_project/shared/commponents/my_grid_view.da
 import 'package:programming_languages_project/shared/commponents/my_radio_buttons.dart';
 import 'package:programming_languages_project/shared/constants.dart';
 import 'package:programming_languages_project/shared/status.dart';
+import 'package:programming_languages_project/shared/themes/main_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
@@ -53,12 +54,14 @@ class HomeScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             )
           : RefreshIndicator(
+              color: theme == lightTheme ? Colors.white : mainRed,
               onRefresh: () {
                 return provider.getProducts();
               },
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
                 child: Column(
                   children: [
                     Row(

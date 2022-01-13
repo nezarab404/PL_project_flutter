@@ -180,7 +180,7 @@ class RegisterScreen extends StatelessWidget {
                         backgroundColor: mainRed,
                         child: Icon(
                           Icons.arrow_forward,
-                          color: mainDarkBlue,
+                          color: theme.backgroundColor,
                         ),
                         elevation: 6,
                       ),
